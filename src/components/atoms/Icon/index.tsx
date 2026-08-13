@@ -1,4 +1,11 @@
-export type IconName = 'search' | 'user' | 'bag' | 'chevron-left' | 'chevron-right';
+export type IconName =
+  | 'search'
+  | 'user'
+  | 'bag'
+  | 'chevron-left'
+  | 'chevron-right'
+  | 'dots'
+  | 'close';
 
 const icons: Record<IconName, React.ReactNode> = {
   search: (
@@ -22,6 +29,19 @@ const icons: Record<IconName, React.ReactNode> = {
   ),
   'chevron-left': <path d="M14.5 5 8 12l6.5 7" />,
   'chevron-right': <path d="M9.5 5 16 12l-6.5 7" />,
+  dots: (
+    <>
+      <circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none" />
+    </>
+  ),
+  close: (
+    <>
+      <line x1="6" y1="6" x2="18" y2="18" />
+      <line x1="18" y1="6" x2="6" y2="18" />
+    </>
+  ),
 };
 
 export interface IconProps {

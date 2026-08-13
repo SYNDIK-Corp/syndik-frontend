@@ -15,7 +15,10 @@
     "contact": "Contacto",
     "search": "Buscar",
     "account": "Mi cuenta",
-    "bag": "Bolsa"
+    "bag": "Bolsa",
+    "menu": "Menú",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
   },
   "hero": {
     "title": "Arte\ndigital para las\ncalles",

@@ -32,6 +32,7 @@ export const theme = {
   },
   zIndices: {
     navbar: 100,
+    drawer: 110,
   },
   spacing: {
     xs: '0.25rem',

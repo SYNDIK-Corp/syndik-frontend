@@ -35,36 +35,6 @@ export const CartButton = styled.button`
   }
 `;
 
-export const Container = styled(Link)<{ $tone: CardTone }>`
-  display: block;
-
-  ${({ theme, $tone }) =>
-    $tone === 'dark'
-      ? css`
-          --card-fg: ${theme.colors.white};
-          --card-bg: ${theme.colors.black};
-          --card-muted: rgba(255, 255, 255, 0.55);
-          --card-frame: #1a1a1a;
-          --card-cart-bg: transparent;
-        `
-      : css`
-          --card-fg: ${theme.colors.text};
-          --card-bg: ${theme.colors.white};
-          --card-muted: ${theme.colors.textMuted};
-          --card-frame: ${theme.colors.surface};
-          --card-cart-bg: ${theme.colors.white};
-        `}
-
-  &:hover ${AltImage} {
-    opacity: 1;
-  }
-
-  &:hover ${CartButton} {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
 export const Frame = styled.div<{ $ratio: string }>`
   position: relative;
   aspect-ratio: ${({ $ratio }) => $ratio};
@@ -150,4 +120,75 @@ export const ComparePrice = styled.span`
   font-size: 12px;
   color: var(--card-muted);
   text-decoration: line-through;
+`;
+
+export const Container = styled(Link)<{ $tone: CardTone; $compact: boolean }>`
+  display: block;
+
+  ${({ theme, $tone }) =>
+    $tone === 'dark'
+      ? css`
+          --card-fg: ${theme.colors.white};
+          --card-bg: ${theme.colors.black};
+          --card-muted: rgba(255, 255, 255, 0.55);
+          --card-frame: #1a1a1a;
+          --card-cart-bg: transparent;
+        `
+      : css`
+          --card-fg: ${theme.colors.text};
+          --card-bg: ${theme.colors.white};
+          --card-muted: ${theme.colors.textMuted};
+          --card-frame: ${theme.colors.surface};
+          --card-cart-bg: ${theme.colors.white};
+        `}
+
+  &:hover ${AltImage} {
+    opacity: 1;
+  }
+
+  &:hover ${CartButton} {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  ${({ $compact }) =>
+    $compact &&
+    css`
+      ${CartButton} {
+        display: none;
+      }
+
+      ${Tag} {
+        top: 10px;
+        padding: 4px 8px;
+        font-size: 8px;
+      }
+
+      ${Meta} {
+        margin-top: 10px;
+        gap: 4px;
+      }
+
+      ${Collection} {
+        font-size: 9px;
+        letter-spacing: 0.16em;
+      }
+
+      ${Name} {
+        font-size: 12px;
+      }
+
+      ${Prices} {
+        margin-top: 2px;
+        gap: 8px;
+      }
+
+      ${Price} {
+        font-size: 12px;
+      }
+
+      ${ComparePrice} {
+        font-size: 10px;
+      }
+    `}
 `;

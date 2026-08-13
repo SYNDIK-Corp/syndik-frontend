@@ -15,7 +15,10 @@
     "contact": "Contato",
     "search": "Buscar",
     "account": "Minha conta",
-    "bag": "Sacola"
+    "bag": "Sacola",
+    "menu": "Menu",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
   },
   "hero": {
     "title": "Arte\ndigital para as\nruas",

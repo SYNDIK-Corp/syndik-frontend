@@ -15,7 +15,10 @@
     "contact": "Contact",
     "search": "Search",
     "account": "My account",
-    "bag": "Bag"
+    "bag": "Bag",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "hero": {
     "title": "Digital\nart for the\nstreets",

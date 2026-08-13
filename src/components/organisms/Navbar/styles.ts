@@ -30,6 +30,11 @@ export const Container = styled.header<{ $solid: boolean }>`
         `}
 `;
 
+export const LeftCell = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const NavLinks = styled.nav`
   display: flex;
   align-items: center;
@@ -37,6 +42,16 @@ export const NavLinks = styled.nav`
 
   @media (max-width: 640px) {
     display: none;
+  }
+`;
+
+export const MobileLeft = styled.div`
+  display: none;
+  align-items: center;
+  gap: 2px;
+
+  @media (max-width: 640px) {
+    display: flex;
   }
 `;
 
@@ -74,5 +89,11 @@ export const IconButton = styled.button`
 
   &:hover {
     opacity: 1;
+  }
+`;
+
+export const DesktopSearchButton = styled(IconButton)`
+  @media (max-width: 640px) {
+    display: none;
   }
 `;

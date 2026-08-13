@@ -12,6 +12,8 @@ export interface ProductCardProps {
   tone?: CardTone;
   ratio?: '4 / 5' | '1 / 1';
   metaLayout?: 'stack' | 'row';
+  /* versão reduzida (ex.: mini-carrossel do menu lateral) */
+  compact?: boolean;
   onAddToBag?: (product: Product) => void;
 }
 
@@ -20,6 +22,7 @@ export function ProductCard({
   tone = 'light',
   ratio = '4 / 5',
   metaLayout = 'stack',
+  compact = false,
   onAddToBag,
 }: ProductCardProps) {
   const { t, i18n } = useTranslation();
@@ -40,7 +43,7 @@ export function ProductCard({
   );
 
   return (
-    <S.Container to="/products" $tone={tone}>
+    <S.Container to="/products" $tone={tone} $compact={compact}>
       <S.Frame $ratio={ratio}>
         {product.coverImage && (
           <S.Image src={product.coverImage} alt={product.coverAlt ?? product.name} />
