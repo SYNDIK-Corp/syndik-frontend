@@ -30,6 +30,31 @@
     "sale": "Sale",
     "addToBag": "Add to bag"
   },
+  "sound": {
+    "eyebrow": "SYNDIK / Sound — 001",
+    "title": "Get seen\nor get\nskipped.",
+    "description": "Your track fights a million thumbnails for one tap. Turn up armed.",
+    "cta": "Grab your cover",
+    "secondaryCta": "See the vault",
+    "perks": "Delivered in minutes · 3000 × 3000 · Release licence · Never resold",
+    "products": {
+      "single-cover": {
+        "collection": "Single",
+        "tag": "One release"
+      },
+      "album-pack": {
+        "collection": "Cover + single + closer",
+        "tag": "3 pieces"
+      }
+    },
+    "ticker": [
+      "No cover, no cult",
+      "— Spotify · Apple · Deezer ready",
+      "— Instant delivery",
+      "— One artwork, one owner",
+      "— Commissions open"
+    ]
+  },
   "products": {
     "title": "Products",
     "description": "The full catalog will be available here soon."

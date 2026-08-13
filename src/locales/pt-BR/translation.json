@@ -30,6 +30,31 @@
     "sale": "Promoção",
     "addToBag": "Adicionar à sacola"
   },
+  "sound": {
+    "eyebrow": "SYNDIK / Sound — 001",
+    "title": "Seja visto\nou seja\npulado.",
+    "description": "Sua faixa disputa um toque com um milhão de thumbnails. Chegue armado.",
+    "cta": "Garanta sua capa",
+    "secondaryCta": "Ver o acervo",
+    "perks": "Entrega em minutos · 3000 × 3000 · Licença de lançamento · Nunca revendido",
+    "products": {
+      "single-cover": {
+        "collection": "Single",
+        "tag": "Um lançamento"
+      },
+      "album-pack": {
+        "collection": "Capa + single + faixa final",
+        "tag": "3 peças"
+      }
+    },
+    "ticker": [
+      "Sem capa, sem culto",
+      "— Pronto para Spotify · Apple · Deezer",
+      "— Entrega imediata",
+      "— Uma arte, um dono",
+      "— Comissões abertas"
+    ]
+  },
   "products": {
     "title": "Produtos",
     "description": "Em breve, o catálogo completo estará disponível aqui."

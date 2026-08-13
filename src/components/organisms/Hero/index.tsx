@@ -13,7 +13,7 @@ export function Hero({ leftImage, leftImageAlt, rightImage, rightImageAlt }: Her
   const { t } = useTranslation();
 
   return (
-    <S.Container>
+    <S.Container data-navbar-theme="dark">
       <S.Pane>
         {leftImage && <S.Image src={leftImage} alt={leftImageAlt ?? ''} />}
       </S.Pane>

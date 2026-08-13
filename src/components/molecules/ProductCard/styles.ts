@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import type { CardTone } from '.';
 
 export const AltImage = styled.div`
   position: absolute;
@@ -17,9 +18,9 @@ export const CartButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.text};
-  color: ${({ theme }) => theme.colors.text};
+  background: var(--card-cart-bg);
+  border: 1px solid var(--card-fg);
+  color: var(--card-fg);
   opacity: 0;
   transform: translateY(6px);
   transition:
@@ -29,13 +30,30 @@ export const CartButton = styled.button`
     color 0.3s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.text};
-    color: ${({ theme }) => theme.colors.white};
+    background: var(--card-fg);
+    color: var(--card-bg);
   }
 `;
 
-export const Container = styled(Link)`
+export const Container = styled(Link)<{ $tone: CardTone }>`
   display: block;
+
+  ${({ theme, $tone }) =>
+    $tone === 'dark'
+      ? css`
+          --card-fg: ${theme.colors.white};
+          --card-bg: ${theme.colors.black};
+          --card-muted: rgba(255, 255, 255, 0.55);
+          --card-frame: #1a1a1a;
+          --card-cart-bg: transparent;
+        `
+      : css`
+          --card-fg: ${theme.colors.text};
+          --card-bg: ${theme.colors.white};
+          --card-muted: ${theme.colors.textMuted};
+          --card-frame: ${theme.colors.surface};
+          --card-cart-bg: ${theme.colors.white};
+        `}
 
   &:hover ${AltImage} {
     opacity: 1;
@@ -47,11 +65,11 @@ export const Container = styled(Link)`
   }
 `;
 
-export const Frame = styled.div`
+export const Frame = styled.div<{ $ratio: string }>`
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: ${({ $ratio }) => $ratio};
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.surface};
+  background-color: var(--card-frame);
 `;
 
 export const Image = styled.img`
@@ -62,12 +80,12 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
-export const SaleTag = styled.span`
+export const Tag = styled.span`
   position: absolute;
   left: 0;
   top: 14px;
-  background: ${({ theme }) => theme.colors.text};
-  color: ${({ theme }) => theme.colors.white};
+  background: var(--card-fg);
+  color: var(--card-bg);
   padding: 6px 11px 6px 12px;
   font-size: 9px;
   font-weight: 500;
@@ -76,11 +94,30 @@ export const SaleTag = styled.span`
   pointer-events: none;
 `;
 
-export const Meta = styled.div`
-  margin-top: 16px;
+export const Meta = styled.div<{ $layout: 'stack' | 'row' }>`
+  color: var(--card-fg);
+
+  ${({ $layout }) =>
+    $layout === 'row'
+      ? css`
+          margin-top: 14px;
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 16px;
+        `
+      : css`
+          margin-top: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        `}
+`;
+
+export const MetaInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 `;
 
 export const Collection = styled.span`
@@ -88,11 +125,11 @@ export const Collection = styled.span`
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: var(--card-muted);
 `;
 
-export const Name = styled.span`
-  font-size: 15px;
+export const Name = styled.span<{ $layout: 'stack' | 'row' }>`
+  font-size: ${({ $layout }) => ($layout === 'row' ? '16px' : '15px')};
   font-weight: 500;
   letter-spacing: 0.02em;
 `;
@@ -104,13 +141,13 @@ export const Prices = styled.div`
   gap: 10px;
 `;
 
-export const Price = styled.span`
-  font-size: 14px;
+export const Price = styled.span<{ $layout: 'stack' | 'row' }>`
+  font-size: ${({ $layout }) => ($layout === 'row' ? '16px' : '14px')};
   font-weight: 500;
 `;
 
 export const ComparePrice = styled.span`
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: var(--card-muted);
   text-decoration: line-through;
 `;

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Logo } from '@/components/atoms/Logo';
 import { Icon } from '@/components/atoms/Icon';
 import { useScrolled } from '@/hooks/useScrolled';
+import { useNavbarOverDark } from '@/hooks/useNavbarOverDark';
 import * as S from './styles';
 
 export type NavbarVariant = 'overlay' | 'solid';
@@ -13,7 +14,9 @@ export interface NavbarProps {
 export function Navbar({ variant = 'overlay' }: NavbarProps) {
   const { t } = useTranslation();
   const scrolled = useScrolled();
-  const solid = variant === 'solid' || scrolled;
+  const overDark = useNavbarOverDark();
+  /* sobre seções escuras a navbar fica transparente com conteúdo branco */
+  const solid = variant === 'solid' || (scrolled && !overDark);
 
   return (
     <S.Container $solid={solid}>

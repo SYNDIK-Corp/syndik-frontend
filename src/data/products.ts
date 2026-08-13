@@ -51,3 +51,20 @@ export const bestSellers: Product[] = [
     onSale: true,
   },
 ];
+
+export const soundProducts: Product[] = [
+  {
+    id: 'single-cover',
+    collection: 'Single',
+    name: 'SINGLE COVER',
+    price: 5.0,
+    tag: 'One release',
+  },
+  {
+    id: 'album-pack',
+    collection: 'Cover + single + closer',
+    name: 'ALBUM PACK',
+    price: 19.99,
+    tag: '3 pieces',
+  },
+];

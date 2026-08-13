@@ -5,6 +5,8 @@ export interface Product {
   price: number;
   compareAtPrice?: number;
   onSale?: boolean;
+  /* etiqueta customizada sobre a arte (ex.: "One release"); sem ela, usa "Promoção" quando onSale */
+  tag?: string;
   coverImage?: string;
   coverAlt?: string;
   hoverImage?: string;

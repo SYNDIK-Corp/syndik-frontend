@@ -4,12 +4,14 @@ import * as S from './styles';
 export interface CtaLinkProps {
   to: string;
   children: ReactNode;
+  arrow?: boolean;
 }
 
-export function CtaLink({ to, children }: CtaLinkProps) {
+export function CtaLink({ to, children, arrow = true }: CtaLinkProps) {
   return (
     <S.Container to={to}>
-      {children} <span aria-hidden="true">→</span>
+      {children}
+      {arrow && <span aria-hidden="true"> →</span>}
     </S.Container>
   );
 }

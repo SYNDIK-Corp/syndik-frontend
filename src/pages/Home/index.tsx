@@ -1,13 +1,15 @@
 import { MainLayout } from '@/components/templates/MainLayout';
 import { Hero } from '@/components/organisms/Hero';
 import { BestSellers } from '@/components/organisms/BestSellers';
-import { bestSellers } from '@/data/products';
+import { SoundSection } from '@/components/organisms/SoundSection';
+import { bestSellers, soundProducts } from '@/data/products';
 
 export function Home() {
   return (
     <MainLayout navbarVariant="overlay">
       <Hero />
       <BestSellers products={bestSellers} />
+      <SoundSection products={soundProducts} />
     </MainLayout>
   );
 }

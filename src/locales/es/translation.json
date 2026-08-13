@@ -30,6 +30,31 @@
     "sale": "Oferta",
     "addToBag": "Añadir a la bolsa"
   },
+  "sound": {
+    "eyebrow": "SYNDIK / Sound — 001",
+    "title": "Que te vean\no que te\nsalten.",
+    "description": "Tu tema pelea con un millón de miniaturas por un tap. Llega armado.",
+    "cta": "Consigue tu portada",
+    "secondaryCta": "Ver el archivo",
+    "perks": "Entrega en minutos · 3000 × 3000 · Licencia de lanzamiento · Nunca revendido",
+    "products": {
+      "single-cover": {
+        "collection": "Single",
+        "tag": "Un lanzamiento"
+      },
+      "album-pack": {
+        "collection": "Portada + single + pista final",
+        "tag": "3 piezas"
+      }
+    },
+    "ticker": [
+      "Sin portada, no hay culto",
+      "— Listo para Spotify · Apple · Deezer",
+      "— Entrega inmediata",
+      "— Una obra, un dueño",
+      "— Comisiones abiertas"
+    ]
+  },
   "products": {
     "title": "Productos",
     "description": "Pronto estará disponible aquí el catálogo completo."
