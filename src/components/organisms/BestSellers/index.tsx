@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@/components/atoms/Icon';
+import { Eyebrow } from '@/components/atoms/Eyebrow';
 import { CtaLink } from '@/components/atoms/CtaLink';
 import { ProductCard } from '@/components/molecules/ProductCard';
 import type { Product } from '@/types/product';
@@ -31,7 +32,7 @@ export function BestSellers({ products }: BestSellersProps) {
     <S.Container id="best-sellers">
       <S.Header>
         <div>
-          <S.Eyebrow>{t('bestSellers.eyebrow')}</S.Eyebrow>
+          <Eyebrow>{t('bestSellers.eyebrow')}</Eyebrow>
           <S.Title>{t('bestSellers.title')}</S.Title>
         </div>
 

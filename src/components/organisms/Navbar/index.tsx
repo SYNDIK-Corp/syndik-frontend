@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Logo } from '@/components/atoms/Logo';
 import { Icon } from '@/components/atoms/Icon';
 import { MobileMenu } from '@/components/organisms/MobileMenu';
-import { useScrolled } from '@/hooks/useScrolled';
-import { useNavbarOverDark } from '@/hooks/useNavbarOverDark';
+import { useNavbarSectionTheme } from '@/hooks/useNavbarSectionTheme';
 import * as S from './styles';
 
 export type NavbarVariant = 'overlay' | 'solid';
@@ -16,13 +15,12 @@ export interface NavbarProps {
 export function Navbar({ variant = 'overlay' }: NavbarProps) {
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const scrolled = useScrolled();
-  const overDark = useNavbarOverDark();
-  /* sobre seções escuras a navbar fica transparente com conteúdo branco */
-  const solid = variant === 'solid' || (scrolled && !overDark);
+  const sectionTheme = useNavbarSectionTheme();
+  /* sempre transparente, cor conforme o fundo; "black" vira fundo preto (Sound) */
+  const mode = variant === 'solid' ? 'solid' : sectionTheme;
 
   return (
-    <S.Container $solid={solid}>
+    <S.Container $mode={mode}>
       <S.LeftCell>
         <S.NavLinks aria-label={t('nav.mainNavigation')}>
           <S.NavItem to="/" end>

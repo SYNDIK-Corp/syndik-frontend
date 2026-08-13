@@ -28,28 +28,12 @@ export const TextColumn = styled.div`
   grid-column: span 5;
   display: flex;
   flex-direction: column;
+  --eyebrow-color: rgba(255, 255, 255, 0.55);
+  --eyebrow-dot-color: ${({ theme }) => theme.colors.white};
 
   @media (max-width: 900px) {
     grid-column: 1 / -1;
   }
-`;
-
-export const Eyebrow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
-`;
-
-export const EyebrowDot = styled.span`
-  width: 6px;
-  height: 6px;
-  background: ${({ theme }) => theme.colors.white};
-  display: block;
 `;
 
 export const Title = styled.h2`

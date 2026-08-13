@@ -58,6 +58,31 @@
       "— Comissões abertas"
     ]
   },
+  "archive": {
+    "eyebrow": "SYNDIK / Tudo o que fazemos",
+    "title": "Sua tela.\nSeu lançamento.\nMesmo acervo.",
+    "description": "Um acervo, dois jeitos de vestir — a tela que você encara o dia todo e a capa do seu próximo lançamento. Desenhado aqui, vendido uma vez.",
+    "coverTag": "Sound",
+    "nowPlaying": "Tocando agora",
+    "captions": ["01 — Wallpaper / desktop + mobile", "02 — Capa / seu lançamento"],
+    "priceFrom": "a partir de {{price}}",
+    "rows": {
+      "wallpapers": { "name": "Packs de wallpaper" },
+      "singleCover": { "name": "Capa de single" },
+      "albumPack": { "name": "Pack de álbum completo" },
+      "custom": { "name": "Comissão personalizada", "price": "Sob consulta" }
+    },
+    "cta": "Ver tudo",
+    "specTitle": "A ficha técnica",
+    "specs": [
+      { "title": "8K RAW", "description": "Masters em 7680 × 4320" },
+      { "title": "Finalizado à mão", "description": "Cor e grão, peça por peça" },
+      { "title": "Pronto para DSP", "description": "3000 × 3000 RGB — suba sem redimensionar" },
+      { "title": "Sem marca d'água", "description": "Sem packs de banco, sem upscale de IA" },
+      { "title": "Um dono", "description": "Vendido uma vez, depois aposentado" },
+      { "title": "Direto no celular", "description": "Zipado e baixado em um minuto" }
+    ]
+  },
   "products": {
     "title": "Produtos",
     "description": "Em breve, o catálogo completo estará disponível aqui."

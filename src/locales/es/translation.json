@@ -58,6 +58,31 @@
       "— Comisiones abiertas"
     ]
   },
+  "archive": {
+    "eyebrow": "SYNDIK / Todo lo que hacemos",
+    "title": "Tu pantalla.\nTu lanzamiento.\nMismo archivo.",
+    "description": "Un archivo, dos formas de llevarlo — la pantalla que miras todo el día y la portada de tu próximo drop. Dibujado aquí, vendido una vez.",
+    "coverTag": "Sound",
+    "nowPlaying": "Sonando ahora",
+    "captions": ["01 — Wallpaper / desktop + móvil", "02 — Portada / tu lanzamiento"],
+    "priceFrom": "desde {{price}}",
+    "rows": {
+      "wallpapers": { "name": "Packs de wallpaper" },
+      "singleCover": { "name": "Portada de single" },
+      "albumPack": { "name": "Pack de álbum completo" },
+      "custom": { "name": "Comisión personalizada", "price": "Bajo pedido" }
+    },
+    "cta": "Ver todo",
+    "specTitle": "La ficha técnica",
+    "specs": [
+      { "title": "8K RAW", "description": "Masters de 7680 × 4320" },
+      { "title": "Masterizado a mano", "description": "Color y grano, pieza por pieza" },
+      { "title": "Listo para DSP", "description": "3000 × 3000 RGB — sube sin redimensionar" },
+      { "title": "Sin marca de agua", "description": "Sin packs de stock, sin upscale con IA" },
+      { "title": "Un dueño", "description": "Vendido una vez, luego retirado" },
+      { "title": "Directo al teléfono", "description": "Comprimido y descargado en un minuto" }
+    ]
+  },
   "products": {
     "title": "Productos",
     "description": "Pronto estará disponible aquí el catálogo completo."

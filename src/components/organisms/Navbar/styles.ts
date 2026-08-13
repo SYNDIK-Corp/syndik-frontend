@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const Container = styled.header<{ $solid: boolean }>`
+export type NavbarMode = 'solid' | 'light' | 'dark' | 'black';
+
+export const Container = styled.header<{ $mode: NavbarMode }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -17,17 +19,31 @@ export const Container = styled.header<{ $solid: boolean }>`
     color 0.25s ease,
     box-shadow 0.25s ease;
 
-  ${({ theme, $solid }) =>
-    $solid
-      ? css`
+  ${({ theme, $mode }) => {
+    switch ($mode) {
+      case 'solid':
+        return css`
           background-color: ${theme.colors.white};
           color: ${theme.colors.text};
           box-shadow: ${theme.shadows.sm};
-        `
-      : css`
+        `;
+      case 'black':
+        return css`
+          background-color: ${theme.colors.black};
+          color: ${theme.colors.white};
+        `;
+      case 'dark':
+        return css`
           background-color: transparent;
           color: ${theme.colors.white};
-        `}
+        `;
+      default:
+        return css`
+          background-color: transparent;
+          color: ${theme.colors.text};
+        `;
+    }
+  }}
 `;
 
 export const LeftCell = styled.div`

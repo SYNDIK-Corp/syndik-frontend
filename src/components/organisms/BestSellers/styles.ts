@@ -19,14 +19,6 @@ export const Header = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Eyebrow = styled.span`
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
 export const Title = styled.h2`
   margin-top: 14px;
   font-weight: 300;

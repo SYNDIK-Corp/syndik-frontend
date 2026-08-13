@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Eyebrow } from '@/components/atoms/Eyebrow';
 import { CtaLink } from '@/components/atoms/CtaLink';
 import { ProductCard } from '@/components/molecules/ProductCard';
 import { Marquee } from '@/components/molecules/Marquee';
@@ -25,13 +26,10 @@ export function SoundSection({ products }: SoundSectionProps) {
   }));
 
   return (
-    <S.Container data-navbar-theme="dark">
+    <S.Container data-navbar-theme="black">
       <S.Grid>
         <S.TextColumn>
-          <S.Eyebrow>
-            <S.EyebrowDot />
-            <span>{t('sound.eyebrow')}</span>
-          </S.Eyebrow>
+          <Eyebrow dot>{t('sound.eyebrow')}</Eyebrow>
           <S.Title>{t('sound.title')}</S.Title>
           <S.Description>{t('sound.description')}</S.Description>
           <S.Actions>

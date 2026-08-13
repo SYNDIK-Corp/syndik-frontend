@@ -58,6 +58,31 @@
       "— Commissions open"
     ]
   },
+  "archive": {
+    "eyebrow": "SYNDIK / Everything we make",
+    "title": "Your screen.\nYour release.\nSame archive.",
+    "description": "One archive, two ways to wear it — the screen you stare at all day and the cover of your next drop. Drawn here, sold once.",
+    "coverTag": "Sound",
+    "nowPlaying": "Now playing",
+    "captions": ["01 — Wallpaper / desktop + mobile", "02 — Cover art / your release"],
+    "priceFrom": "from {{price}}",
+    "rows": {
+      "wallpapers": { "name": "Wallpaper packs" },
+      "singleCover": { "name": "Single cover" },
+      "albumPack": { "name": "Complete album pack" },
+      "custom": { "name": "Custom commission", "price": "On request" }
+    },
+    "cta": "See everything",
+    "specTitle": "The spec sheet",
+    "specs": [
+      { "title": "8K RAW", "description": "7680 × 4320 masters" },
+      { "title": "Mastered by hand", "description": "Grade and grain, piece by piece" },
+      { "title": "DSP ready", "description": "3000 × 3000 RGB — upload, don't resize" },
+      { "title": "No watermark", "description": "No stock packs, no AI upscale" },
+      { "title": "One owner", "description": "Sold once, then retired" },
+      { "title": "Straight to the phone", "description": "Zipped and downloaded in a minute" }
+    ]
+  },
   "products": {
     "title": "Products",
     "description": "The full catalog will be available here soon."
