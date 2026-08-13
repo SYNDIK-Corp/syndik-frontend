@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import * as S from './styles';
 
-export type ButtonVariant = 'primary' | 'outline';
+export type ButtonVariant = 'primary' | 'outline' | 'light';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;

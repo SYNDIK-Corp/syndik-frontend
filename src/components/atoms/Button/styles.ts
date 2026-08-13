@@ -30,6 +30,17 @@ export const Container = styled.button<{ $variant: ButtonVariant }>`
     `}
 
   ${({ theme, $variant }) =>
+    $variant === 'light' &&
+    css`
+      background-color: ${theme.colors.white};
+      color: ${theme.colors.secondary};
+
+      &:hover:not(:disabled) {
+        background-color: ${theme.colors.surface};
+      }
+    `}
+
+  ${({ theme, $variant }) =>
     $variant === 'outline' &&
     css`
       background-color: transparent;

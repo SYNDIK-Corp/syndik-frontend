@@ -1,17 +1,19 @@
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/atoms/Button';
-import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher';
+import { MainLayout } from '@/components/templates/MainLayout';
+import { Hero } from '@/components/organisms/Hero';
 import * as S from './styles';
 
 export function Home() {
   const { t } = useTranslation();
 
   return (
-    <S.Container>
-      <S.Title>{t('home.title')}</S.Title>
-      <S.Subtitle>{t('home.subtitle')}</S.Subtitle>
-      <Button>{t('home.cta')}</Button>
-      <LanguageSwitcher />
-    </S.Container>
+    <MainLayout navbarVariant="overlay">
+      <Hero />
+
+      <S.Featured>
+        <S.FeaturedTitle>{t('home.featuredTitle')}</S.FeaturedTitle>
+        <S.FeaturedText>{t('home.featuredDescription')}</S.FeaturedText>
+      </S.Featured>
+    </MainLayout>
   );
 }

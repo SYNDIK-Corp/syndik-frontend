@@ -6,9 +6,29 @@
     "confirm": "Confirmar",
     "cancel": "Cancelar"
   },
+  "nav": {
+    "mainNavigation": "Navegación principal",
+    "home": "Inicio",
+    "products": "Productos",
+    "contact": "Contacto",
+    "search": "Buscar",
+    "account": "Mi cuenta",
+    "bag": "Bolsa"
+  },
+  "hero": {
+    "title": "Arte\ndigital para las\ncalles",
+    "cta": "Explorar colecciones"
+  },
   "home": {
-    "title": "Bienvenido a la tienda Syndik",
-    "subtitle": "Todo lo que necesitas, en un solo lugar.",
-    "cta": "Ver productos"
+    "featuredTitle": "Destacados",
+    "featuredDescription": "Pronto aparecerán aquí los productos destacados."
+  },
+  "products": {
+    "title": "Productos",
+    "description": "Pronto estará disponible aquí el catálogo completo."
+  },
+  "contact": {
+    "title": "Contacto",
+    "description": "Pronto estarán disponibles aquí los canales de contacto."
   }
 }

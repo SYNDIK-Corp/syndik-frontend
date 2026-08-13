@@ -6,9 +6,29 @@
     "confirm": "Confirm",
     "cancel": "Cancel"
   },
+  "nav": {
+    "mainNavigation": "Main navigation",
+    "home": "Home",
+    "products": "Products",
+    "contact": "Contact",
+    "search": "Search",
+    "account": "My account",
+    "bag": "Bag"
+  },
+  "hero": {
+    "title": "Digital\nart for the\nstreets",
+    "cta": "Explore collections"
+  },
   "home": {
-    "title": "Welcome to the Syndik store",
-    "subtitle": "Everything you need, in one place.",
-    "cta": "Browse products"
+    "featuredTitle": "Featured",
+    "featuredDescription": "Featured products will appear here soon."
+  },
+  "products": {
+    "title": "Products",
+    "description": "The full catalog will be available here soon."
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Contact channels will be available here soon."
   }
 }

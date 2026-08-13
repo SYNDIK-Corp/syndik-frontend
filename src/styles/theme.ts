@@ -1,19 +1,19 @@
 export const theme = {
   colors: {
-    primary: '#2563EB',
-    primaryHover: '#1D4ED8',
-    secondary: '#0F172A',
+    primary: '#111111',
+    primaryHover: '#000000',
+    secondary: '#111111',
     background: '#FFFFFF',
-    surface: '#F8FAFC',
-    text: '#0F172A',
-    textMuted: '#64748B',
-    border: '#E2E8F0',
+    surface: '#F4F4F4',
+    text: '#111111',
+    textMuted: '#666666',
+    border: '#E5E5E5',
     danger: '#DC2626',
     success: '#16A34A',
     white: '#FFFFFF',
   },
   fonts: {
-    body: "'Inter', system-ui, -apple-system, sans-serif",
+    body: "'Archivo Variable', 'Archivo', system-ui, -apple-system, sans-serif",
   },
   fontSizes: {
     xs: '0.75rem',
@@ -22,6 +22,14 @@ export const theme = {
     lg: '1.125rem',
     xl: '1.5rem',
     xxl: '2rem',
+    display: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
+  },
+  sizes: {
+    navbarHeight: '4.5rem',
+    logoNavWidth: '5.375rem',
+  },
+  zIndices: {
+    navbar: 100,
   },
   spacing: {
     xs: '0.25rem',
