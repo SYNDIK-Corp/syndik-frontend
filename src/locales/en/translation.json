@@ -123,5 +123,9 @@
   "contact": {
     "title": "Contact",
     "description": "Contact channels will be available here soon."
+  },
+  "footer": {
+    "rights": "© {{year}} Syndik — All rights reserved",
+    "terms": "Terms of Use and Privacy Policy"
   }
 }
