@@ -1,0 +1,14 @@
+{
+  "common": {
+    "appName": "Syndik",
+    "loading": "Loading...",
+    "error": "Something went wrong. Please try again.",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "home": {
+    "title": "Welcome to the Syndik store",
+    "subtitle": "Everything you need, in one place.",
+    "cta": "Browse products"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "common": {
+    "appName": "Syndik",
+    "loading": "Cargando...",
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
+  },
+  "home": {
+    "title": "Bienvenido a la tienda Syndik",
+    "subtitle": "Todo lo que necesitas, en un solo lugar.",
+    "cta": "Ver productos"
+  }
+}
