@@ -31,7 +31,45 @@
   },
   "product": {
     "sale": "Oferta",
-    "addToBag": "Añadir a la bolsa"
+    "addToBag": "Añadir a la bolsa",
+    "sold": "Vendido"
+  },
+  "cart": {
+    "bag": "Tu bolsa",
+    "close": "Cerrar",
+    "empty": "Nada en la bolsa todavía. Pasa el cursor por una obra y toca la bolsa.",
+    "total": "Total",
+    "checkout": "Finalizar compra",
+    "perks": "Descarga inmediata · Sin marca de agua",
+    "remove": "Quitar {{name}} de la bolsa"
+  },
+  "catalog": {
+    "tabs": {
+      "screen": "Para tu pantalla",
+      "sound": "Para tu sonido"
+    },
+    "variants": {
+      "mobile7": "7 móvil",
+      "desktop7": "7 escritorio",
+      "single": "single",
+      "albumPack": "pack de álbum"
+    },
+    "screens": {
+      "eyebrow": "SYNDIK / El archivo — hoja 001",
+      "title": "Para tu pantalla.",
+      "stats": ["12 obras", "7 archivos por pack", "8K raw + corte móvil", "Actualizado cada semana", "2 retiradas"],
+      "retiredTag": "Retirada",
+      "endNote": "Fin de la hoja 001 — SYNDIK / Cultura digital / 2026",
+      "nextSheet": "Próxima hoja: para tu sonido"
+    },
+    "sound": {
+      "eyebrow": "SYNDIK / El archivo — hoja 002",
+      "title": "Para tu sonido.",
+      "stats": ["10 obras", "3000 × 3000 RGB", "Un dueño por portada", "Licencia de lanzamiento incluida", "3 retiradas"],
+      "retiredTag": "Un dueño — se fue",
+      "endNote": "Fin de la hoja 002 — SYNDIK / Cultura digital / 2026",
+      "nextSheet": "Próxima hoja: para tu pantalla"
+    }
   },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",
@@ -115,10 +153,6 @@
         "answer": "Sí. Cada portada sale con la especificación exacta que piden los distribuidores."
       }
     ]
-  },
-  "products": {
-    "title": "Productos",
-    "description": "Pronto estará disponible aquí el catálogo completo."
   },
   "contact": {
     "title": "Contacto",

@@ -115,3 +115,10 @@ export const DesktopSearchButton = styled(IconButton)`
     display: none;
   }
 `;
+
+export const CartCount = styled.span`
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+`;

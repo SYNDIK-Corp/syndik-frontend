@@ -35,11 +35,12 @@ export const CartButton = styled.button`
   }
 `;
 
-export const Frame = styled.div<{ $ratio: string }>`
+export const Frame = styled.div<{ $ratio: string; $sold?: boolean }>`
   position: relative;
   aspect-ratio: ${({ $ratio }) => $ratio};
   overflow: hidden;
   background-color: var(--card-frame);
+  opacity: ${({ $sold }) => ($sold ? 0.42 : 1)};
 `;
 
 export const Image = styled.img`
@@ -50,12 +51,12 @@ export const Image = styled.img`
   object-fit: cover;
 `;
 
-export const Tag = styled.span`
+export const Tag = styled.span<{ $sold?: boolean }>`
   position: absolute;
   left: 0;
   top: 14px;
-  background: var(--card-fg);
-  color: var(--card-bg);
+  background: ${({ theme, $sold }) => ($sold ? theme.colors.textMuted : 'var(--card-fg)')};
+  color: ${({ theme, $sold }) => ($sold ? theme.colors.white : 'var(--card-bg)')};
   padding: 6px 11px 6px 12px;
   font-size: 9px;
   font-weight: 500;
@@ -122,7 +123,13 @@ export const ComparePrice = styled.span`
   text-decoration: line-through;
 `;
 
-export const Container = styled(Link)<{ $tone: CardTone; $compact: boolean }>`
+export const SoldLabel = styled.span<{ $layout: 'stack' | 'row' }>`
+  font-size: ${({ $layout }) => ($layout === 'row' ? '16px' : '14px')};
+  font-weight: 500;
+  color: var(--card-muted);
+`;
+
+export const Container = styled(Link)<{ $tone: CardTone; $compact: boolean; $dense: boolean }>`
   display: block;
 
   ${({ theme, $tone }) =>
@@ -189,6 +196,45 @@ export const Container = styled(Link)<{ $tone: CardTone; $compact: boolean }>`
 
       ${ComparePrice} {
         font-size: 10px;
+      }
+    `}
+
+  ${({ $dense }) =>
+    $dense &&
+    css`
+      ${Tag} {
+        top: 10px;
+        padding: 4px 8px;
+        font-size: 8px;
+      }
+
+      ${CartButton} {
+        left: 8px;
+        bottom: 8px;
+        width: 36px;
+        height: 36px;
+      }
+
+      ${Meta} {
+        margin-top: 10px;
+        gap: 10px;
+      }
+
+      ${MetaInfo} {
+        gap: 4px;
+        min-width: 0;
+      }
+
+      ${Collection} {
+        font-size: 8px;
+      }
+
+      ${Name} {
+        font-size: 12px;
+      }
+
+      ${Price}, ${SoldLabel} {
+        font-size: 12px;
       }
     `}
 `;

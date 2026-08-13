@@ -31,7 +31,45 @@
   },
   "product": {
     "sale": "Sale",
-    "addToBag": "Add to bag"
+    "addToBag": "Add to bag",
+    "sold": "Sold"
+  },
+  "cart": {
+    "bag": "Your bag",
+    "close": "Close",
+    "empty": "Nothing in the bag yet. Hover a plate and hit the cart.",
+    "total": "Total",
+    "checkout": "Checkout",
+    "perks": "Instant download · No watermark",
+    "remove": "Remove {{name}} from the bag"
+  },
+  "catalog": {
+    "tabs": {
+      "screen": "For your screen",
+      "sound": "For your sound"
+    },
+    "variants": {
+      "mobile7": "7 mobile",
+      "desktop7": "7 desktop",
+      "single": "single",
+      "albumPack": "album pack"
+    },
+    "screens": {
+      "eyebrow": "SYNDIK / The vault — sheet 001",
+      "title": "For your screen.",
+      "stats": ["12 plates", "7 files per pack", "8K raw + mobile cut", "Updated weekly", "2 retired"],
+      "retiredTag": "Retired",
+      "endNote": "End of sheet 001 — SYNDIK / Digital culture / 2026",
+      "nextSheet": "Next sheet: for your sound"
+    },
+    "sound": {
+      "eyebrow": "SYNDIK / The vault — sheet 002",
+      "title": "For your sound.",
+      "stats": ["10 plates", "3000 × 3000 RGB", "One owner per cover", "Release licence included", "3 retired"],
+      "retiredTag": "One owner — gone",
+      "endNote": "End of sheet 002 — SYNDIK / Digital culture / 2026",
+      "nextSheet": "Next sheet: for your screen"
+    }
   },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",
@@ -115,10 +153,6 @@
         "answer": "Yes. Every cover ships at the exact spec distributors ask for."
       }
     ]
-  },
-  "products": {
-    "title": "Products",
-    "description": "The full catalog will be available here soon."
   },
   "contact": {
     "title": "Contact",

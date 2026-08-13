@@ -7,7 +7,22 @@ export interface Product {
   onSale?: boolean;
   /* etiqueta customizada sobre a arte (ex.: "One release"); sem ela, usa "Promoção" quando onSale */
   tag?: string;
+  sku?: string;
+  /* vendido/aposentado: arte esmaecida, sem compra, preço vira "Vendido" */
+  sold?: boolean;
   coverImage?: string;
   coverAlt?: string;
   hoverImage?: string;
+}
+
+export type CatalogVariant = 'mobile7' | 'desktop7' | 'single' | 'albumPack';
+
+export interface CatalogItem {
+  id: string;
+  sku: string;
+  number: string;
+  name: string;
+  price: number;
+  variant: CatalogVariant;
+  sold?: boolean;
 }

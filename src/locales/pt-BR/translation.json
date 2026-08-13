@@ -31,7 +31,45 @@
   },
   "product": {
     "sale": "Promoção",
-    "addToBag": "Adicionar à sacola"
+    "addToBag": "Adicionar à sacola",
+    "sold": "Vendido"
+  },
+  "cart": {
+    "bag": "Sua sacola",
+    "close": "Fechar",
+    "empty": "Nada na sacola ainda. Passe o mouse numa arte e toque na sacola.",
+    "total": "Total",
+    "checkout": "Finalizar compra",
+    "perks": "Download imediato · Sem marca d'água",
+    "remove": "Remover {{name}} da sacola"
+  },
+  "catalog": {
+    "tabs": {
+      "screen": "Para sua tela",
+      "sound": "Para seu som"
+    },
+    "variants": {
+      "mobile7": "7 mobile",
+      "desktop7": "7 desktop",
+      "single": "single",
+      "albumPack": "pack de álbum"
+    },
+    "screens": {
+      "eyebrow": "SYNDIK / O acervo — folha 001",
+      "title": "Para sua tela.",
+      "stats": ["12 artes", "7 arquivos por pack", "8K raw + corte mobile", "Atualizado toda semana", "2 aposentadas"],
+      "retiredTag": "Aposentada",
+      "endNote": "Fim da folha 001 — SYNDIK / Cultura digital / 2026",
+      "nextSheet": "Próxima folha: para seu som"
+    },
+    "sound": {
+      "eyebrow": "SYNDIK / O acervo — folha 002",
+      "title": "Para seu som.",
+      "stats": ["10 artes", "3000 × 3000 RGB", "Um dono por capa", "Licença de lançamento incluída", "3 aposentadas"],
+      "retiredTag": "Um dono — já era",
+      "endNote": "Fim da folha 002 — SYNDIK / Cultura digital / 2026",
+      "nextSheet": "Próxima folha: para sua tela"
+    }
   },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",
@@ -115,10 +153,6 @@
         "answer": "Sim. Toda capa sai na especificação exata que os distribuidores pedem."
       }
     ]
-  },
-  "products": {
-    "title": "Produtos",
-    "description": "Em breve, o catálogo completo estará disponível aqui."
   },
   "contact": {
     "title": "Contato",

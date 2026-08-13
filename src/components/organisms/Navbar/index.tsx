@@ -4,6 +4,7 @@ import { Logo } from '@/components/atoms/Logo';
 import { Icon } from '@/components/atoms/Icon';
 import { MobileMenu } from '@/components/organisms/MobileMenu';
 import { useNavbarSectionTheme } from '@/hooks/useNavbarSectionTheme';
+import { useCart } from '@/hooks/useCart';
 import * as S from './styles';
 
 export type NavbarVariant = 'overlay' | 'solid';
@@ -15,6 +16,7 @@ export interface NavbarProps {
 export function Navbar({ variant = 'overlay' }: NavbarProps) {
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { items, openCart } = useCart();
   const sectionTheme = useNavbarSectionTheme();
   /* sempre transparente, cor conforme o fundo; "black" vira fundo preto (Sound) */
   const mode = variant === 'solid' ? 'solid' : sectionTheme;
@@ -49,8 +51,9 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
         <S.IconButton type="button" aria-label={t('nav.account')}>
           <Icon name="user" />
         </S.IconButton>
-        <S.IconButton type="button" aria-label={t('nav.bag')}>
+        <S.IconButton type="button" aria-label={t('nav.bag')} onClick={openCart}>
           <Icon name="bag" />
+          <S.CartCount>{items.length}</S.CartCount>
         </S.IconButton>
       </S.Actions>
 
