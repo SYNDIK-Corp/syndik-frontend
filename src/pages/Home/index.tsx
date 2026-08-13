@@ -3,6 +3,7 @@ import { Hero } from '@/components/organisms/Hero';
 import { BestSellers } from '@/components/organisms/BestSellers';
 import { SoundSection } from '@/components/organisms/SoundSection';
 import { ArchiveSection } from '@/components/organisms/ArchiveSection';
+import { FaqSection } from '@/components/organisms/FaqSection';
 import { bestSellers, soundProducts } from '@/data/products';
 
 export function Home() {
@@ -12,6 +13,7 @@ export function Home() {
       <BestSellers products={bestSellers} />
       <SoundSection products={soundProducts} />
       <ArchiveSection />
+      <FaqSection />
     </MainLayout>
   );
 }

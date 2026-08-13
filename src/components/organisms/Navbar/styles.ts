@@ -37,10 +37,12 @@ export const Container = styled.header<{ $mode: NavbarMode }>`
           background-color: transparent;
           color: ${theme.colors.white};
         `;
+      /* seções claras: navbar branca sólida */
       default:
         return css`
-          background-color: transparent;
+          background-color: ${theme.colors.white};
           color: ${theme.colors.text};
+          box-shadow: ${theme.shadows.sm};
         `;
     }
   }}

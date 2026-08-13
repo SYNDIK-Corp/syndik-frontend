@@ -83,6 +83,39 @@
       { "title": "Directo al teléfono", "description": "Comprimido y descargado en un minuto" }
     ]
   },
+  "faq": {
+    "eyebrow": "SYNDIK / Soporte",
+    "title": "FAQs",
+    "description": "Todo lo que necesitas saber antes de comprar — archivos, tamaños, licencia y entrega.",
+    "note": "¿No encuentras lo que buscas? Escríbenos por Instagram — respondemos en un día.",
+    "cta": "Contactar soporte",
+    "items": [
+      {
+        "question": "¿Qué recibo después de comprar?",
+        "answer": "Un enlace de descarga con los archivos en resolución completa y un readme corto con tamaños y licencia."
+      },
+      {
+        "question": "¿Móvil y escritorio?",
+        "answer": "Ambos, vendidos como colecciones separadas — cada una compuesta para esa pantalla, nunca recortada de la otra."
+      },
+      {
+        "question": "¿Qué resolución?",
+        "answer": "Wallpapers en 7680 × 4320 y 1440 × 3120. Portadas en 3000 × 3000 RGB."
+      },
+      {
+        "question": "¿Puedo usarlo comercialmente?",
+        "answer": "La portada incluye licencia de lanzamiento para un proyecto. Los wallpapers son solo para uso personal."
+      },
+      {
+        "question": "¿Qué tan rápida es la entrega?",
+        "answer": "Inmediata — el enlace está en la pantalla de confirmación y en tu cuenta."
+      },
+      {
+        "question": "¿Spotify y Apple Music?",
+        "answer": "Sí. Cada portada sale con la especificación exacta que piden los distribuidores."
+      }
+    ]
+  },
   "products": {
     "title": "Productos",
     "description": "Pronto estará disponible aquí el catálogo completo."

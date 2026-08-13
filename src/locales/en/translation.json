@@ -83,6 +83,39 @@
       { "title": "Straight to the phone", "description": "Zipped and downloaded in a minute" }
     ]
   },
+  "faq": {
+    "eyebrow": "SYNDIK / Support",
+    "title": "FAQs",
+    "description": "Everything you need to know before you buy — files, sizes, licence and delivery.",
+    "note": "Can't find what you're looking for? Message us on Instagram — we answer within a day.",
+    "cta": "Contact support",
+    "items": [
+      {
+        "question": "What do I get after buying?",
+        "answer": "A download link with the full-resolution files and a short readme covering sizes and licence."
+      },
+      {
+        "question": "Mobile and desktop?",
+        "answer": "Both, sold as separate collections — each composed for that screen, never cropped from the other."
+      },
+      {
+        "question": "What resolution?",
+        "answer": "Wallpapers at 7680 × 4320 and 1440 × 3120. Covers at 3000 × 3000 RGB."
+      },
+      {
+        "question": "Can I use it commercially?",
+        "answer": "Cover artwork includes a release licence for one project. Wallpapers are personal use only."
+      },
+      {
+        "question": "How fast is delivery?",
+        "answer": "Instant — the link is on the confirmation screen and in your account."
+      },
+      {
+        "question": "Spotify and Apple Music?",
+        "answer": "Yes. Every cover ships at the exact spec distributors ask for."
+      }
+    ]
+  },
   "products": {
     "title": "Products",
     "description": "The full catalog will be available here soon."

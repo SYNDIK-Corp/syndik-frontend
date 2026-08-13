@@ -83,6 +83,39 @@
       { "title": "Direto no celular", "description": "Zipado e baixado em um minuto" }
     ]
   },
+  "faq": {
+    "eyebrow": "SYNDIK / Suporte",
+    "title": "FAQs",
+    "description": "Tudo o que você precisa saber antes de comprar — arquivos, tamanhos, licença e entrega.",
+    "note": "Não achou o que procurava? Chama a gente no Instagram — respondemos em até um dia.",
+    "cta": "Falar com o suporte",
+    "items": [
+      {
+        "question": "O que eu recebo após a compra?",
+        "answer": "Um link de download com os arquivos em resolução total e um readme curto com tamanhos e licença."
+      },
+      {
+        "question": "Mobile e desktop?",
+        "answer": "Os dois, vendidos como coleções separadas — cada uma composta para aquela tela, nunca cortada da outra."
+      },
+      {
+        "question": "Qual resolução?",
+        "answer": "Wallpapers em 7680 × 4320 e 1440 × 3120. Capas em 3000 × 3000 RGB."
+      },
+      {
+        "question": "Posso usar comercialmente?",
+        "answer": "A capa inclui licença de lançamento para um projeto. Wallpapers são apenas para uso pessoal."
+      },
+      {
+        "question": "Qual a velocidade da entrega?",
+        "answer": "Imediata — o link aparece na tela de confirmação e na sua conta."
+      },
+      {
+        "question": "Spotify e Apple Music?",
+        "answer": "Sim. Toda capa sai na especificação exata que os distribuidores pedem."
+      }
+    ]
+  },
   "products": {
     "title": "Produtos",
     "description": "Em breve, o catálogo completo estará disponível aqui."

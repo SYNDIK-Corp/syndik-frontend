@@ -27,7 +27,7 @@ export const theme = {
     display: 'clamp(2rem, 3vw + 1rem, 3.25rem)',
   },
   sizes: {
-    navbarHeight: '4rem',
+    navbarHeight: '3.5rem',
     logoNavWidth: '5.375rem',
   },
   zIndices: {
