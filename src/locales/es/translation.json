@@ -4,7 +4,9 @@
     "loading": "Cargando...",
     "error": "Algo salió mal. Inténtalo de nuevo.",
     "confirm": "Confirmar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "previous": "Anterior",
+    "next": "Siguiente"
   },
   "nav": {
     "mainNavigation": "Navegación principal",
@@ -19,9 +21,14 @@
     "title": "Arte\ndigital para las\ncalles",
     "cta": "Explorar colecciones"
   },
-  "home": {
-    "featuredTitle": "Destacados",
-    "featuredDescription": "Pronto aparecerán aquí los productos destacados."
+  "bestSellers": {
+    "eyebrow": "Índice de la colección",
+    "title": "Más vendidos",
+    "viewAll": "Ver todo"
+  },
+  "product": {
+    "sale": "Oferta",
+    "addToBag": "Añadir a la bolsa"
   },
   "products": {
     "title": "Productos",

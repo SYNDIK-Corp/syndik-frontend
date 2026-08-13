@@ -1,4 +1,4 @@
-export type IconName = 'search' | 'user' | 'bag';
+export type IconName = 'search' | 'user' | 'bag' | 'chevron-left' | 'chevron-right';
 
 const icons: Record<IconName, React.ReactNode> = {
   search: (
@@ -20,6 +20,8 @@ const icons: Record<IconName, React.ReactNode> = {
       <path d="M16 10a4 4 0 0 1-8 0" />
     </>
   ),
+  'chevron-left': <path d="M14.5 5 8 12l6.5 7" />,
+  'chevron-right': <path d="M9.5 5 16 12l-6.5 7" />,
 };
 
 export interface IconProps {

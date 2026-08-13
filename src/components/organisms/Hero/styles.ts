@@ -42,13 +42,14 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: clamp(30px, 4.4vw, 68px);
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: clamp(22px, 3vw, 44px);
   font-weight: 300;
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  line-height: 1.3;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   white-space: pre-line;
-  max-width: 40rem;
+  max-width: 44rem;
   text-shadow: 0 2px 12px rgba(15, 23, 42, 0.35);
 `;
 

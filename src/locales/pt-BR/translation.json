@@ -4,7 +4,9 @@
     "loading": "Carregando...",
     "error": "Algo deu errado. Tente novamente.",
     "confirm": "Confirmar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "previous": "Anterior",
+    "next": "Próximo"
   },
   "nav": {
     "mainNavigation": "Navegação principal",
@@ -19,9 +21,14 @@
     "title": "Arte\ndigital para as\nruas",
     "cta": "Explorar coleções"
   },
-  "home": {
-    "featuredTitle": "Destaques",
-    "featuredDescription": "Em breve, os produtos em destaque aparecerão aqui."
+  "bestSellers": {
+    "eyebrow": "Índice da coleção",
+    "title": "Mais vendidos",
+    "viewAll": "Ver tudo"
+  },
+  "product": {
+    "sale": "Promoção",
+    "addToBag": "Adicionar à sacola"
   },
   "products": {
     "title": "Produtos",

@@ -4,7 +4,9 @@
     "loading": "Loading...",
     "error": "Something went wrong. Please try again.",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "previous": "Previous",
+    "next": "Next"
   },
   "nav": {
     "mainNavigation": "Main navigation",
@@ -19,9 +21,14 @@
     "title": "Digital\nart for the\nstreets",
     "cta": "Explore collections"
   },
-  "home": {
-    "featuredTitle": "Featured",
-    "featuredDescription": "Featured products will appear here soon."
+  "bestSellers": {
+    "eyebrow": "Collection index",
+    "title": "Best sellers",
+    "viewAll": "View all"
+  },
+  "product": {
+    "sale": "Sale",
+    "addToBag": "Add to bag"
   },
   "products": {
     "title": "Products",

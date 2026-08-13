@@ -14,6 +14,7 @@ export const theme = {
   },
   fonts: {
     body: "'Archivo Variable', 'Archivo', system-ui, -apple-system, sans-serif",
+    display: "'Space Grotesk Variable', 'Space Grotesk', 'Archivo Variable', sans-serif",
   },
   fontSizes: {
     xs: '0.75rem',
