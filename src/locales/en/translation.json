@@ -35,13 +35,46 @@
     "sold": "Sold"
   },
   "cart": {
-    "bag": "Your bag",
-    "close": "Close",
-    "empty": "Nothing in the bag yet. Hover a plate and hit the cart.",
-    "total": "Total",
-    "checkout": "Checkout",
-    "perks": "Instant download · No watermark",
-    "remove": "Remove {{name}} from the bag"
+    "title": "My cart",
+    "closeAria": "Close",
+    "empty": "Your bag is empty. Pull something out of the vault.",
+    "remove": "Remove {{name}} from the bag",
+    "discounts": "Discounts",
+    "subtotal": "Subtotal",
+    "continueShopping": "Continue shopping",
+    "held": {
+      "label": "Almost yours — held for"
+    },
+    "unlock": {
+      "progress": "Add {{amount}} to unlock {{percent}}% off",
+      "complete": "Top tier unlocked — {{percent}}% off applied",
+      "tierLabel": "{{percent}}% off"
+    },
+    "line": {
+      "youSave": "You save {{amount}}",
+      "save": "Save {{amount}}"
+    },
+    "terms": {
+      "text": "I've read the <0>licence terms</0>, <1>privacy policy</1> and <2>refund policy</2> for digital files, and I agree to them."
+    },
+    "cta": {
+      "empty": "Your bag is empty",
+      "acceptTerms": "Accept the terms to continue",
+      "checkout": "Checkout • {{total}}"
+    },
+    "payment": {
+      "applePay": "Apple Pay",
+      "payPal": "PayPal",
+      "brands": {
+        "visa": "Visa",
+        "mastercard": "Mastercard",
+        "amex": "Amex",
+        "elo": "Elo",
+        "gpay": "G Pay",
+        "pix": "Pix",
+        "stripe": "Stripe"
+      }
+    }
   },
   "catalog": {
     "tabs": {

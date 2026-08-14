@@ -35,13 +35,46 @@
     "sold": "Vendido"
   },
   "cart": {
-    "bag": "Tu bolsa",
-    "close": "Cerrar",
-    "empty": "Nada en la bolsa todavía. Pasa el cursor por una obra y toca la bolsa.",
-    "total": "Total",
-    "checkout": "Finalizar compra",
-    "perks": "Descarga inmediata · Sin marca de agua",
-    "remove": "Quitar {{name}} de la bolsa"
+    "title": "Mi carrito",
+    "closeAria": "Cerrar",
+    "empty": "Tu bolsa está vacía. Saca algo del archivo.",
+    "remove": "Quitar {{name}} de la bolsa",
+    "discounts": "Descuentos",
+    "subtotal": "Subtotal",
+    "continueShopping": "Seguir comprando",
+    "held": {
+      "label": "Casi tuya — reservada por"
+    },
+    "unlock": {
+      "progress": "Falta {{amount}} para desbloquear {{percent}}% off",
+      "complete": "Nivel máximo desbloqueado — {{percent}}% off aplicado",
+      "tierLabel": "{{percent}}% off"
+    },
+    "line": {
+      "youSave": "Ahorras {{amount}}",
+      "save": "Ahorra {{amount}}"
+    },
+    "terms": {
+      "text": "Leí los <0>términos de licencia</0>, la <1>política de privacidad</1> y la <2>política de reembolso</2> para archivos digitales, y estoy de acuerdo."
+    },
+    "cta": {
+      "empty": "Tu bolsa está vacía",
+      "acceptTerms": "Acepta los términos para continuar",
+      "checkout": "Finalizar compra • {{total}}"
+    },
+    "payment": {
+      "applePay": "Apple Pay",
+      "payPal": "PayPal",
+      "brands": {
+        "visa": "Visa",
+        "mastercard": "Mastercard",
+        "amex": "Amex",
+        "elo": "Elo",
+        "gpay": "G Pay",
+        "pix": "Pix",
+        "stripe": "Stripe"
+      }
+    }
   },
   "catalog": {
     "tabs": {

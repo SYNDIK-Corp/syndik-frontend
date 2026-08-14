@@ -25,6 +25,7 @@ export interface CatalogItem {
   number: string;
   name: string;
   price: number;
+  compareAtPrice?: number;
   variant: CatalogVariant;
   sold?: boolean;
 }

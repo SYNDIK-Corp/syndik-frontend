@@ -27,6 +27,8 @@ export function Catalog({ sheet }: CatalogProps) {
     collection: `${item.sku} / ${t(`catalog.variants.${item.variant}`)}`,
     name: item.name,
     price: item.price,
+    compareAtPrice: item.compareAtPrice,
+    onSale: item.compareAtPrice != null,
     tag: item.sold ? t(`catalog.${sheet}.retiredTag`) : item.number,
     sold: item.sold,
   }));

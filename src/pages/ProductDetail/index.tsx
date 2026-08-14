@@ -28,7 +28,9 @@ export function ProductDetail() {
     return <Navigate to="/products/screens" replace />;
   }
 
-  const { item, plateCount, compareAtPrice, onSale, relatedIds } = detail;
+  const { item, plateCount, relatedIds } = detail;
+  const compareAtPrice = item.compareAtPrice;
+  const onSale = item.compareAtPrice != null;
 
   const collectionLabel = t(`productDetail.items.${item.id}.collectionLabel`, {
     defaultValue: t('productDetail.genericCollectionLabel', {

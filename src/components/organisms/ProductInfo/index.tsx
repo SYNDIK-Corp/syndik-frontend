@@ -64,7 +64,9 @@ export function ProductInfo({
 
       <S.AddToCartButton
         type="button"
-        onClick={() => addItem({ sku, name, price })}
+        onClick={() =>
+          addItem({ sku, name, price, compareAtPrice, description: includedRows[0]?.label })
+        }
       >
         <Icon name="bag" size={16} />
         <span>{t('productDetail.addToCart', { price: formatPrice(price, i18n.language) })}</span>

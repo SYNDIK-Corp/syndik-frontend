@@ -45,6 +45,8 @@ export function ProductCard({
       sku: product.sku ?? product.id.toUpperCase(),
       name: product.name,
       price: product.price,
+      compareAtPrice: product.compareAtPrice,
+      description: product.collection,
     });
   };
 

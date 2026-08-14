@@ -5,7 +5,8 @@ export type IconName =
   | 'chevron-left'
   | 'chevron-right'
   | 'dots'
-  | 'close';
+  | 'close'
+  | 'trash';
 
 const icons: Record<IconName, React.ReactNode> = {
   search: (
@@ -42,6 +43,7 @@ const icons: Record<IconName, React.ReactNode> = {
       <line x1="18" y1="6" x2="6" y2="18" />
     </>
   ),
+  trash: <path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13" />,
 };
 
 export interface IconProps {

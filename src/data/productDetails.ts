@@ -22,18 +22,12 @@ export interface ProductDetailData {
   item: CatalogItem;
   sheet: CatalogSheet;
   plateCount: number;
-  compareAtPrice?: number;
-  onSale?: boolean;
   relatedIds: string[];
 }
 
-/* precificação e cross-sell autorados manualmente; demais produtos usam fallback abaixo */
-const overrides: Record<string, Partial<Pick<ProductDetailData, 'compareAtPrice' | 'onSale' | 'relatedIds'>>> = {
-  'scr-001': {
-    compareAtPrice: 5.99,
-    onSale: true,
-    relatedIds: ['scr-002', 'scr-003', 'snd-001', 'scr-005', 'scr-006', 'snd-003'],
-  },
+/* cross-sell autorado manualmente; demais produtos usam fallback abaixo */
+const relatedIdsOverrides: Record<string, string[]> = {
+  'scr-001': ['scr-002', 'scr-003', 'snd-001', 'scr-005', 'scr-006', 'snd-003'],
 };
 
 function defaultRelatedIds(id: string, sheet: CatalogSheet): string[] {
@@ -53,14 +47,10 @@ export function getProductDetail(id: string): ProductDetailData | undefined {
   const entry = catalogById.get(id);
   if (!entry) return undefined;
 
-  const override = overrides[id] ?? {};
-
   return {
     item: entry.item,
     sheet: entry.sheet,
     plateCount: PLATE_COUNT[entry.item.variant],
-    compareAtPrice: override.compareAtPrice,
-    onSale: override.onSale,
-    relatedIds: override.relatedIds ?? defaultRelatedIds(id, entry.sheet),
+    relatedIds: relatedIdsOverrides[id] ?? defaultRelatedIds(id, entry.sheet),
   };
 }
