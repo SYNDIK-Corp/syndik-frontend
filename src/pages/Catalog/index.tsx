@@ -4,10 +4,8 @@ import { Eyebrow } from '@/components/atoms/Eyebrow';
 import { CtaLink } from '@/components/atoms/CtaLink';
 import { ProductCard } from '@/components/molecules/ProductCard';
 import { screensCatalog, soundCatalog } from '@/data/catalog';
-import type { Product } from '@/types/product';
+import type { CatalogSheet, Product } from '@/types/product';
 import * as S from './styles';
-
-export type CatalogSheet = 'screens' | 'sound';
 
 const SHEETS: Record<CatalogSheet, { items: typeof screensCatalog; ratio: '4 / 5' | '1 / 1'; other: CatalogSheet; otherPath: string }> = {
   screens: { items: screensCatalog, ratio: '4 / 5', other: 'sound', otherPath: '/products/sound' },
@@ -75,7 +73,7 @@ export function Catalog({ sheet }: CatalogProps) {
                 dense
                 metaLayout="row"
                 ratio={ratio}
-                to={`/products/${sheet}`}
+                to={`/products/${sheet}/${product.id}`}
               />
             ))}
           </S.Grid>

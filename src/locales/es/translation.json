@@ -71,6 +71,96 @@
       "nextSheet": "Próxima hoja: para tu pantalla"
     }
   },
+  "productDetail": {
+    "sheetLabel": {
+      "screens": "Hoja 001 / Para tu pantalla",
+      "sound": "Hoja 002 / Para tu sonido"
+    },
+    "plateCounter": "Lámina {{current}} de {{total}} — {{name}}",
+    "genericPlateName": "Lámina {{number}}",
+    "previousPlate": "Lámina anterior",
+    "nextPlate": "Siguiente lámina",
+    "allPlatesIncluded": "Las {{count}} láminas incluidas",
+    "singleFileIncluded": "Archivo incluido",
+    "useStripHint": "Usa la tira o las flechas",
+    "hoverToZoom": "Pasa el mouse para ver el grano",
+    "whatsIncluded": "Qué incluye",
+    "addToCart": "Añadir al carrito — {{price}}",
+    "perks": {
+      "instant": "Descarga inmediata",
+      "noWatermark": "Sin marca de agua",
+      "neverResold": "Nunca revendido como banco de imágenes"
+    },
+    "exclusivity": {
+      "label": "Un solo dueño",
+      "body": "¿La quieres exclusiva? Compra la lámina por completo y sale de la tienda.",
+      "cta": "Preguntar por la exclusividad"
+    },
+    "related": {
+      "eyebrow": "Mismo archivo",
+      "title": "Combina bien con esto",
+      "viewSheet": "Ver la hoja completa",
+      "sheetTag": {
+        "screens": "Pantalla",
+        "sound": "Sonido"
+      }
+    },
+    "genericCollectionLabel": "{{sku}} / {{variant}}",
+    "genericDescription": "{{name}} es una obra original del archivo SYNDIK, lista para usar de inmediato.",
+    "genericFileInfo": "{{count}} archivos",
+    "genericFileInfoSingular": "1 archivo",
+    "included": {
+      "mobile7": [
+        { "label": "7 wallpapers para móvil", "value": "1440 × 3120" },
+        { "label": "Recortes de bloqueo a juego", "value": "Incluido" },
+        { "label": "Masters 8K raw", "value": "7680 × 4320" },
+        { "label": "Readme + licencia", "value": "PDF" }
+      ],
+      "desktop7": [
+        { "label": "7 wallpapers de escritorio", "value": "3840 × 2160" },
+        { "label": "Recortes de bloqueo a juego", "value": "Incluido" },
+        { "label": "Masters 8K raw", "value": "7680 × 4320" },
+        { "label": "Readme + licencia", "value": "PDF" }
+      ],
+      "single": [
+        { "label": "Portada en alta resolución", "value": "3000 × 3000" },
+        { "label": "Licencia de lanzamiento", "value": "Un proyecto" },
+        { "label": "Lista para DSP", "value": "Spotify · Apple · Deezer" },
+        { "label": "Readme + licencia", "value": "PDF" }
+      ],
+      "albumPack": [
+        { "label": "3 portadas en alta resolución", "value": "3000 × 3000" },
+        { "label": "Licencia de lanzamiento", "value": "Un proyecto" },
+        { "label": "Lista para DSP", "value": "Spotify · Apple · Deezer" },
+        { "label": "Readme + licencia", "value": "PDF" }
+      ]
+    },
+    "faq": {
+      "screens": [
+        { "question": "¿Cómo las instalo?", "answer": "Descarga el zip en tu celular, abre Archivos y configúrala desde la galería de fotos. El readme cubre iOS y Android." },
+        { "question": "¿Incluye escritorio?", "answer": "Esta es la versión para móvil. La composición de escritorio, cuando exista, se vende por separado." },
+        { "question": "Licencia", "answer": "Uso personal, en tus propios dispositivos. Sin reventa, sin impresiones, sin acuñar NFT." }
+      ],
+      "sound": [
+        { "question": "¿Lista para Spotify y Apple Music?", "answer": "Sí. Cada portada sale con la especificación exacta que piden los distribuidores." },
+        { "question": "¿La licencia cubre el lanzamiento?", "answer": "Sí, la compra incluye una licencia de lanzamiento para un proyecto." },
+        { "question": "¿Puedo revenderla?", "answer": "No — cada portada se vende una sola vez y luego se retira del archivo." }
+      ]
+    },
+    "items": {
+      "scr-001": {
+        "collectionLabel": "SYNDIK / Colección 001 — móvil",
+        "description": "Siete láminas nocturnas fotografiadas a través de vidrio mojado y reveladas a mano — concreto, luz de sodio y ningún horizonte que reconozcas. Recortada para el celular que realmente llevas contigo.",
+        "fileInfo": "7 archivos · 214 MB",
+        "plates": ["Sodio", "Vidrio mojado", "Bloque", "Paso a desnivel", "Cerca", "Último autobús", "Último tren"],
+        "faq": [
+          { "question": "¿Cómo las instalo?", "answer": "Descarga el zip en tu celular, abre Archivos y configúrala desde la galería de fotos. El readme cubre iOS y Android." },
+          { "question": "¿Incluye escritorio?", "answer": "Esta lámina es el corte para móvil. La composición de escritorio se vende como STATIC en la hoja 001." },
+          { "question": "Licencia", "answer": "Uso personal, en tus propios dispositivos. Sin reventa, sin impresiones, sin acuñar NFT." }
+        ]
+      }
+    }
+  },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",
     "title": "Que te vean\no que te\nsalten.",

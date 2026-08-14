@@ -71,6 +71,96 @@
       "nextSheet": "Próxima folha: para sua tela"
     }
   },
+  "productDetail": {
+    "sheetLabel": {
+      "screens": "Folha 001 / Para sua tela",
+      "sound": "Folha 002 / Para seu som"
+    },
+    "plateCounter": "Prancha {{current}} de {{total}} — {{name}}",
+    "genericPlateName": "Prancha {{number}}",
+    "previousPlate": "Prancha anterior",
+    "nextPlate": "Próxima prancha",
+    "allPlatesIncluded": "As {{count}} pranchas incluídas",
+    "singleFileIncluded": "Arquivo incluído",
+    "useStripHint": "Use a fita ou as setas",
+    "hoverToZoom": "Passe o mouse pra ver o grão",
+    "whatsIncluded": "O que está incluso",
+    "addToCart": "Adicionar ao carrinho — {{price}}",
+    "perks": {
+      "instant": "Download imediato",
+      "noWatermark": "Sem marca d'água",
+      "neverResold": "Nunca revendido como banco de imagens"
+    },
+    "exclusivity": {
+      "label": "Um dono só",
+      "body": "Quer exclusividade? Compre a arte por completo e ela sai da loja.",
+      "cta": "Perguntar sobre exclusividade"
+    },
+    "related": {
+      "eyebrow": "Mesmo acervo",
+      "title": "Combina bem com isso",
+      "viewSheet": "Ver a folha inteira",
+      "sheetTag": {
+        "screens": "Tela",
+        "sound": "Som"
+      }
+    },
+    "genericCollectionLabel": "{{sku}} / {{variant}}",
+    "genericDescription": "{{name}} é uma arte original do acervo SYNDIK, pronta para uso imediato.",
+    "genericFileInfo": "{{count}} arquivos",
+    "genericFileInfoSingular": "1 arquivo",
+    "included": {
+      "mobile7": [
+        { "label": "7 wallpapers mobile", "value": "1440 × 3120" },
+        { "label": "Recortes de bloqueio combinando", "value": "Incluído" },
+        { "label": "Masters 8K raw", "value": "7680 × 4320" },
+        { "label": "Readme + licença", "value": "PDF" }
+      ],
+      "desktop7": [
+        { "label": "7 wallpapers desktop", "value": "3840 × 2160" },
+        { "label": "Recortes de bloqueio combinando", "value": "Incluído" },
+        { "label": "Masters 8K raw", "value": "7680 × 4320" },
+        { "label": "Readme + licença", "value": "PDF" }
+      ],
+      "single": [
+        { "label": "Capa em alta resolução", "value": "3000 × 3000" },
+        { "label": "Licença de lançamento", "value": "Um projeto" },
+        { "label": "Pronta para DSP", "value": "Spotify · Apple · Deezer" },
+        { "label": "Readme + licença", "value": "PDF" }
+      ],
+      "albumPack": [
+        { "label": "3 capas em alta resolução", "value": "3000 × 3000" },
+        { "label": "Licença de lançamento", "value": "Um projeto" },
+        { "label": "Pronta para DSP", "value": "Spotify · Apple · Deezer" },
+        { "label": "Readme + licença", "value": "PDF" }
+      ]
+    },
+    "faq": {
+      "screens": [
+        { "question": "Como eu instalo?", "answer": "Baixe o zip no celular, abra os Arquivos e defina pela galeria de fotos. O readme cobre iOS e Android." },
+        { "question": "O desktop está incluso?", "answer": "Esta é a versão para tela do celular. A composição para desktop, quando existir, é vendida separadamente." },
+        { "question": "Licença", "answer": "Uso pessoal, nos seus próprios aparelhos. Sem revenda, sem impressão, sem cunhagem em NFT." }
+      ],
+      "sound": [
+        { "question": "Funciona no Spotify e Apple Music?", "answer": "Sim. Toda capa sai na especificação exata que os distribuidores pedem." },
+        { "question": "A licença cobre o lançamento?", "answer": "Sim, uma licença de lançamento para um projeto está inclusa na compra." },
+        { "question": "Posso revender?", "answer": "Não — cada capa é vendida uma única vez e sai do acervo em seguida." }
+      ]
+    },
+    "items": {
+      "scr-001": {
+        "collectionLabel": "SYNDIK / Coleção 001 — mobile",
+        "description": "Sete pranchas noturnas fotografadas através de vidro molhado e reveladas à mão — concreto, luz de sódio e nenhum horizonte que você reconheça. Cortada para o celular que você realmente carrega.",
+        "fileInfo": "7 arquivos · 214 MB",
+        "plates": ["Sódio", "Vidro molhado", "Bloco", "Passagem", "Cerca", "Último ônibus", "Último trem"],
+        "faq": [
+          { "question": "Como eu instalo?", "answer": "Baixe o zip no celular, abra os Arquivos e defina pela galeria de fotos. O readme cobre iOS e Android." },
+          { "question": "O desktop está incluso?", "answer": "Esta é a versão para o celular. A composição para desktop é vendida como STATIC na folha 001." },
+          { "question": "Licença", "answer": "Uso pessoal, nos seus próprios aparelhos. Sem revenda, sem impressão, sem cunhagem em NFT." }
+        ]
+      }
+    }
+  },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",
     "title": "Seja visto\nou seja\npulado.",

@@ -71,6 +71,96 @@
       "nextSheet": "Next sheet: for your screen"
     }
   },
+  "productDetail": {
+    "sheetLabel": {
+      "screens": "Sheet 001 / For your screen",
+      "sound": "Sheet 002 / For your sound"
+    },
+    "plateCounter": "Plate {{current}} of {{total}} — {{name}}",
+    "genericPlateName": "Plate {{number}}",
+    "previousPlate": "Previous plate",
+    "nextPlate": "Next plate",
+    "allPlatesIncluded": "All {{count}} plates included",
+    "singleFileIncluded": "File included",
+    "useStripHint": "Use the strip or the arrows",
+    "hoverToZoom": "Hover to zoom grain",
+    "whatsIncluded": "What's included",
+    "addToCart": "Add to cart — {{price}}",
+    "perks": {
+      "instant": "Instant download",
+      "noWatermark": "No watermark",
+      "neverResold": "Never resold as stock"
+    },
+    "exclusivity": {
+      "label": "One owner",
+      "body": "Want it exclusive? Buy the plate outright and it leaves the store.",
+      "cta": "Ask about exclusivity"
+    },
+    "related": {
+      "eyebrow": "Same archive",
+      "title": "Wears well with this",
+      "viewSheet": "Whole sheet",
+      "sheetTag": {
+        "screens": "Screen",
+        "sound": "Sound"
+      }
+    },
+    "genericCollectionLabel": "{{sku}} / {{variant}}",
+    "genericDescription": "{{name}} is an original piece from the SYNDIK archive, ready for immediate use.",
+    "genericFileInfo": "{{count}} files",
+    "genericFileInfoSingular": "1 file",
+    "included": {
+      "mobile7": [
+        { "label": "7 mobile wallpapers", "value": "1440 × 3120" },
+        { "label": "Matching lockscreen crops", "value": "Included" },
+        { "label": "8K raw masters", "value": "7680 × 4320" },
+        { "label": "Readme + licence", "value": "PDF" }
+      ],
+      "desktop7": [
+        { "label": "7 desktop wallpapers", "value": "3840 × 2160" },
+        { "label": "Matching lockscreen crops", "value": "Included" },
+        { "label": "8K raw masters", "value": "7680 × 4320" },
+        { "label": "Readme + licence", "value": "PDF" }
+      ],
+      "single": [
+        { "label": "High-resolution cover", "value": "3000 × 3000" },
+        { "label": "Release licence", "value": "One project" },
+        { "label": "DSP ready", "value": "Spotify · Apple · Deezer" },
+        { "label": "Readme + licence", "value": "PDF" }
+      ],
+      "albumPack": [
+        { "label": "3 high-resolution covers", "value": "3000 × 3000" },
+        { "label": "Release licence", "value": "One project" },
+        { "label": "DSP ready", "value": "Spotify · Apple · Deezer" },
+        { "label": "Readme + licence", "value": "PDF" }
+      ]
+    },
+    "faq": {
+      "screens": [
+        { "question": "How do I install them?", "answer": "Download the zip on your phone, open Files, then set from the photo library. The readme covers iOS and Android." },
+        { "question": "Is desktop included?", "answer": "This is the mobile cut. The desktop composition, when available, is sold separately." },
+        { "question": "Licence", "answer": "Personal use on your own devices. No resale, no print runs, no NFT minting." }
+      ],
+      "sound": [
+        { "question": "Spotify and Apple Music ready?", "answer": "Yes. Every cover ships at the exact spec distributors ask for." },
+        { "question": "Does the licence cover the release?", "answer": "Yes, a release licence for one project is included with the purchase." },
+        { "question": "Can I resell it?", "answer": "No — each cover is sold once and retired from the archive right after." }
+      ]
+    },
+    "items": {
+      "scr-001": {
+        "collectionLabel": "SYNDIK / Collection 001 — mobile",
+        "description": "Seven night plates shot through wet glass and graded by hand — concrete, sodium light and no skyline you can name. Cut for the phone you actually carry.",
+        "fileInfo": "7 files · 214 MB",
+        "plates": ["Sodium", "Wet glass", "Block", "Underpass", "Fence", "Late bus", "Last train"],
+        "faq": [
+          { "question": "How do I install them?", "answer": "Download the zip on your phone, open Files, then set from the photo library. The readme covers iOS and Android." },
+          { "question": "Is desktop included?", "answer": "This plate is the mobile cut. The desktop composition is sold as STATIC on sheet 001." },
+          { "question": "Licence", "answer": "Personal use on your own devices. No resale, no print runs, no NFT minting." }
+        ]
+      }
+    }
+  },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",
     "title": "Get seen\nor get\nskipped.",

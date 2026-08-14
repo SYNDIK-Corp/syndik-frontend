@@ -15,6 +15,8 @@ export interface Product {
   hoverImage?: string;
 }
 
+export type CatalogSheet = 'screens' | 'sound';
+
 export type CatalogVariant = 'mobile7' | 'desktop7' | 'single' | 'albumPack';
 
 export interface CatalogItem {
