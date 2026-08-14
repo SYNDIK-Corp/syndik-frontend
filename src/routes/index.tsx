@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from '@/pages/Home';
 import { Catalog } from '@/pages/Catalog';
 import { ProductDetail } from '@/pages/ProductDetail';
+import { Checkout } from '@/pages/Checkout';
 import { Contact } from '@/pages/Contact';
 
 export function AppRoutes() {
@@ -13,6 +14,7 @@ export function AppRoutes() {
         <Route path="/products/screens" element={<Catalog sheet="screens" />} />
         <Route path="/products/sound" element={<Catalog sheet="sound" />} />
         <Route path="/products/:sheet/:id" element={<ProductDetail />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>

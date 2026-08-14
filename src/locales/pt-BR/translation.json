@@ -70,9 +70,98 @@
         "mastercard": "Mastercard",
         "amex": "Amex",
         "elo": "Elo",
+        "applePay": "Apple Pay",
+        "paypal": "PayPal",
         "gpay": "G Pay",
         "pix": "Pix",
         "stripe": "Stripe"
+      }
+    }
+  },
+  "checkout": {
+    "express": {
+      "title": "Checkout expresso",
+      "or": "Ou"
+    },
+    "contact": {
+      "title": "Contato",
+      "signIn": "Entrar",
+      "member": "Membro {{id}}",
+      "mockEmail": "membro0417@syndik.store",
+      "pinLabel": "Digite seu PIN — sem senha",
+      "pinPlaceholder": "0000",
+      "pinEnter": "Entrar",
+      "pinHintDefault": "Qualquer 4 dígitos funcionam neste protótipo.",
+      "pinHintRetry": "Quatro dígitos, depois Entrar.",
+      "emailPlaceholder": "Email ou celular",
+      "newsletter": "Me avise quando um novo lançamento chegar. Só isso."
+    },
+    "payment": {
+      "title": "Pagamento",
+      "subtitle": "Todas as transações são seguras e criptografadas. Os arquivos liberam assim que a compra é confirmada.",
+      "methods": {
+        "card": "Cartão de crédito",
+        "paypal": "PayPal",
+        "pix": "Pix",
+        "pixBadge": "Instantâneo"
+      },
+      "cardBrands": {
+        "visa": "Visa",
+        "mc": "MC",
+        "amex": "Amex"
+      },
+      "moreCount": "+{{count}}",
+      "cardNumber": "Número do cartão",
+      "expiration": "Validade (MM / AA)",
+      "securityCode": "Código de segurança",
+      "nameOnCard": "Nome no cartão",
+      "pixNote": "Um QR code aparece assim que você confirmar. Costuma cair em menos de 30 segundos."
+    },
+    "billing": {
+      "title": "Endereço de cobrança",
+      "subtitle": "Produtos digitais — só precisamos disso para a nota fiscal.",
+      "fullName": "Nome completo",
+      "country": "País",
+      "postalCode": "CEP"
+    },
+    "terms": {
+      "text": "Li os <0>termos de licença</0> e a <1>política de reembolso</1> para arquivos digitais, e concordo com eles."
+    },
+    "cta": {
+      "incomplete": "Complete os campos acima",
+      "pay": "Pagar agora • {{total}}",
+      "paid": "Pago — confira sua caixa de entrada"
+    },
+    "note": {
+      "secure": "Pagamento seguro · arquivos liberam na hora",
+      "paid": "Recibo enviado. Os arquivos estão na sua conta."
+    },
+    "summary": {
+      "empty": "Sua sacola está vazia. Tire algo do acervo.",
+      "remove": "Remover",
+      "codePlaceholder": "Código de desconto",
+      "apply": "Aplicar",
+      "codeHint": "Tem um código de lançamento? Coloca aí.",
+      "codeApplied": "{{code}} aplicado — {{percent}}% off",
+      "codeInvalid": "Esse código não está ativo.",
+      "subtotal": "Subtotal",
+      "discount": "Desconto",
+      "delivery": "Entrega",
+      "deliveryValue": "Instantânea · grátis",
+      "total": "Total",
+      "currency": "USD",
+      "addToDrop": "Adicione ao lançamento",
+      "add": "Adicionar"
+    },
+    "addons": {
+      "desktop-cut": {
+        "description": "O mesmo pack recomposto para desktop 8K"
+      },
+      "single-cover": {
+        "description": "3000 × 3000, licença de lançamento inclusa"
+      },
+      "exclusive-rights": {
+        "description": "A arte sai da loja — um dono só"
       }
     }
   },

@@ -14,7 +14,7 @@ export interface CartContextValue {
   isOpen: boolean;
   /* segundos restantes da reserva do carrinho (contagem regressiva de urgência) */
   holdSecondsRemaining: number;
-  addItem: (item: CartItem) => void;
+  addItem: (item: CartItem, options?: { openCart?: boolean }) => void;
   removeItem: (index: number) => void;
   openCart: () => void;
   closeCart: () => void;

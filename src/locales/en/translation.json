@@ -70,9 +70,98 @@
         "mastercard": "Mastercard",
         "amex": "Amex",
         "elo": "Elo",
+        "applePay": "Apple Pay",
+        "paypal": "PayPal",
         "gpay": "G Pay",
         "pix": "Pix",
         "stripe": "Stripe"
+      }
+    }
+  },
+  "checkout": {
+    "express": {
+      "title": "Express checkout",
+      "or": "Or"
+    },
+    "contact": {
+      "title": "Contact",
+      "signIn": "Sign in",
+      "member": "Member {{id}}",
+      "mockEmail": "member0417@syndik.store",
+      "pinLabel": "Enter your pin — no password",
+      "pinPlaceholder": "0000",
+      "pinEnter": "Enter",
+      "pinHintDefault": "Any 4 digits work in this prototype.",
+      "pinHintRetry": "Four digits, then Enter.",
+      "emailPlaceholder": "Email or mobile number",
+      "newsletter": "Tell me when a new drop lands. Nothing else."
+    },
+    "payment": {
+      "title": "Payment",
+      "subtitle": "All transactions are secure and encrypted. Files release the second it clears.",
+      "methods": {
+        "card": "Credit card",
+        "paypal": "PayPal",
+        "pix": "Pix",
+        "pixBadge": "Instant"
+      },
+      "cardBrands": {
+        "visa": "Visa",
+        "mc": "MC",
+        "amex": "Amex"
+      },
+      "moreCount": "+{{count}}",
+      "cardNumber": "Card number",
+      "expiration": "Expiration date (MM / YY)",
+      "securityCode": "Security code",
+      "nameOnCard": "Name on card",
+      "pixNote": "A QR code appears after you confirm. Usually clears in under 30 seconds."
+    },
+    "billing": {
+      "title": "Billing address",
+      "subtitle": "Digital goods — we only need this for the invoice.",
+      "fullName": "Full name",
+      "country": "Country",
+      "postalCode": "Postal code"
+    },
+    "terms": {
+      "text": "I've read the <0>licence terms</0> and the <1>refund policy</1> for digital files, and I agree to them."
+    },
+    "cta": {
+      "incomplete": "Complete the fields above",
+      "pay": "Pay now • {{total}}",
+      "paid": "Paid — check your inbox"
+    },
+    "note": {
+      "secure": "Secure payment · files unlock instantly",
+      "paid": "Receipt sent. Files are in your account."
+    },
+    "summary": {
+      "empty": "Your bag is empty. Pull something out of the vault.",
+      "remove": "Remove",
+      "codePlaceholder": "Discount code",
+      "apply": "Apply",
+      "codeHint": "Got a drop code? Drop it in.",
+      "codeApplied": "{{code}} applied — {{percent}}% off",
+      "codeInvalid": "That code is not live.",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "delivery": "Delivery",
+      "deliveryValue": "Instant · free",
+      "total": "Total",
+      "currency": "USD",
+      "addToDrop": "Add to the drop",
+      "add": "Add"
+    },
+    "addons": {
+      "desktop-cut": {
+        "description": "Same pack recomposed for 8K desktop"
+      },
+      "single-cover": {
+        "description": "3000 × 3000, release licence included"
+      },
+      "exclusive-rights": {
+        "description": "The plate leaves the store — one owner"
       }
     }
   },

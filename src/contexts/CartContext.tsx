@@ -39,9 +39,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
       total: items.reduce((sum, item) => sum + item.price, 0),
       isOpen,
       holdSecondsRemaining,
-      addItem: (item) => {
+      addItem: (item, options) => {
         setItems((prev) => [...prev, item]);
-        setIsOpen(true);
+        if (options?.openCart ?? true) setIsOpen(true);
       },
       removeItem: (index) => setItems((prev) => prev.filter((_, i) => i !== index)),
       openCart: () => setIsOpen(true),

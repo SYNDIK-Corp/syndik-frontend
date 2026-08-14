@@ -296,27 +296,6 @@ export const PaymentButton = styled.button`
   }
 `;
 
-export const Brands = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex-wrap: wrap;
-`;
-
-export const BrandBadge = styled.span`
-  height: 24px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 0 8px;
-  display: flex;
-  align-items: center;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
 export const ContinueShopping = styled(Link)`
   align-self: center;
   margin-top: 2px;

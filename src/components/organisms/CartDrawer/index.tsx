@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Icon } from '@/components/atoms/Icon';
 import { CartLineItem } from '@/components/molecules/CartLineItem';
 import { CartRecommendationCard } from '@/components/molecules/CartRecommendationCard';
+import { PaymentBrands, type BrandKey } from '@/components/molecules/PaymentBrands';
 import { useCart } from '@/hooks/useCart';
 import { formatCountdown, formatPrice } from '@/lib/format';
 import { getCartRecommendations } from '@/data/cartRecommendations';
@@ -14,12 +16,13 @@ const DISCOUNT_TIERS = [
   { threshold: 40, percent: 20, position: 100 },
 ];
 
-const BRANDS = ['visa', 'mastercard', 'amex', 'elo', 'gpay', 'pix', 'stripe'] as const;
+const BRANDS: BrandKey[] = ['visa', 'mastercard', 'amex', 'elo', 'gpay', 'pix', 'stripe'];
 
 export function CartDrawer() {
   const { t, i18n } = useTranslation();
   const { items, total, isOpen, holdSecondsRemaining, removeItem, closeCart, addItem } = useCart();
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -149,7 +152,15 @@ export function CartDrawer() {
               </S.TermsText>
             </S.TermsLabel>
 
-            <S.CheckoutButton type="button" $enabled={canCheckout} disabled={!canCheckout}>
+            <S.CheckoutButton
+              type="button"
+              $enabled={canCheckout}
+              disabled={!canCheckout}
+              onClick={() => {
+                closeCart();
+                navigate('/checkout');
+              }}
+            >
               {ctaLabel}
             </S.CheckoutButton>
 
@@ -158,11 +169,7 @@ export function CartDrawer() {
               <S.PaymentButton type="button">{t('cart.payment.payPal')}</S.PaymentButton>
             </S.PaymentRow>
 
-            <S.Brands>
-              {BRANDS.map((brand) => (
-                <S.BrandBadge key={brand}>{t(`cart.payment.brands.${brand}`)}</S.BrandBadge>
-              ))}
-            </S.Brands>
+            <PaymentBrands brands={BRANDS} />
 
             <S.ContinueShopping to="/products/screens" onClick={closeCart}>
               {t('cart.continueShopping')}
