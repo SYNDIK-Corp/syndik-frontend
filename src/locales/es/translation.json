@@ -165,6 +165,171 @@
       }
     }
   },
+  "account": {
+    "eyebrow": "SYNDIK / Tu cuenta",
+    "mockEmail": "miembro0417@syndik.store",
+    "memberTag": "Miembro {{id}}",
+    "gate": {
+      "title": "Cuatro dígitos.\nSin contraseña.",
+      "description": "Tu pin se creó en tu primer pedido. Desbloquea todos los archivos que ya compraste — descárgalos de nuevo cuando quieras, en cualquier dispositivo.",
+      "pinPlaceholder": "0000",
+      "enter": "Entrar",
+      "pinHintDefault": "Cualquier 4 dígitos funcionan en este prototipo.",
+      "pinHintRetry": "Cuatro dígitos, luego Entrar.",
+      "lostPin": "¿Perdiste el pin?",
+      "lostPinDescription": "Ingresa el email con el que compraste y te enviamos un enlace de un solo uso.",
+      "emailPlaceholder": "tu@email.com",
+      "sendLink": "Enviar el enlace"
+    },
+    "sidebar": {
+      "tabs": {
+        "downloads": "Descargas",
+        "orders": "Pedidos",
+        "details": "Datos"
+      },
+      "signOut": "Cerrar sesión",
+      "memberRate": {
+        "label": "Tarifa de miembro",
+        "body": "Cada lanzamiento tiene 15% off para ti. Se aplica automáticamente en el pago.",
+        "cta": "Ver el archivo"
+      }
+    },
+    "downloads": {
+      "title": "Tus descargas",
+      "neverExpire": "Los enlaces nunca expiran",
+      "download": "Descargar",
+      "downloadAgain": "De nuevo",
+      "downloadAll": "Descargar todo",
+      "zipInfo": "Un zip · {{size}}",
+      "items": {
+        "scr-001": {
+          "kind": "7 wallpapers para móvil",
+          "specNote": "1440 × 3120 + masters 8K"
+        },
+        "snd-001": {
+          "kind": "Portada de single",
+          "specNote": "3000 × 3000 RGB · licencia de lanzamiento"
+        },
+        "scr-003": {
+          "kind": "7 wallpapers para móvil",
+          "specNote": "1440 × 3120 + masters 8K"
+        }
+      }
+    },
+    "orders": {
+      "title": "Pedidos",
+      "receipt": "Recibo"
+    },
+    "details": {
+      "title": "Datos",
+      "email": "Email",
+      "changePin": "Cambiar el pin",
+      "newPinPlaceholder": "Nuevos 4 dígitos",
+      "save": "Guardar",
+      "saved": "Guardado",
+      "newsletter": "Avísame cuando llegue un nuevo lanzamiento.",
+      "dangerZone": "Zona de riesgo",
+      "dangerZoneBody": "Eliminar la cuenta borra tus enlaces de descarga para siempre. La licencia de los archivos que ya tienes sigue siendo válida.",
+      "deleteAccount": "Eliminar cuenta"
+    }
+  },
+  "orderConfirmation": {
+    "orderBadge": "Pedido {{number}}",
+    "yourAccount": "Tu cuenta",
+    "paymentCleared": "Pago confirmado — {{datetime}}",
+    "title": "Es tuyo.\nVe a buscarlo.",
+    "description": "Los archivos ya están en esta página y en tu cuenta. Un recibo con los mismos enlaces va en camino a <0>{{email}}</0>.",
+    "downloadEverything": "Descargar todo",
+    "downloadedLabel": "Descargado — obtenerlo de nuevo",
+    "zipNote": "Un zip · {{size}}",
+    "zipNoteBuilt": "Zip listo · {{size}}",
+    "files": {
+      "title": "Tus archivos",
+      "neverExpire": "Los enlaces nunca expiran",
+      "ready": "Listo",
+      "downloaded": "Descargado"
+    },
+    "setPin": {
+      "label": "Crea tu pin",
+      "body": "Cuatro dígitos y estos archivos quedan a un toque — sin contraseña, sin perseguir emails.",
+      "placeholder": "0000",
+      "save": "Crear pin",
+      "saved": "Guardado"
+    },
+    "install": {
+      "title": "Cómo instalar",
+      "steps": [
+        { "title": "Descomprime en el dispositivo", "description": "Celular o escritorio — ambos funcionan." },
+        { "title": "Guarda en fotos", "description": "Luego configúralo como wallpaper o pantalla de bloqueo." },
+        { "title": "Las portadas suben directo", "description": "3000 × 3000 — sin redimensionar para ningún DSP." }
+      ]
+    },
+    "receipt": {
+      "title": "Recibo",
+      "print": "Imprimir",
+      "order": "Pedido",
+      "date": "Fecha",
+      "method": "Método",
+      "email": "Email",
+      "subtotal": "Subtotal",
+      "discount": "Descuento",
+      "delivery": "Entrega",
+      "deliveryValue": "Instantánea · gratis",
+      "paid": "Pagado"
+    },
+    "licence": {
+      "label": "Licencia de este pedido",
+      "body": "Wallpapers: uso personal, en tus propios dispositivos. Portadas: un lanzamiento, acreditado o no, en cualquier plataforma. Sin reventa, sin bancos de imágenes, sin acuñación.",
+      "cta": "Leer la licencia completa"
+    },
+    "support": {
+      "label": "¿Algo salió mal?",
+      "body": "Enlace roto, archivo equivocado, o necesitas otro tamaño — escríbenos y lo resolvemos el mismo día.",
+      "cta": "Contactar soporte"
+    },
+    "related": {
+      "title": "Ya que estás aquí",
+      "viewAll": "Archivo completo"
+    }
+  },
+  "search": {
+    "close": "Cerrar",
+    "placeholder": "BUSCAR EN SYNDIK",
+    "clear": "Limpiar",
+    "filters": {
+      "all": "Todo",
+      "screen": "Para tu pantalla",
+      "sound": "Para tu sonido",
+      "mobile": "Móvil",
+      "desktop": "Escritorio"
+    },
+    "plateSingular": "{{count}} obra",
+    "platePlural": "{{count}} obras",
+    "countIdle": "{{count}} obras en el archivo",
+    "mostWanted": "Más buscadas",
+    "suggestions": [
+      { "label": "Wallpapers para móvil", "query": "mobile" },
+      { "label": "Portadas trap", "query": "trap" },
+      { "label": "Packs de álbum", "query": "album" },
+      { "label": "Noche / oscuro", "query": "night" },
+      { "label": "Menos de $5", "query": "3.99" }
+    ],
+    "collections": "Colecciones",
+    "collectionRows": {
+      "sheetScreens": "Hoja 001 — para tu pantalla",
+      "sheetSound": "Hoja 002 — para tu sonido",
+      "newThisWeek": "Novedades de la semana",
+      "retired": "Retiradas — un solo dueño"
+    },
+    "lastDrop": "Último lanzamiento",
+    "soldBadge": "Un dueño — ya se fue",
+    "empty": {
+      "title": "Nada con ese nombre.",
+      "description": "El archivo es pequeño a propósito. Prueba con un ambiente en vez de un título — humo, concreto, noche — o pídenos que lo creemos.",
+      "commission": "Encargar",
+      "browse": "Ver el archivo"
+    }
+  },
   "catalog": {
     "tabs": {
       "screen": "Para tu pantalla",

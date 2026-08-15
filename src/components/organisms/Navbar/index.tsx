@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Logo } from '@/components/atoms/Logo';
 import { Icon } from '@/components/atoms/Icon';
@@ -36,7 +37,7 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
           <S.IconButton type="button" aria-label={t('nav.openMenu')} onClick={() => setMenuOpen(true)}>
             <Icon name="dots" />
           </S.IconButton>
-          <S.IconButton type="button" aria-label={t('nav.search')}>
+          <S.IconButton as={Link} to="/search" aria-label={t('nav.search')}>
             <Icon name="search" />
           </S.IconButton>
         </S.MobileLeft>
@@ -45,10 +46,10 @@ export function Navbar({ variant = 'overlay' }: NavbarProps) {
       <Logo />
 
       <S.Actions>
-        <S.DesktopSearchButton type="button" aria-label={t('nav.search')}>
+        <S.DesktopSearchButton as={Link} to="/search" aria-label={t('nav.search')}>
           <Icon name="search" />
         </S.DesktopSearchButton>
-        <S.IconButton type="button" aria-label={t('nav.account')}>
+        <S.IconButton as={Link} to="/account" aria-label={t('nav.account')}>
           <Icon name="user" />
         </S.IconButton>
         <S.IconButton type="button" aria-label={t('nav.bag')} onClick={openCart}>

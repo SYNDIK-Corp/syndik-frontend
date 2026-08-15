@@ -165,6 +165,171 @@
       }
     }
   },
+  "account": {
+    "eyebrow": "SYNDIK / Your account",
+    "mockEmail": "member0417@syndik.store",
+    "memberTag": "Member {{id}}",
+    "gate": {
+      "title": "Four digits.\nNo password.",
+      "description": "Your pin was set on your first order. It unlocks every file you've ever bought — re-download whenever, on any device.",
+      "pinPlaceholder": "0000",
+      "enter": "Enter",
+      "pinHintDefault": "Any 4 digits work in this prototype.",
+      "pinHintRetry": "Four digits, then Enter.",
+      "lostPin": "Lost the pin?",
+      "lostPinDescription": "Enter the email you bought with and we'll send a one-time link.",
+      "emailPlaceholder": "you@email.com",
+      "sendLink": "Send the link"
+    },
+    "sidebar": {
+      "tabs": {
+        "downloads": "Downloads",
+        "orders": "Orders",
+        "details": "Details"
+      },
+      "signOut": "Sign out",
+      "memberRate": {
+        "label": "Member rate",
+        "body": "Every drop is 15% off for you. Applied automatically at checkout.",
+        "cta": "See the vault"
+      }
+    },
+    "downloads": {
+      "title": "Your downloads",
+      "neverExpire": "Links never expire",
+      "download": "Download",
+      "downloadAgain": "Again",
+      "downloadAll": "Download everything",
+      "zipInfo": "One zip · {{size}}",
+      "items": {
+        "scr-001": {
+          "kind": "7 mobile wallpapers",
+          "specNote": "1440 × 3120 + 8K masters"
+        },
+        "snd-001": {
+          "kind": "Single cover",
+          "specNote": "3000 × 3000 RGB · release licence"
+        },
+        "scr-003": {
+          "kind": "7 mobile wallpapers",
+          "specNote": "1440 × 3120 + 8K masters"
+        }
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "receipt": "Receipt"
+    },
+    "details": {
+      "title": "Details",
+      "email": "Email",
+      "changePin": "Change pin",
+      "newPinPlaceholder": "New 4 digits",
+      "save": "Save",
+      "saved": "Saved",
+      "newsletter": "Tell me when a new drop lands.",
+      "dangerZone": "Danger zone",
+      "dangerZoneBody": "Deleting the account removes your download links for good. The licence on files you already have stays valid.",
+      "deleteAccount": "Delete account"
+    }
+  },
+  "orderConfirmation": {
+    "orderBadge": "Order {{number}}",
+    "yourAccount": "Your account",
+    "paymentCleared": "Payment cleared — {{datetime}}",
+    "title": "It's yours.\nGo get it.",
+    "description": "Files are live on this page and in your account. A receipt with the same links is on its way to <0>{{email}}</0>.",
+    "downloadEverything": "Download everything",
+    "downloadedLabel": "Downloaded — get it again",
+    "zipNote": "One zip · {{size}}",
+    "zipNoteBuilt": "Zip built · {{size}}",
+    "files": {
+      "title": "Your files",
+      "neverExpire": "Links never expire",
+      "ready": "Ready",
+      "downloaded": "Downloaded"
+    },
+    "setPin": {
+      "label": "Set your pin",
+      "body": "Four digits and these files stay one tap away — no password, no email chase.",
+      "placeholder": "0000",
+      "save": "Set pin",
+      "saved": "Saved"
+    },
+    "install": {
+      "title": "How to install",
+      "steps": [
+        { "title": "Unzip on the device", "description": "Phone or desktop — both work." },
+        { "title": "Save to photos", "description": "Then set as wallpaper or lockscreen." },
+        { "title": "Covers go straight up", "description": "3000 × 3000 — no resizing for any DSP." }
+      ]
+    },
+    "receipt": {
+      "title": "Receipt",
+      "print": "Print",
+      "order": "Order",
+      "date": "Date",
+      "method": "Method",
+      "email": "Email",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "delivery": "Delivery",
+      "deliveryValue": "Instant · free",
+      "paid": "Paid"
+    },
+    "licence": {
+      "label": "Licence on this order",
+      "body": "Wallpapers: personal use on your own devices. Covers: one release, credited or not, on any platform. No resale, no stock libraries, no minting.",
+      "cta": "Read the full licence"
+    },
+    "support": {
+      "label": "Something wrong?",
+      "body": "Broken link, wrong file, or you need another size — message us and it's fixed the same day.",
+      "cta": "Contact support"
+    },
+    "related": {
+      "title": "While you're here",
+      "viewAll": "Whole vault"
+    }
+  },
+  "search": {
+    "close": "Close",
+    "placeholder": "SEARCH SYNDIK",
+    "clear": "Clear",
+    "filters": {
+      "all": "Everything",
+      "screen": "For your screen",
+      "sound": "For your sound",
+      "mobile": "Mobile",
+      "desktop": "Desktop"
+    },
+    "plateSingular": "{{count}} plate",
+    "platePlural": "{{count}} plates",
+    "countIdle": "{{count}} plates in the vault",
+    "mostWanted": "Most wanted",
+    "suggestions": [
+      { "label": "Mobile wallpapers", "query": "mobile" },
+      { "label": "Trap covers", "query": "trap" },
+      { "label": "Album packs", "query": "album" },
+      { "label": "Night / dark", "query": "night" },
+      { "label": "Under $5", "query": "3.99" }
+    ],
+    "collections": "Collections",
+    "collectionRows": {
+      "sheetScreens": "Sheet 001 — for your screen",
+      "sheetSound": "Sheet 002 — for your sound",
+      "newThisWeek": "New this week",
+      "retired": "Retired — one owner"
+    },
+    "lastDrop": "Last drop",
+    "soldBadge": "One owner — gone",
+    "empty": {
+      "title": "Nothing under that name.",
+      "description": "The archive is small on purpose. Try a mood instead of a title — smoke, concrete, night — or ask us to build it.",
+      "commission": "Commission it",
+      "browse": "Browse the vault"
+    }
+  },
   "catalog": {
     "tabs": {
       "screen": "For your screen",

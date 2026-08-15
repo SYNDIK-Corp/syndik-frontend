@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { MainLayout } from '@/components/templates/MainLayout';
 import { ProductGallery } from '@/components/organisms/ProductGallery';
 import { ProductInfo } from '@/components/organisms/ProductInfo';
-import { RelatedProducts, type RelatedProduct } from '@/components/organisms/RelatedProducts';
-import { getCatalogEntry, getProductDetail } from '@/data/productDetails';
+import { RelatedProducts } from '@/components/organisms/RelatedProducts';
+import { getProductDetail } from '@/data/productDetails';
+import { buildRelatedProducts } from '@/lib/relatedProducts';
 import type { CatalogSheet } from '@/types/product';
 import * as S from './styles';
 
@@ -66,23 +67,7 @@ export function ProductDetail() {
     ? (t(faqKey, { returnObjects: true }) as FaqItem[])
     : (t(`productDetail.faq.${sheet}`, { returnObjects: true }) as FaqItem[]);
 
-  const related: RelatedProduct[] = relatedIds
-    .map((relatedId): RelatedProduct | null => {
-      const entry = getCatalogEntry(relatedId);
-      if (!entry) return null;
-
-      return {
-        id: entry.item.id,
-        sku: entry.item.sku,
-        collection: `${entry.item.sku} / ${t(`catalog.variants.${entry.item.variant}`)}`,
-        name: entry.item.name,
-        price: entry.item.price,
-        tag: t(`productDetail.related.sheetTag.${entry.sheet}`),
-        sheet: entry.sheet,
-        to: `/products/${entry.sheet}/${entry.item.id}`,
-      };
-    })
-    .filter((product): product is RelatedProduct => product !== null);
+  const related = buildRelatedProducts(relatedIds, t);
 
   return (
     <MainLayout>
@@ -110,7 +95,7 @@ export function ProductDetail() {
         </S.Grid>
       </S.Section>
 
-      <RelatedProducts products={related} viewSheetTo={`/products/${sheet}`} />
+      <RelatedProducts products={related} viewAllTo={`/products/${sheet}`} />
     </MainLayout>
   );
 }

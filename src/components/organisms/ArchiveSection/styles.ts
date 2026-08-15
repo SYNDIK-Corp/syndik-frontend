@@ -304,43 +304,6 @@ export const SpecSheet = styled.div`
   grid-column: span 12;
 `;
 
-export const SpecGrid = styled.div`
+export const SpecSheetSpacing = styled.div`
   margin-top: 16px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 0 clamp(18px, 2.4vw, 36px);
-`;
-
-export const SpecItem = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 13px 0 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-
-export const SpecHead = styled.div`
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-`;
-
-export const SpecNumber = styled.span`
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
-export const SpecName = styled.span`
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-`;
-
-export const SpecDescription = styled.span`
-  font-size: 11px;
-  line-height: 1.6;
-  color: ${({ theme }) => theme.colors.textMuted};
 `;

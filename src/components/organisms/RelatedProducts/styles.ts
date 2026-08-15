@@ -73,8 +73,9 @@ export const Rail = styled.div`
   }
 `;
 
-export const RailItem = styled.div`
-  flex: 0 0 calc((100% - 96px) / 4.5);
+export const RailItem = styled.div<{ $cardsPerView: number }>`
+  flex: 0 0
+    calc((100% - ${({ $cardsPerView }) => Math.floor($cardsPerView) * 24}px) / ${({ $cardsPerView }) => $cardsPerView});
   scroll-snap-align: start;
 
   @media (max-width: 900px) {

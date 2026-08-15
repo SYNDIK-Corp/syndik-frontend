@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Eyebrow } from '@/components/atoms/Eyebrow';
+import { SpecList } from '@/components/molecules/SpecList';
 import { formatPrice } from '@/lib/format';
 import * as S from './styles';
 
@@ -100,17 +101,9 @@ export function ArchiveSection({
 
         <S.SpecSheet>
           <Eyebrow dot>{t('archive.specTitle')}</Eyebrow>
-          <S.SpecGrid>
-            {specs.map((spec, index) => (
-              <S.SpecItem key={spec.title}>
-                <S.SpecHead>
-                  <S.SpecNumber>{String(index + 1).padStart(2, '0')}</S.SpecNumber>
-                  <S.SpecName>{spec.title}</S.SpecName>
-                </S.SpecHead>
-                <S.SpecDescription>{spec.description}</S.SpecDescription>
-              </S.SpecItem>
-            ))}
-          </S.SpecGrid>
+          <S.SpecSheetSpacing>
+            <SpecList items={specs} />
+          </S.SpecSheetSpacing>
         </S.SpecSheet>
       </S.Grid>
     </S.Container>

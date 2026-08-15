@@ -165,6 +165,171 @@
       }
     }
   },
+  "account": {
+    "eyebrow": "SYNDIK / Sua conta",
+    "mockEmail": "membro0417@syndik.store",
+    "memberTag": "Membro {{id}}",
+    "gate": {
+      "title": "Quatro dígitos.\nSem senha.",
+      "description": "Seu pin foi criado no seu primeiro pedido. Ele libera todos os arquivos que você já comprou — baixe de novo quando quiser, em qualquer aparelho.",
+      "pinPlaceholder": "0000",
+      "enter": "Entrar",
+      "pinHintDefault": "Qualquer 4 dígitos funcionam neste protótipo.",
+      "pinHintRetry": "Quatro dígitos, depois Entrar.",
+      "lostPin": "Perdeu o pin?",
+      "lostPinDescription": "Digite o email que você usou na compra e enviamos um link de acesso único.",
+      "emailPlaceholder": "voce@email.com",
+      "sendLink": "Enviar o link"
+    },
+    "sidebar": {
+      "tabs": {
+        "downloads": "Downloads",
+        "orders": "Pedidos",
+        "details": "Dados"
+      },
+      "signOut": "Sair",
+      "memberRate": {
+        "label": "Tarifa de membro",
+        "body": "Todo lançamento tem 15% off pra você. Aplicado automaticamente no checkout.",
+        "cta": "Ver o acervo"
+      }
+    },
+    "downloads": {
+      "title": "Seus downloads",
+      "neverExpire": "Links nunca expiram",
+      "download": "Baixar",
+      "downloadAgain": "Novamente",
+      "downloadAll": "Baixar tudo",
+      "zipInfo": "Um zip · {{size}}",
+      "items": {
+        "scr-001": {
+          "kind": "7 wallpapers mobile",
+          "specNote": "1440 × 3120 + masters 8K"
+        },
+        "snd-001": {
+          "kind": "Capa de single",
+          "specNote": "3000 × 3000 RGB · licença de lançamento"
+        },
+        "scr-003": {
+          "kind": "7 wallpapers mobile",
+          "specNote": "1440 × 3120 + masters 8K"
+        }
+      }
+    },
+    "orders": {
+      "title": "Pedidos",
+      "receipt": "Recibo"
+    },
+    "details": {
+      "title": "Dados",
+      "email": "Email",
+      "changePin": "Trocar o pin",
+      "newPinPlaceholder": "Novos 4 dígitos",
+      "save": "Salvar",
+      "saved": "Salvo",
+      "newsletter": "Me avise quando um novo lançamento chegar.",
+      "dangerZone": "Zona de risco",
+      "dangerZoneBody": "Excluir a conta remove seus links de download definitivamente. A licença dos arquivos que você já tem continua válida.",
+      "deleteAccount": "Excluir conta"
+    }
+  },
+  "orderConfirmation": {
+    "orderBadge": "Pedido {{number}}",
+    "yourAccount": "Sua conta",
+    "paymentCleared": "Pagamento confirmado — {{datetime}}",
+    "title": "É seu.\nVai lá pegar.",
+    "description": "Os arquivos já estão nesta página e na sua conta. Um recibo com os mesmos links está a caminho de <0>{{email}}</0>.",
+    "downloadEverything": "Baixar tudo",
+    "downloadedLabel": "Baixado — pegar de novo",
+    "zipNote": "Um zip · {{size}}",
+    "zipNoteBuilt": "Zip pronto · {{size}}",
+    "files": {
+      "title": "Seus arquivos",
+      "neverExpire": "Links nunca expiram",
+      "ready": "Pronto",
+      "downloaded": "Baixado"
+    },
+    "setPin": {
+      "label": "Crie seu pin",
+      "body": "Quatro dígitos e esses arquivos ficam a um toque — sem senha, sem caçar email.",
+      "placeholder": "0000",
+      "save": "Criar pin",
+      "saved": "Salvo"
+    },
+    "install": {
+      "title": "Como instalar",
+      "steps": [
+        { "title": "Descompacte no aparelho", "description": "Celular ou desktop — os dois funcionam." },
+        { "title": "Salve nas fotos", "description": "Depois defina como papel de parede ou tela de bloqueio." },
+        { "title": "Capas sobem direto", "description": "3000 × 3000 — sem redimensionar para nenhum DSP." }
+      ]
+    },
+    "receipt": {
+      "title": "Recibo",
+      "print": "Imprimir",
+      "order": "Pedido",
+      "date": "Data",
+      "method": "Método",
+      "email": "Email",
+      "subtotal": "Subtotal",
+      "discount": "Desconto",
+      "delivery": "Entrega",
+      "deliveryValue": "Instantânea · grátis",
+      "paid": "Pago"
+    },
+    "licence": {
+      "label": "Licença deste pedido",
+      "body": "Wallpapers: uso pessoal, nos seus próprios aparelhos. Capas: um lançamento, creditado ou não, em qualquer plataforma. Sem revenda, sem banco de imagens, sem cunhagem.",
+      "cta": "Ler a licença completa"
+    },
+    "support": {
+      "label": "Algo errado?",
+      "body": "Link quebrado, arquivo errado, ou você precisa de outro tamanho — chama a gente e resolvemos no mesmo dia.",
+      "cta": "Falar com o suporte"
+    },
+    "related": {
+      "title": "Já que você está aqui",
+      "viewAll": "Acervo completo"
+    }
+  },
+  "search": {
+    "close": "Fechar",
+    "placeholder": "BUSCAR NA SYNDIK",
+    "clear": "Limpar",
+    "filters": {
+      "all": "Tudo",
+      "screen": "Para sua tela",
+      "sound": "Para seu som",
+      "mobile": "Mobile",
+      "desktop": "Desktop"
+    },
+    "plateSingular": "{{count}} arte",
+    "platePlural": "{{count}} artes",
+    "countIdle": "{{count}} artes no acervo",
+    "mostWanted": "Mais buscadas",
+    "suggestions": [
+      { "label": "Wallpapers mobile", "query": "mobile" },
+      { "label": "Capas trap", "query": "trap" },
+      { "label": "Packs de álbum", "query": "album" },
+      { "label": "Noite / escuro", "query": "night" },
+      { "label": "Abaixo de $5", "query": "3.99" }
+    ],
+    "collections": "Coleções",
+    "collectionRows": {
+      "sheetScreens": "Folha 001 — para sua tela",
+      "sheetSound": "Folha 002 — para seu som",
+      "newThisWeek": "Novidades da semana",
+      "retired": "Aposentadas — um dono só"
+    },
+    "lastDrop": "Último lançamento",
+    "soldBadge": "Um dono — já era",
+    "empty": {
+      "title": "Nada com esse nome.",
+      "description": "O acervo é pequeno de propósito. Tente um clima em vez de um título — fumaça, concreto, noite — ou peça pra gente criar.",
+      "commission": "Encomendar",
+      "browse": "Ver o acervo"
+    }
+  },
   "catalog": {
     "tabs": {
       "screen": "Para sua tela",

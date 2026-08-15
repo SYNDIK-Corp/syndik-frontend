@@ -3,6 +3,9 @@ import { Home } from '@/pages/Home';
 import { Catalog } from '@/pages/Catalog';
 import { ProductDetail } from '@/pages/ProductDetail';
 import { Checkout } from '@/pages/Checkout';
+import { Account } from '@/pages/Account';
+import { OrderConfirmation } from '@/pages/OrderConfirmation';
+import { Search } from '@/pages/Search';
 import { Contact } from '@/pages/Contact';
 
 export function AppRoutes() {
@@ -15,6 +18,9 @@ export function AppRoutes() {
         <Route path="/products/sound" element={<Catalog sheet="sound" />} />
         <Route path="/products/:sheet/:id" element={<ProductDetail />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>

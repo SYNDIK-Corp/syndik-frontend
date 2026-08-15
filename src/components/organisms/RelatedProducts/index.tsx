@@ -16,10 +16,22 @@ export interface RelatedProduct extends Product {
 
 export interface RelatedProductsProps {
   products: RelatedProduct[];
-  viewSheetTo: string;
+  viewAllTo: string;
+  /* sobrescrevem os textos padrão (usados na página de produto) */
+  title?: string;
+  viewAllLabel?: string;
+  showArrows?: boolean;
+  cardsPerView?: number;
 }
 
-export function RelatedProducts({ products, viewSheetTo }: RelatedProductsProps) {
+export function RelatedProducts({
+  products,
+  viewAllTo,
+  title,
+  viewAllLabel,
+  showArrows = true,
+  cardsPerView = 4.5,
+}: RelatedProductsProps) {
   const { t } = useTranslation();
   const { railRef, scrollByCard } = useHorizontalRail<HTMLDivElement>(RAIL_GAP);
 
@@ -30,27 +42,29 @@ export function RelatedProducts({ products, viewSheetTo }: RelatedProductsProps)
       <S.Header>
         <div>
           <Eyebrow>{t('productDetail.related.eyebrow')}</Eyebrow>
-          <S.Title>{t('productDetail.related.title')}</S.Title>
+          <S.Title>{title ?? t('productDetail.related.title')}</S.Title>
         </div>
 
         <S.HeaderActions>
           <S.ViewSheetWrapper>
-            <CtaLink to={viewSheetTo}>{t('productDetail.related.viewSheet')}</CtaLink>
+            <CtaLink to={viewAllTo}>{viewAllLabel ?? t('productDetail.related.viewSheet')}</CtaLink>
           </S.ViewSheetWrapper>
-          <S.Arrows>
-            <S.Arrow type="button" aria-label={t('common.previous')} onClick={() => scrollByCard(-1)}>
-              <Icon name="chevron-left" size={15} />
-            </S.Arrow>
-            <S.Arrow type="button" aria-label={t('common.next')} onClick={() => scrollByCard(1)}>
-              <Icon name="chevron-right" size={15} />
-            </S.Arrow>
-          </S.Arrows>
+          {showArrows && (
+            <S.Arrows>
+              <S.Arrow type="button" aria-label={t('common.previous')} onClick={() => scrollByCard(-1)}>
+                <Icon name="chevron-left" size={15} />
+              </S.Arrow>
+              <S.Arrow type="button" aria-label={t('common.next')} onClick={() => scrollByCard(1)}>
+                <Icon name="chevron-right" size={15} />
+              </S.Arrow>
+            </S.Arrows>
+          )}
         </S.HeaderActions>
       </S.Header>
 
       <S.Rail ref={railRef}>
         {products.map((product) => (
-          <S.RailItem key={product.id}>
+          <S.RailItem key={product.id} $cardsPerView={cardsPerView}>
             <ProductCard product={product} to={product.to} />
           </S.RailItem>
         ))}
