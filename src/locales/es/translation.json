@@ -46,8 +46,8 @@
       "label": "Casi tuya — reservada por"
     },
     "unlock": {
-      "progress": "Falta {{amount}} para desbloquear {{percent}}% off",
-      "complete": "Nivel máximo desbloqueado — {{percent}}% off aplicado",
+      "progress": "Falta <0>{{amount}}</0> para desbloquear <1>{{percent}}% off</1>",
+      "complete": "Nivel máximo desbloqueado — <1>{{percent}}% off</1> aplicado",
       "tierLabel": "{{percent}}% off"
     },
     "line": {
@@ -73,7 +73,6 @@
         "applePay": "Apple Pay",
         "paypal": "PayPal",
         "gpay": "G Pay",
-        "pix": "Pix",
         "stripe": "Stripe"
       }
     }

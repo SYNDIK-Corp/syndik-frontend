@@ -16,7 +16,7 @@ const DISCOUNT_TIERS = [
   { threshold: 40, percent: 20, position: 100 },
 ];
 
-const BRANDS: BrandKey[] = ['visa', 'mastercard', 'amex', 'elo', 'gpay', 'pix', 'stripe'];
+const BRANDS: BrandKey[] = ['visa', 'mastercard', 'amex', 'elo', 'gpay', 'stripe'];
 
 export function CartDrawer() {
   const { t, i18n } = useTranslation();
@@ -97,19 +97,30 @@ export function CartDrawer() {
             </S.CloseButton>
           </S.Header>
 
-          <S.HoldBanner>
+          <S.HoldBanner $urgent={holdSecondsRemaining <= 60}>
+            <Icon name="bolt" size={11} />
             <span>{t('cart.held.label')}</span>
             <S.HoldClock>{formatCountdown(holdSecondsRemaining)}</S.HoldClock>
           </S.HoldBanner>
 
           <S.UnlockSection>
             <S.UnlockMessage>
-              {nextTier
-                ? t('cart.unlock.progress', {
+              {nextTier ? (
+                <Trans
+                  i18nKey="cart.unlock.progress"
+                  values={{
                     amount: formatPrice(nextTier.threshold - total, i18n.language),
                     percent: nextTier.percent,
-                  })
-                : t('cart.unlock.complete', { percent: lastTier.percent })}
+                  }}
+                  components={[<S.Emphasis key="0" />, <S.Emphasis key="1" />]}
+                />
+              ) : (
+                <Trans
+                  i18nKey="cart.unlock.complete"
+                  values={{ percent: lastTier.percent }}
+                  components={[<S.Emphasis key="0" />, <S.Emphasis key="1" />]}
+                />
+              )}
             </S.UnlockMessage>
 
             <S.ProgressTrack>
@@ -122,6 +133,7 @@ export function CartDrawer() {
             <S.TierLabels>
               {DISCOUNT_TIERS.map((tier) => (
                 <S.TierLabel key={tier.threshold} $hit={total >= tier.threshold}>
+                  {total >= tier.threshold && <Icon name="check" size={9} />}
                   {t('cart.unlock.tierLabel', { percent: tier.percent })}
                 </S.TierLabel>
               ))}

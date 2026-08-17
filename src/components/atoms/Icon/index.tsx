@@ -11,7 +11,8 @@ export type IconName =
   | 'bolt'
   | 'shield'
   | 'no-watermark'
-  | 'chevron-down';
+  | 'chevron-down'
+  | 'check';
 
 const icons: Record<IconName, React.ReactNode> = {
   search: (
@@ -64,6 +65,7 @@ const icons: Record<IconName, React.ReactNode> = {
     </>
   ),
   'chevron-down': <path d="M5 9.5 12 16l7-6.5" />,
+  check: <path d="M5 12.5 10 17.5 19 7" />,
 };
 
 export interface IconProps {

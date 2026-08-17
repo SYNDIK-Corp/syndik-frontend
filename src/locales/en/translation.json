@@ -46,8 +46,8 @@
       "label": "Almost yours — held for"
     },
     "unlock": {
-      "progress": "Add {{amount}} to unlock {{percent}}% off",
-      "complete": "Top tier unlocked — {{percent}}% off applied",
+      "progress": "Add <0>{{amount}}</0> to unlock <1>{{percent}}% off</1>",
+      "complete": "Top tier unlocked — <1>{{percent}}% off</1> applied",
       "tierLabel": "{{percent}}% off"
     },
     "line": {
@@ -73,7 +73,6 @@
         "applePay": "Apple Pay",
         "paypal": "PayPal",
         "gpay": "G Pay",
-        "pix": "Pix",
         "stripe": "Stripe"
       }
     }

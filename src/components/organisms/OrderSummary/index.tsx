@@ -9,7 +9,7 @@ import { getCartRecommendations, type CartRecommendation } from '@/data/cartReco
 import { getDiscountRate } from '@/data/discountCodes';
 import * as S from './styles';
 
-const SUMMARY_BRANDS = ['visa', 'mastercard', 'amex', 'elo', 'applePay', 'gpay', 'pix', 'stripe'] as const;
+const SUMMARY_BRANDS = ['visa', 'mastercard', 'amex', 'elo', 'applePay', 'gpay', 'stripe'] as const;
 
 export function OrderSummary() {
   const { t, i18n } = useTranslation();

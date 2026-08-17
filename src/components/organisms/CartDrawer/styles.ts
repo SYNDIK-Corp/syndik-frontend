@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Backdrop = styled.div<{ $open: boolean }>`
@@ -86,23 +86,37 @@ export const CloseButton = styled.button`
   display: flex;
 `;
 
-export const HoldBanner = styled.div`
+const urgentPulse = keyframes`
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+`;
+
+export const HoldBanner = styled.div<{ $urgent: boolean }>`
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   padding: 10px 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+
+  svg {
+    flex: 0 0 auto;
+    animation: ${({ $urgent }) => ($urgent ? css`${urgentPulse} 1s ease-in-out infinite` : 'none')};
+  }
 `;
 
 export const HoldClock = styled.span`
   font-variant-numeric: tabular-nums;
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 2px 8px;
 `;
 
 export const UnlockSection = styled.div`
@@ -115,10 +129,15 @@ export const UnlockMessage = styled.div`
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
+export const Emphasis = styled.strong`
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.text};
+`;
+
 export const ProgressTrack = styled.div`
-  margin-top: 14px;
+  margin-top: 16px;
   position: relative;
-  height: 3px;
+  height: 5px;
   background: ${({ theme }) => theme.colors.border};
 `;
 
@@ -136,27 +155,41 @@ export const ProgressTick = styled.span<{ $position: number; $hit: boolean }>`
   position: absolute;
   left: ${({ $position }) => $position}%;
   top: -4px;
-  width: 11px;
-  height: 11px;
-  margin-left: -5px;
+  width: 13px;
+  height: 13px;
+  margin-left: -6.5px;
   background: ${({ theme, $hit }) => ($hit ? theme.colors.black : theme.colors.white)};
   box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.black};
+  transform: scale(${({ $hit }) => ($hit ? 1.15 : 1)});
+  transition:
+    background 0.4s ease,
+    transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
 `;
 
 export const TierLabels = styled.div`
-  margin-top: 12px;
+  margin-top: 14px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  text-align: center;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
 `;
 
 export const TierLabel = styled.span<{ $hit: boolean }>`
-  color: ${({ theme, $hit }) => ($hit ? theme.colors.text : theme.colors.textMuted)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 24px;
+  border: 1px solid ${({ theme, $hit }) => ($hit ? theme.colors.black : theme.colors.border)};
+  background: ${({ theme, $hit }) => ($hit ? theme.colors.black : 'transparent')};
+  color: ${({ theme, $hit }) => ($hit ? theme.colors.white : theme.colors.textMuted)};
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 `;
 
 export const Lines = styled.div`
