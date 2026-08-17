@@ -1,10 +1,13 @@
 import { fetchScreensCatalog } from '@/lib/catalogApi';
+import { formatStyleLabel } from '@/lib/format';
+import { shortRichTitle } from '@/lib/richProductDisplay';
 import type { CatalogItem, CatalogSheet } from '@/types/product';
 
 export interface CartRecommendation {
   id: string;
   sku: string;
   name: string;
+  category?: string;
   price: number;
   compareAtPrice: number;
   sheet: CatalogSheet;
@@ -16,7 +19,8 @@ function toRecommendation(item: CatalogItem): CartRecommendation {
   return {
     id: item.id,
     sku: item.sku,
-    name: item.name,
+    name: shortRichTitle(item),
+    category: item.style ? formatStyleLabel(item.style) : undefined,
     price: item.price,
     compareAtPrice: item.compareAtPrice as number,
     sheet: 'screens',

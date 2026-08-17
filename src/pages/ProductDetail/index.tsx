@@ -7,8 +7,9 @@ import { ProductGallery } from '@/components/organisms/ProductGallery';
 import { ProductInfo } from '@/components/organisms/ProductInfo';
 import { RelatedProducts, type RelatedProduct } from '@/components/organisms/RelatedProducts';
 import { getProductDetail, type ProductDetailData } from '@/data/productDetails';
-import { formatStyleWords } from '@/lib/format';
+import { formatStyleLabel, formatStyleWords } from '@/lib/format';
 import { buildRelatedProducts } from '@/lib/relatedProducts';
+import { shortRichTitle } from '@/lib/richProductDisplay';
 import type { CatalogSheet } from '@/types/product';
 import * as S from './styles';
 
@@ -72,7 +73,7 @@ export function ProductDetail() {
      marca ("SYNDIK / categoria"), igual ao padrão usado no header do
      catálogo ("SYNDIK / THE VAULT — SHEET 001"). */
   const hasRichTitle = itemSheet === 'screens' && item.style != null && item.volume != null;
-  const displayName = hasRichTitle ? `VOL. ${item.volume} — ${item.name}`.toUpperCase() : item.name;
+  const displayName = shortRichTitle(item);
   const displaySubtitle = hasRichTitle
     ? t('productDetail.richSubtitle', { count: item.designCount })
     : undefined;
@@ -81,6 +82,9 @@ export function ProductDetail() {
       ? `SYNDIK / ${formatStyleWords(item.style)}`
       : (item.collectionLabel ??
         t('productDetail.genericCollectionLabel', { sku: item.sku, variant: t(`catalog.variants.${item.variant}`) }));
+  /* categoria "crua" (sem o prefixo "SYNDIK /" do eyebrow) — vai pro
+     carrinho, mesmo formato usado no card do catálogo. */
+  const cartCategory = hasRichTitle && item.style ? formatStyleLabel(item.style) : undefined;
 
   const description = item.description ?? t('productDetail.genericDescription', { name: item.name });
 
@@ -89,15 +93,23 @@ export function ProductDetail() {
       ? t('productDetail.genericFileInfoSingular')
       : t('productDetail.genericFileInfo', { count: plateCount });
 
+  /* a capa do produto entra como a 1ª imagem da galeria (antes da própria
+     galeria de preview) — só quando já existe galeria real, pra não
+     interferir no placeholder genérico de Drop sem cluster/ ainda. */
+  const previewImages =
+    itemSheet === 'screens' && galleryImages.length > 0 && item.coverImage
+      ? [item.coverImage, ...galleryImages]
+      : galleryImages;
+
   /* contagem da galeria (imagens de preview reais, se existirem) é
      independente de plateCount (quantos arquivos pagos vêm no pack) — um
      Drop com cluster/ enviado mostra os previews reais; sem cluster ainda,
      cai no placeholder genérico do tamanho de plateCount. */
-  const galleryCount = galleryImages.length > 0 ? galleryImages.length : plateCount;
+  const galleryCount = previewImages.length > 0 ? previewImages.length : plateCount;
   const plateNames = Array.from({ length: galleryCount }, (_, index) =>
     t('productDetail.genericPlateName', { number: String(index + 1).padStart(2, '0') }),
   );
-  const plates = plateNames.map((name, index) => ({ name, image: galleryImages[index] }));
+  const plates = plateNames.map((name, index) => ({ name, image: previewImages[index] }));
 
   const deviceLabel: Record<string, string> = {
     mobile: t('productDetail.deviceLabel.mobile'),
@@ -135,6 +147,7 @@ export function ProductDetail() {
               sku={item.sku}
               collectionLabel={collectionLabel}
               name={displayName}
+              category={cartCategory}
               subtitle={displaySubtitle}
               image={item.coverImage}
               price={item.price}

@@ -76,6 +76,7 @@ export function CartDrawer() {
                 addItem({
                   sku: product.sku,
                   name: product.name,
+                  category: product.category,
                   price: product.price,
                   compareAtPrice: product.compareAtPrice,
                   image: product.image,

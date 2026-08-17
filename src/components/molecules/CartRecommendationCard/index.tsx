@@ -17,7 +17,7 @@ export function CartRecommendationCard({ product, onAdd }: CartRecommendationCar
       <S.Thumb>{product.image ? <S.ThumbImage src={product.image} alt={product.name} /> : product.sku}</S.Thumb>
 
       <S.Meta>
-        <S.Sku>{product.sku}</S.Sku>
+        <S.Sku>{product.category ?? product.sku}</S.Sku>
         <S.Name>{product.name}</S.Name>
         <S.Prices>
           <S.Price>{formatPrice(product.price, i18n.language)}</S.Price>

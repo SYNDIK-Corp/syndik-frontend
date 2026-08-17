@@ -14,12 +14,12 @@ export function OrderSummaryLine({ item, onRemove }: OrderSummaryLineProps) {
   return (
     <S.Container>
       <S.ThumbWrapper>
-        <S.Thumb>{item.sku}</S.Thumb>
+        <S.Thumb>{item.image ? <S.ThumbImage src={item.image} alt="" /> : item.sku}</S.Thumb>
         <S.QtyBadge>1</S.QtyBadge>
       </S.ThumbWrapper>
 
       <S.Info>
-        <S.Sku>{item.sku}</S.Sku>
+        <S.Sku>{item.category ?? item.sku}</S.Sku>
         <S.Name>{item.name}</S.Name>
         <S.RemoveButton type="button" onClick={onRemove}>
           {t('checkout.summary.remove')}

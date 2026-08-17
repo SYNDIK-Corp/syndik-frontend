@@ -65,7 +65,7 @@ export function RelatedProducts({
       <S.Rail ref={railRef}>
         {products.map((product) => (
           <S.RailItem key={product.id} $cardsPerView={cardsPerView}>
-            <ProductCard product={product} to={product.to} />
+            <ProductCard product={product} dense to={product.to} />
           </S.RailItem>
         ))}
         <S.RailSpacer aria-hidden="true" />

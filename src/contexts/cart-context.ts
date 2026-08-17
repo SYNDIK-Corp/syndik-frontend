@@ -7,6 +7,9 @@ export interface CartItem {
   compareAtPrice?: number;
   description?: string;
   image?: string;
+  /* eyebrow do Drop (ex.: "MONEY / POWER") — mesma categoria mostrada no
+     card/página de produto, exibida junto do item no carrinho/checkout */
+  category?: string;
 }
 
 export interface CartContextValue {

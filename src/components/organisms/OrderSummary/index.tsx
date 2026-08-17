@@ -124,6 +124,7 @@ export function OrderSummary() {
                       {
                         sku: addon.sku,
                         name: addon.name,
+                        category: addon.category,
                         price: addon.price,
                         compareAtPrice: addon.compareAtPrice,
                         image: addon.image,

@@ -20,7 +20,7 @@ export function CartLineItem({ item, onRemove }: CartLineItemProps) {
       <S.Info>
         <S.Top>
           <S.Meta>
-            <S.Sku>{item.sku}</S.Sku>
+            <S.Sku>{item.category ?? item.sku}</S.Sku>
             <S.Name>{item.name}</S.Name>
             {item.description && <S.Description>{item.description}</S.Description>}
           </S.Meta>

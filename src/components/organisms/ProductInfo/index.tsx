@@ -12,6 +12,7 @@ export interface ProductInfoProps {
   sku: string;
   collectionLabel: string;
   name: string;
+  category?: string;
   subtitle?: string;
   image?: string;
   price: number;
@@ -27,6 +28,7 @@ export function ProductInfo({
   sku,
   collectionLabel,
   name,
+  category,
   subtitle,
   image,
   price,
@@ -103,7 +105,9 @@ export function ProductInfo({
 
       <S.AddToCartButton
         type="button"
-        onClick={() => addItem({ sku, name, price, compareAtPrice, image, description: includedRows[0]?.label })}
+        onClick={() =>
+          addItem({ sku, name, price, compareAtPrice, image, category, description: includedRows[0]?.label })
+        }
       >
         <Icon name="bag" size={14} />
         <span>{t('productDetail.addToCart')}</span>

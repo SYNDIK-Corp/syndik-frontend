@@ -15,6 +15,10 @@ export interface Product {
   /* eyebrow pequeno acima do nome (ex.: "MONEY / POWER") — só o grid
      principal do catálogo usa isso; demais cards ficam sem */
   category?: string;
+  /* versão curta do nome ("VOL.N — Nome", sem o parêntese de marketing) —
+     usada quando o produto vai pro carrinho; o card continua mostrando
+     `name` (a versão rica/comprida). Sem style/volume, é igual a `name`. */
+  cartName?: string;
 }
 
 export type CatalogSheet = 'screens' | 'sound';

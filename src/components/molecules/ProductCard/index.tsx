@@ -43,10 +43,11 @@ export function ProductCard({
     }
     addItem({
       sku: product.sku ?? product.id.toUpperCase(),
-      name: product.name,
+      name: product.cartName ?? product.name,
       price: product.price,
       compareAtPrice: product.compareAtPrice,
       image: product.coverImage,
+      category: product.category,
     });
   };
 

@@ -17,6 +17,7 @@ export const ThumbWrapper = styled.div`
 export const Thumb = styled.div`
   position: absolute;
   inset: 0;
+  overflow: hidden;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   display: flex;
@@ -27,6 +28,14 @@ export const Thumb = styled.div`
   font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.12em;
+`;
+
+export const ThumbImage = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const QtyBadge = styled.span`
