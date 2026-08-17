@@ -83,6 +83,12 @@ export const Layer = styled.div<{ $active: boolean }>`
   transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 `;
 
+export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 export const ZoomHint = styled.span`
   position: absolute;
   left: 0;

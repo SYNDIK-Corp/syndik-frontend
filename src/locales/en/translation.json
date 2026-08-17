@@ -336,6 +336,7 @@
       "sound": "For your sound"
     },
     "variants": {
+      "comboPack": "7 mobile + 7 desktop",
       "mobile7": "7 mobile",
       "desktop7": "7 desktop",
       "single": "single",
@@ -344,7 +345,7 @@
     "screens": {
       "eyebrow": "SYNDIK / The vault — sheet 001",
       "title": "For your screen.",
-      "stats": ["12 plates", "7 files per pack", "8K raw + mobile cut", "Updated weekly", "2 retired"],
+      "stats": ["12 plates", "14 files per pack (7 mobile + 7 desktop)", "8K raw + mobile cut", "Updated weekly", "2 retired"],
       "retiredTag": "Retired",
       "endNote": "End of sheet 001 — SYNDIK / Digital culture / 2026",
       "nextSheet": "Next sheet: for your sound"
@@ -396,19 +397,12 @@
     "genericDescription": "{{name}} is an original piece from the SYNDIK archive, ready for immediate use.",
     "genericFileInfo": "{{count}} files",
     "genericFileInfoSingular": "1 file",
+    "deviceLabel": {
+      "mobile": "Mobile wallpapers",
+      "desktop": "Desktop wallpapers",
+      "any": "Files"
+    },
     "included": {
-      "mobile7": [
-        { "label": "7 mobile wallpapers", "value": "1440 × 3120" },
-        { "label": "Matching lockscreen crops", "value": "Included" },
-        { "label": "8K raw masters", "value": "7680 × 4320" },
-        { "label": "Readme + licence", "value": "PDF" }
-      ],
-      "desktop7": [
-        { "label": "7 desktop wallpapers", "value": "3840 × 2160" },
-        { "label": "Matching lockscreen crops", "value": "Included" },
-        { "label": "8K raw masters", "value": "7680 × 4320" },
-        { "label": "Readme + licence", "value": "PDF" }
-      ],
       "single": [
         { "label": "High-resolution cover", "value": "3000 × 3000" },
         { "label": "Release licence", "value": "One project" },
@@ -423,29 +417,11 @@
       ]
     },
     "faq": {
-      "screens": [
-        { "question": "How do I install them?", "answer": "Download the zip on your phone, open Files, then set from the photo library. The readme covers iOS and Android." },
-        { "question": "Is desktop included?", "answer": "This is the mobile cut. The desktop composition, when available, is sold separately." },
-        { "question": "Licence", "answer": "Personal use on your own devices. No resale, no print runs, no NFT minting." }
-      ],
       "sound": [
         { "question": "Spotify and Apple Music ready?", "answer": "Yes. Every cover ships at the exact spec distributors ask for." },
         { "question": "Does the licence cover the release?", "answer": "Yes, a release licence for one project is included with the purchase." },
         { "question": "Can I resell it?", "answer": "No — each cover is sold once and retired from the archive right after." }
       ]
-    },
-    "items": {
-      "scr-001": {
-        "collectionLabel": "SYNDIK / Collection 001 — mobile",
-        "description": "Seven night plates shot through wet glass and graded by hand — concrete, sodium light and no skyline you can name. Cut for the phone you actually carry.",
-        "fileInfo": "7 files · 214 MB",
-        "plates": ["Sodium", "Wet glass", "Block", "Underpass", "Fence", "Late bus", "Last train"],
-        "faq": [
-          { "question": "How do I install them?", "answer": "Download the zip on your phone, open Files, then set from the photo library. The readme covers iOS and Android." },
-          { "question": "Is desktop included?", "answer": "This plate is the mobile cut. The desktop composition is sold as STATIC on sheet 001." },
-          { "question": "Licence", "answer": "Personal use on your own devices. No resale, no print runs, no NFT minting." }
-        ]
-      }
     }
   },
   "sound": {

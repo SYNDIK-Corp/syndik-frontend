@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@/components/atoms/Icon';
 import { ProductCard } from '@/components/molecules/ProductCard';
-import { bestSellers } from '@/data/products';
+import { fetchHomeBestSellers } from '@/lib/catalogApi';
+import type { Product } from '@/types/product';
 import * as S from './styles';
 
 export interface MobileMenuProps {
@@ -12,6 +13,7 @@ export interface MobileMenuProps {
 
 export function MobileMenu({ open, onClose }: MobileMenuProps) {
   const { t } = useTranslation();
+  const [bestSellers, setBestSellers] = useState<Product[]>([]);
 
   useEffect(() => {
     if (!open) return;
@@ -21,6 +23,17 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
       document.body.style.overflow = previous;
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!open || bestSellers.length > 0) return;
+    let cancelled = false;
+    fetchHomeBestSellers().then((result) => {
+      if (!cancelled) setBestSellers(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [open, bestSellers.length]);
 
   return (
     <>

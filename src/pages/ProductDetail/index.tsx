@@ -1,73 +1,104 @@
+import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MainLayout } from '@/components/templates/MainLayout';
 import { ProductGallery } from '@/components/organisms/ProductGallery';
 import { ProductInfo } from '@/components/organisms/ProductInfo';
-import { RelatedProducts } from '@/components/organisms/RelatedProducts';
-import { getProductDetail } from '@/data/productDetails';
+import { RelatedProducts, type RelatedProduct } from '@/components/organisms/RelatedProducts';
+import { getProductDetail, type ProductDetailData } from '@/data/productDetails';
 import { buildRelatedProducts } from '@/lib/relatedProducts';
 import type { CatalogSheet } from '@/types/product';
 import * as S from './styles';
 
-interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-interface IncludedRow {
-  label: string;
-  value: string;
-}
+type LoadState =
+  | { status: 'loading' }
+  | { status: 'not-found' }
+  | { status: 'ready'; detail: ProductDetailData; related: RelatedProduct[] };
 
 export function ProductDetail() {
   const { sheet, id } = useParams<{ sheet: CatalogSheet; id: string }>();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const [state, setState] = useState<LoadState>({ status: 'loading' });
 
-  const detail = id ? getProductDetail(id) : undefined;
+  useEffect(() => {
+    let cancelled = false;
+    setState({ status: 'loading' });
 
-  if (!detail || detail.sheet !== sheet) {
+    if (!id) {
+      setState({ status: 'not-found' });
+      return;
+    }
+
+    getProductDetail(id).then(async (detail) => {
+      if (cancelled) return;
+      if (!detail || detail.sheet !== sheet) {
+        setState({ status: 'not-found' });
+        return;
+      }
+      const related = await buildRelatedProducts(detail.relatedIds, t);
+      if (!cancelled) setState({ status: 'ready', detail, related });
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [id, sheet, t]);
+
+  if (state.status === 'not-found') {
     return <Navigate to="/products/screens" replace />;
   }
 
-  const { item, plateCount, relatedIds } = detail;
+  if (state.status === 'loading') {
+    return <MainLayout>{null}</MainLayout>;
+  }
+
+  const { item, sheet: itemSheet, plateCount, galleryImages, fileBreakdown, includedRows, faq } = state.detail;
   const compareAtPrice = item.compareAtPrice;
   const onSale = item.compareAtPrice != null;
 
-  const collectionLabel = t(`productDetail.items.${item.id}.collectionLabel`, {
-    defaultValue: t('productDetail.genericCollectionLabel', {
-      sku: item.sku,
-      variant: t(`catalog.variants.${item.variant}`),
-    }),
-  });
+  /* 'screens' é 100% backend: nome/descrição/specs/FAQ vêm do produto real.
+     'sound' continua mockado (Fase 10) — usa os templates genéricos por
+     variante/sheet só pra esses 2 itens, nunca por id individual. */
+  const collectionLabel =
+    item.collectionLabel ??
+    t('productDetail.genericCollectionLabel', { sku: item.sku, variant: t(`catalog.variants.${item.variant}`) });
 
-  const description = t(`productDetail.items.${item.id}.description`, {
-    defaultValue: t('productDetail.genericDescription', { name: item.name }),
-  });
+  const description = item.description ?? t('productDetail.genericDescription', { name: item.name });
 
-  const fileInfo = t(`productDetail.items.${item.id}.fileInfo`, {
-    defaultValue:
-      plateCount === 1
-        ? t('productDetail.genericFileInfoSingular')
-        : t('productDetail.genericFileInfo', { count: plateCount }),
-  });
+  const fileInfo =
+    plateCount === 1
+      ? t('productDetail.genericFileInfoSingular')
+      : t('productDetail.genericFileInfo', { count: plateCount });
 
-  const platesKey = `productDetail.items.${item.id}.plates`;
-  const plateNames = i18n.exists(platesKey)
-    ? (t(platesKey, { returnObjects: true }) as string[])
-    : Array.from({ length: plateCount }, (_, index) =>
-        t('productDetail.genericPlateName', { number: String(index + 1).padStart(2, '0') }),
-      );
+  /* contagem da galeria (imagens de preview reais, se existirem) é
+     independente de plateCount (quantos arquivos pagos vêm no pack) — um
+     Drop com cluster/ enviado mostra os previews reais; sem cluster ainda,
+     cai no placeholder genérico do tamanho de plateCount. */
+  const galleryCount = galleryImages.length > 0 ? galleryImages.length : plateCount;
+  const plateNames = Array.from({ length: galleryCount }, (_, index) =>
+    t('productDetail.genericPlateName', { number: String(index + 1).padStart(2, '0') }),
+  );
+  const plates = plateNames.map((name, index) => ({ name, image: galleryImages[index] }));
 
-  const includedRows = t(`productDetail.included.${item.variant}`, {
-    returnObjects: true,
-  }) as IncludedRow[];
+  const deviceLabel: Record<string, string> = {
+    mobile: t('productDetail.deviceLabel.mobile'),
+    desktop: t('productDetail.deviceLabel.desktop'),
+    any: t('productDetail.deviceLabel.any'),
+  };
+  const derivedIncludedRows = fileBreakdown.map((row) => ({
+    label: deviceLabel[row.device_variant] ?? row.device_variant,
+    value: String(row.file_count),
+  }));
 
-  const faqKey = `productDetail.items.${item.id}.faq`;
-  const faq = i18n.exists(faqKey)
-    ? (t(faqKey, { returnObjects: true }) as FaqItem[])
-    : (t(`productDetail.faq.${sheet}`, { returnObjects: true }) as FaqItem[]);
+  const resolvedIncludedRows =
+    itemSheet === 'screens'
+      ? [...derivedIncludedRows, ...includedRows]
+      : (t(`productDetail.included.${item.variant}`, { returnObjects: true }) as { label: string; value: string }[]);
 
-  const related = buildRelatedProducts(relatedIds, t);
+  const resolvedFaq =
+    itemSheet === 'screens'
+      ? faq
+      : (t(`productDetail.faq.${sheet}`, { returnObjects: true }) as { question: string; answer: string }[]);
 
   return (
     <MainLayout>
@@ -79,7 +110,7 @@ export function ProductDetail() {
 
       <S.Section>
         <S.Grid>
-          <ProductGallery plateNames={plateNames} />
+          <ProductGallery plates={plates} />
           <ProductInfo
             sku={item.sku}
             collectionLabel={collectionLabel}
@@ -89,13 +120,13 @@ export function ProductDetail() {
             onSale={onSale}
             description={description}
             fileInfo={fileInfo}
-            includedRows={includedRows}
-            faq={faq}
+            includedRows={resolvedIncludedRows}
+            faq={resolvedFaq}
           />
         </S.Grid>
       </S.Section>
 
-      <RelatedProducts products={related} viewAllTo={`/products/${sheet}`} />
+      <RelatedProducts products={state.related} viewAllTo={`/products/${sheet}`} />
     </MainLayout>
   );
 }

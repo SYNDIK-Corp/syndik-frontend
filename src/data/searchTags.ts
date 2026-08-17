@@ -1,13 +1,15 @@
-/* palavras-chave de humor/estilo por item, usadas só na busca */
+/* palavras-chave de humor/estilo por item, usadas só na busca.
+   chave = SKU (estável — não muda se o nome/slug do produto mudar),
+   maiúsculo pra bater com o SKU real do banco (SCR-001, SND-001...) */
 export const searchTags: Record<string, string[]> = {
-  'scr-001': ['night', 'city', 'concrete', 'sodium'],
-  'scr-002': ['grain', 'noise', 'analog'],
-  'scr-003': ['brutalist', 'block', 'grey'],
-  'scr-005': ['smoke', 'haze', 'dark'],
-  'scr-006': ['grid', 'geometry', 'lines'],
-  'scr-012': ['night', 'train', 'motion'],
-  'snd-001': ['trap', 'night', 'cover'],
-  'snd-003': ['chrome', 'metal', 'album'],
-  'snd-004': ['bass', '808', 'dark'],
-  'snd-005': ['saint', 'gothic', 'album'],
+  'SCR-001': ['night', 'city', 'concrete', 'sodium'],
+  'SCR-002': ['grain', 'noise', 'analog'],
+  'SCR-003': ['brutalist', 'block', 'grey'],
+  'SCR-005': ['smoke', 'haze', 'dark'],
+  'SCR-006': ['grid', 'geometry', 'lines'],
+  'SCR-012': ['night', 'train', 'motion'],
+  'SND-001': ['trap', 'night', 'cover'],
+  'SND-003': ['chrome', 'metal', 'album'],
+  'SND-004': ['bass', '808', 'dark'],
+  'SND-005': ['saint', 'gothic', 'album'],
 };

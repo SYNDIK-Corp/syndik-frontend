@@ -49,18 +49,20 @@ export function ProductInfo({
 
       <S.Description>{description}</S.Description>
 
-      <S.IncludedList>
-        <S.IncludedHeader>
-          <span>{t('productDetail.whatsIncluded')}</span>
-          <span>{fileInfo}</span>
-        </S.IncludedHeader>
-        {includedRows.map((row) => (
-          <S.IncludedRow key={row.label}>
-            <S.IncludedLabel>{row.label}</S.IncludedLabel>
-            <S.IncludedValue>{row.value}</S.IncludedValue>
-          </S.IncludedRow>
-        ))}
-      </S.IncludedList>
+      {includedRows.length > 0 && (
+        <S.IncludedList>
+          <S.IncludedHeader>
+            <span>{t('productDetail.whatsIncluded')}</span>
+            <span>{fileInfo}</span>
+          </S.IncludedHeader>
+          {includedRows.map((row) => (
+            <S.IncludedRow key={row.label}>
+              <S.IncludedLabel>{row.label}</S.IncludedLabel>
+              <S.IncludedValue>{row.value}</S.IncludedValue>
+            </S.IncludedRow>
+          ))}
+        </S.IncludedList>
+      )}
 
       <S.AddToCartButton
         type="button"
@@ -88,18 +90,20 @@ export function ProductInfo({
         </S.ExclusivityCta>
       </S.ExclusivityBox>
 
-      <S.FaqList>
-        {faq.map((item, index) => (
-          <AccordionItem
-            key={item.question}
-            question={item.question}
-            open={openFaqIndex === index}
-            onToggle={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-          >
-            {item.answer}
-          </AccordionItem>
-        ))}
-      </S.FaqList>
+      {faq.length > 0 && (
+        <S.FaqList>
+          {faq.map((item, index) => (
+            <AccordionItem
+              key={item.question}
+              question={item.question}
+              open={openFaqIndex === index}
+              onToggle={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+            >
+              {item.answer}
+            </AccordionItem>
+          ))}
+        </S.FaqList>
+      )}
     </S.Container>
   );
 }

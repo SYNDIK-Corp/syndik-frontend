@@ -7,7 +7,7 @@ import { CartRecommendationCard } from '@/components/molecules/CartRecommendatio
 import { PaymentBrands, type BrandKey } from '@/components/molecules/PaymentBrands';
 import { useCart } from '@/hooks/useCart';
 import { formatCountdown, formatPrice } from '@/lib/format';
-import { getCartRecommendations } from '@/data/cartRecommendations';
+import { getCartRecommendations, type CartRecommendation } from '@/data/cartRecommendations';
 import * as S from './styles';
 
 const DISCOUNT_TIERS = [
@@ -42,7 +42,19 @@ export function CartDrawer() {
   const nextTier = DISCOUNT_TIERS.find((tier) => total < tier.threshold);
   const progressPercent = Math.min(100, (total / lastTier.threshold) * 100);
 
-  const recommendations = getCartRecommendations(items.map((item) => item.sku));
+  const excludeSkus = items.map((item) => item.sku).join(',');
+  const [recommendations, setRecommendations] = useState<CartRecommendation[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    getCartRecommendations(excludeSkus ? excludeSkus.split(',') : []).then((result) => {
+      if (!cancelled) setRecommendations(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [excludeSkus]);
+
   const canCheckout = termsAccepted && items.length > 0;
 
   const ctaLabel = !items.length

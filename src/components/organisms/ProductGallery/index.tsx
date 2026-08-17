@@ -3,15 +3,21 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@/components/atoms/Icon';
 import * as S from './styles';
 
-export interface ProductGalleryProps {
-  plateNames: string[];
+export interface GalleryPlate {
+  name: string;
+  image?: string;
 }
 
-export function ProductGallery({ plateNames }: ProductGalleryProps) {
+export interface ProductGalleryProps {
+  plates: GalleryPlate[];
+}
+
+export function ProductGallery({ plates }: ProductGalleryProps) {
   const { t } = useTranslation();
   const [active, setActive] = useState(0);
-  const total = plateNames.length;
+  const total = plates.length;
   const multiple = total > 1;
+  const plateNames = plates.map((plate) => plate.name);
 
   const step = (direction: -1 | 1) => {
     setActive((current) => (current + direction + total) % total);
@@ -41,8 +47,10 @@ export function ProductGallery({ plateNames }: ProductGalleryProps) {
 
       <S.Zoomer>
         <S.ZoomImage>
-          {plateNames.map((name, index) => (
-            <S.Layer key={name} $active={index === active} />
+          {plates.map((plate, index) => (
+            <S.Layer key={plate.name} $active={index === active}>
+              {plate.image && <S.Image src={plate.image} alt={plate.name} />}
+            </S.Layer>
           ))}
         </S.ZoomImage>
         <S.ZoomHint>{t('productDetail.hoverToZoom')}</S.ZoomHint>
@@ -50,15 +58,17 @@ export function ProductGallery({ plateNames }: ProductGalleryProps) {
 
       {multiple && (
         <S.Filmstrip>
-          {plateNames.map((name, index) => (
+          {plates.map((plate, index) => (
             <S.Thumb
-              key={name}
+              key={plate.name}
               type="button"
               $active={index === active}
-              aria-label={name}
+              aria-label={plate.name}
               aria-current={index === active}
               onClick={() => setActive(index)}
-            />
+            >
+              {plate.image && <S.Image src={plate.image} alt="" />}
+            </S.Thumb>
           ))}
         </S.Filmstrip>
       )}

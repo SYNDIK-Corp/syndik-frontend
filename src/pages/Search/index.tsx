@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchLayout } from '@/components/templates/SearchLayout';
 import { SearchBar } from '@/components/organisms/SearchBar';
@@ -6,17 +6,38 @@ import { SearchControls } from '@/components/organisms/SearchControls';
 import { SearchIdle, type CollectionRow } from '@/components/organisms/SearchIdle';
 import { SearchResults, type SearchResultItem } from '@/components/organisms/SearchResults';
 import { SearchEmpty } from '@/components/organisms/SearchEmpty';
-import { buildSearchIndex, searchCatalog, type SearchFilter } from '@/lib/search';
-import { screensCatalog } from '@/data/catalog';
-import type { Product } from '@/types/product';
+import { buildSearchIndex, searchCatalog, type SearchableItem, type SearchFilter } from '@/lib/search';
+import { fetchScreensCatalog } from '@/lib/catalogApi';
+import type { CatalogItem, Product } from '@/types/product';
 import * as S from './styles';
 
 export function Search() {
   const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<SearchFilter>('all');
+  const [index, setIndex] = useState<SearchableItem[]>([]);
+  const [screensCatalog, setScreensCatalog] = useState<CatalogItem[]>([]);
 
-  const index = useMemo(() => buildSearchIndex(t), [t]);
+  useEffect(() => {
+    let cancelled = false;
+    buildSearchIndex(t).then((result) => {
+      if (!cancelled) setIndex(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [t]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchScreensCatalog().then((result) => {
+      if (!cancelled) setScreensCatalog(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const hits = useMemo(() => searchCatalog(index, query, filter), [index, query, filter]);
   const active = query.trim() !== '' || filter !== 'all';
 
@@ -53,8 +74,8 @@ export function Search() {
     },
   ];
 
-  const lastDropEntry = screensCatalog[screensCatalog.length - 1];
-  const lastDropProduct: Product = {
+  const lastDropEntry = screensCatalog.at(-1);
+  const lastDropProduct: Product | undefined = lastDropEntry && {
     id: lastDropEntry.id,
     sku: lastDropEntry.sku,
     collection: `${lastDropEntry.sku} / ${t(`catalog.variants.${lastDropEntry.variant}`)}`,
@@ -83,7 +104,7 @@ export function Search() {
       <S.Section>
         <SearchControls filter={filter} onFilterChange={setFilter} countLabel={countLabel} />
 
-        {!active && (
+        {!active && lastDropProduct && lastDropEntry && (
           <SearchIdle
             suggestions={suggestions}
             onPickSuggestion={setQuery}

@@ -336,6 +336,7 @@
       "sound": "Para seu som"
     },
     "variants": {
+      "comboPack": "7 mobile + 7 desktop",
       "mobile7": "7 mobile",
       "desktop7": "7 desktop",
       "single": "single",
@@ -344,7 +345,7 @@
     "screens": {
       "eyebrow": "SYNDIK / O acervo — folha 001",
       "title": "Para sua tela.",
-      "stats": ["12 artes", "7 arquivos por pack", "8K raw + corte mobile", "Atualizado toda semana", "2 aposentadas"],
+      "stats": ["12 artes", "14 arquivos por pack (7 mobile + 7 desktop)", "8K raw + corte mobile", "Atualizado toda semana", "2 aposentadas"],
       "retiredTag": "Aposentada",
       "endNote": "Fim da folha 001 — SYNDIK / Cultura digital / 2026",
       "nextSheet": "Próxima folha: para seu som"
@@ -396,19 +397,12 @@
     "genericDescription": "{{name}} é uma arte original do acervo SYNDIK, pronta para uso imediato.",
     "genericFileInfo": "{{count}} arquivos",
     "genericFileInfoSingular": "1 arquivo",
+    "deviceLabel": {
+      "mobile": "Wallpapers mobile",
+      "desktop": "Wallpapers desktop",
+      "any": "Arquivos"
+    },
     "included": {
-      "mobile7": [
-        { "label": "7 wallpapers mobile", "value": "1440 × 3120" },
-        { "label": "Recortes de bloqueio combinando", "value": "Incluído" },
-        { "label": "Masters 8K raw", "value": "7680 × 4320" },
-        { "label": "Readme + licença", "value": "PDF" }
-      ],
-      "desktop7": [
-        { "label": "7 wallpapers desktop", "value": "3840 × 2160" },
-        { "label": "Recortes de bloqueio combinando", "value": "Incluído" },
-        { "label": "Masters 8K raw", "value": "7680 × 4320" },
-        { "label": "Readme + licença", "value": "PDF" }
-      ],
       "single": [
         { "label": "Capa em alta resolução", "value": "3000 × 3000" },
         { "label": "Licença de lançamento", "value": "Um projeto" },
@@ -423,29 +417,11 @@
       ]
     },
     "faq": {
-      "screens": [
-        { "question": "Como eu instalo?", "answer": "Baixe o zip no celular, abra os Arquivos e defina pela galeria de fotos. O readme cobre iOS e Android." },
-        { "question": "O desktop está incluso?", "answer": "Esta é a versão para tela do celular. A composição para desktop, quando existir, é vendida separadamente." },
-        { "question": "Licença", "answer": "Uso pessoal, nos seus próprios aparelhos. Sem revenda, sem impressão, sem cunhagem em NFT." }
-      ],
       "sound": [
         { "question": "Funciona no Spotify e Apple Music?", "answer": "Sim. Toda capa sai na especificação exata que os distribuidores pedem." },
         { "question": "A licença cobre o lançamento?", "answer": "Sim, uma licença de lançamento para um projeto está inclusa na compra." },
         { "question": "Posso revender?", "answer": "Não — cada capa é vendida uma única vez e sai do acervo em seguida." }
       ]
-    },
-    "items": {
-      "scr-001": {
-        "collectionLabel": "SYNDIK / Coleção 001 — mobile",
-        "description": "Sete pranchas noturnas fotografadas através de vidro molhado e reveladas à mão — concreto, luz de sódio e nenhum horizonte que você reconheça. Cortada para o celular que você realmente carrega.",
-        "fileInfo": "7 arquivos · 214 MB",
-        "plates": ["Sódio", "Vidro molhado", "Bloco", "Passagem", "Cerca", "Último ônibus", "Último trem"],
-        "faq": [
-          { "question": "Como eu instalo?", "answer": "Baixe o zip no celular, abra os Arquivos e defina pela galeria de fotos. O readme cobre iOS e Android." },
-          { "question": "O desktop está incluso?", "answer": "Esta é a versão para o celular. A composição para desktop é vendida como STATIC na folha 001." },
-          { "question": "Licença", "answer": "Uso pessoal, nos seus próprios aparelhos. Sem revenda, sem impressão, sem cunhagem em NFT." }
-        ]
-      }
     }
   },
   "sound": {

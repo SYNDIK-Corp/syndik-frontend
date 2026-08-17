@@ -336,6 +336,7 @@
       "sound": "Para tu sonido"
     },
     "variants": {
+      "comboPack": "7 móvil + 7 escritorio",
       "mobile7": "7 móvil",
       "desktop7": "7 escritorio",
       "single": "single",
@@ -344,7 +345,7 @@
     "screens": {
       "eyebrow": "SYNDIK / El archivo — hoja 001",
       "title": "Para tu pantalla.",
-      "stats": ["12 obras", "7 archivos por pack", "8K raw + corte móvil", "Actualizado cada semana", "2 retiradas"],
+      "stats": ["12 obras", "14 archivos por pack (7 móvil + 7 escritorio)", "8K raw + corte móvil", "Actualizado cada semana", "2 retiradas"],
       "retiredTag": "Retirada",
       "endNote": "Fin de la hoja 001 — SYNDIK / Cultura digital / 2026",
       "nextSheet": "Próxima hoja: para tu sonido"
@@ -396,19 +397,12 @@
     "genericDescription": "{{name}} es una obra original del archivo SYNDIK, lista para usar de inmediato.",
     "genericFileInfo": "{{count}} archivos",
     "genericFileInfoSingular": "1 archivo",
+    "deviceLabel": {
+      "mobile": "Wallpapers para móvil",
+      "desktop": "Wallpapers de escritorio",
+      "any": "Archivos"
+    },
     "included": {
-      "mobile7": [
-        { "label": "7 wallpapers para móvil", "value": "1440 × 3120" },
-        { "label": "Recortes de bloqueo a juego", "value": "Incluido" },
-        { "label": "Masters 8K raw", "value": "7680 × 4320" },
-        { "label": "Readme + licencia", "value": "PDF" }
-      ],
-      "desktop7": [
-        { "label": "7 wallpapers de escritorio", "value": "3840 × 2160" },
-        { "label": "Recortes de bloqueo a juego", "value": "Incluido" },
-        { "label": "Masters 8K raw", "value": "7680 × 4320" },
-        { "label": "Readme + licencia", "value": "PDF" }
-      ],
       "single": [
         { "label": "Portada en alta resolución", "value": "3000 × 3000" },
         { "label": "Licencia de lanzamiento", "value": "Un proyecto" },
@@ -423,29 +417,11 @@
       ]
     },
     "faq": {
-      "screens": [
-        { "question": "¿Cómo las instalo?", "answer": "Descarga el zip en tu celular, abre Archivos y configúrala desde la galería de fotos. El readme cubre iOS y Android." },
-        { "question": "¿Incluye escritorio?", "answer": "Esta es la versión para móvil. La composición de escritorio, cuando exista, se vende por separado." },
-        { "question": "Licencia", "answer": "Uso personal, en tus propios dispositivos. Sin reventa, sin impresiones, sin acuñar NFT." }
-      ],
       "sound": [
         { "question": "¿Lista para Spotify y Apple Music?", "answer": "Sí. Cada portada sale con la especificación exacta que piden los distribuidores." },
         { "question": "¿La licencia cubre el lanzamiento?", "answer": "Sí, la compra incluye una licencia de lanzamiento para un proyecto." },
         { "question": "¿Puedo revenderla?", "answer": "No — cada portada se vende una sola vez y luego se retira del archivo." }
       ]
-    },
-    "items": {
-      "scr-001": {
-        "collectionLabel": "SYNDIK / Colección 001 — móvil",
-        "description": "Siete láminas nocturnas fotografiadas a través de vidrio mojado y reveladas a mano — concreto, luz de sodio y ningún horizonte que reconozcas. Recortada para el celular que realmente llevas contigo.",
-        "fileInfo": "7 archivos · 214 MB",
-        "plates": ["Sodio", "Vidrio mojado", "Bloque", "Paso a desnivel", "Cerca", "Último autobús", "Último tren"],
-        "faq": [
-          { "question": "¿Cómo las instalo?", "answer": "Descarga el zip en tu celular, abre Archivos y configúrala desde la galería de fotos. El readme cubre iOS y Android." },
-          { "question": "¿Incluye escritorio?", "answer": "Esta lámina es el corte para móvil. La composición de escritorio se vende como STATIC en la hoja 001." },
-          { "question": "Licencia", "answer": "Uso personal, en tus propios dispositivos. Sin reventa, sin impresiones, sin acuñar NFT." }
-        ]
-      }
     }
   },
   "sound": {
