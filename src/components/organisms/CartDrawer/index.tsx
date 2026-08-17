@@ -78,6 +78,7 @@ export function CartDrawer() {
                   name: product.name,
                   price: product.price,
                   compareAtPrice: product.compareAtPrice,
+                  image: product.image,
                 })
               }
             />

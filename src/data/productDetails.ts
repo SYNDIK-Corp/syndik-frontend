@@ -67,22 +67,17 @@ export async function getCatalogEntry(id: string): Promise<CatalogEntry | undefi
   return item ? { item, sheet: 'screens' } : undefined;
 }
 
-/* fallback quando não há curadoria manual: mesmo catálogo primeiro, depois
-   o outro, excluindo vendidos — limitado a RELATED_CAP direto na query
-   (nunca busca o catálogo inteiro pro client, escala com o total de
-   produtos). sound é local (pequeno, já em memória) então filtra em JS;
-   screens sempre via fetchScreensCatalogExcluding (bounded no banco). */
+/* fallback quando não há curadoria manual, limitado a RELATED_CAP direto na
+   query (nunca busca o catálogo inteiro pro client, escala com o total de
+   produtos). 'screens' só sugere produtos reais — sem preencher com 'sound'
+   (mock) mesmo que sobre espaço; melhor mostrar menos de 6 relacionados do
+   que misturar item que não existe de verdade. 'sound' (mock, página ainda
+   existe) continua preenchendo com screens reais quando falta — cross-sell
+   de mock pra real é aceitável, o contrário não. */
 async function defaultRelatedIds(id: string, sheet: CatalogSheet): Promise<string[]> {
   if (sheet === 'screens') {
     const sameSheet = await fetchScreensCatalogExcluding(id, RELATED_CAP);
-    const ids = sameSheet.map((item) => item.id);
-    if (ids.length >= RELATED_CAP) return ids;
-
-    const soundFill = soundCatalog
-      .filter((item) => !item.sold)
-      .slice(0, RELATED_CAP - ids.length)
-      .map((item) => item.id);
-    return [...ids, ...soundFill];
+    return sameSheet.map((item) => item.id);
   }
 
   const sameSheet = soundCatalog.filter((item) => item.id !== id && !item.sold).map((item) => item.id);

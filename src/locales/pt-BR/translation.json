@@ -151,18 +151,8 @@
       "total": "Total",
       "currency": "USD",
       "addToDrop": "Adicione ao lançamento",
-      "add": "Adicionar"
-    },
-    "addons": {
-      "desktop-cut": {
-        "description": "O mesmo pack recomposto para desktop 8K"
-      },
-      "single-cover": {
-        "description": "3000 × 3000, licença de lançamento inclusa"
-      },
-      "exclusive-rights": {
-        "description": "A arte sai da loja — um dono só"
-      }
+      "add": "Adicionar",
+      "addonHint": "Download imediato · Todas as telas"
     }
   },
   "account": {
@@ -342,6 +332,7 @@
       "single": "single",
       "albumPack": "pack de álbum"
     },
+    "richTitle": "VOL.{{volume}} - {{name}} ({{count}} ORIGINAL ARTWORKS — MADE FOR EVERY SCREEN)",
     "screens": {
       "eyebrow": "SYNDIK / O acervo — folha 001",
       "title": "Para sua tela.",
@@ -356,7 +347,13 @@
       "stats": ["10 artes", "3000 × 3000 RGB", "Um dono por capa", "Licença de lançamento incluída", "3 aposentadas"],
       "retiredTag": "Um dono — já era",
       "endNote": "Fim da folha 002 — SYNDIK / Cultura digital / 2026",
-      "nextSheet": "Próxima folha: para sua tela"
+      "nextSheet": "Próxima folha: para sua tela",
+      "comingSoon": {
+        "badge": "Em breve",
+        "title": "As capas estão a caminho.",
+        "body": "Estamos preparando os primeiros Drops de capas de álbum — a mesma qualidade cinematográfica dos wallpapers, em breve na loja.",
+        "cta": "Explorar wallpapers"
+      }
     }
   },
   "productDetail": {
@@ -373,7 +370,11 @@
     "useStripHint": "Use a fita ou as setas",
     "hoverToZoom": "Passe o mouse pra ver o grão",
     "whatsIncluded": "O que está incluso",
-    "addToCart": "Adicionar ao carrinho — {{price}}",
+    "addToCart": "Adicionar ao carrinho",
+    "richSubtitle": "{{count}} Original Artworks — Made For Every Screen",
+    "showDetails": "Ver detalhes do pack",
+    "hideDetails": "Fechar detalhes",
+    "trustLabel": "O padrão SYNDIK",
     "perks": {
       "instant": "Download imediato",
       "noWatermark": "Sem marca d'água",

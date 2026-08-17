@@ -1,5 +1,4 @@
 import type { TFunction } from 'i18next';
-import { soundCatalog } from '@/data/catalog';
 import { fetchScreensCatalog } from '@/lib/catalogApi';
 import { searchTags } from '@/data/searchTags';
 import type { CatalogSheet, CatalogVariant } from '@/types/product';
@@ -26,12 +25,12 @@ export interface SearchableItem {
   tags: string[];
 }
 
+/* 'sound' ainda não tem produto real (Fase 10) — não entra mais no índice
+   de busca, senão a busca levaria pra "capas de álbum" mockadas que não
+   existem de verdade na loja. */
 export async function buildSearchIndex(t: TFunction): Promise<SearchableItem[]> {
   const screensCatalog = await fetchScreensCatalog();
-  const entries = [
-    ...screensCatalog.map((item) => ({ item, sheet: 'screens' as CatalogSheet })),
-    ...soundCatalog.map((item) => ({ item, sheet: 'sound' as CatalogSheet })),
-  ];
+  const entries = screensCatalog.map((item) => ({ item, sheet: 'screens' as CatalogSheet }));
 
   return entries.map(({ item, sheet }) => ({
     id: item.id,

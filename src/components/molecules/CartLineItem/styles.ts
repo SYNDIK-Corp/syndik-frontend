@@ -8,7 +8,9 @@ export const Container = styled.div`
 `;
 
 export const Thumb = styled.div`
+  position: relative;
   aspect-ratio: 1 / 1;
+  overflow: hidden;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   display: flex;
@@ -19,6 +21,14 @@ export const Thumb = styled.div`
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.14em;
+`;
+
+export const ThumbImage = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const Info = styled.div`

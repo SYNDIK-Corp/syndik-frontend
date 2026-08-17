@@ -1,6 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import { soundBestSellers } from '@/data/products';
-import type { CatalogItem, Product } from '@/types/product';
+import type { CatalogItem } from '@/types/product';
 
 /* catálogo de wallpapers ('screens') vem do Supabase; 'sound' continua mockado
    até virar produto de verdade (ver backend/docs/roadmap.md, Fase 3).
@@ -23,11 +22,17 @@ interface ProductRow {
   price_compare_at: number | null;
   is_sold_out: boolean;
   collection_label: string | null;
+  drop_style: string | null;
+  drop_volume: number | null;
   product_images: ProductImageRow[];
 }
 
+/* consulta a view product_catalog (products + drops, com o Volume por
+   categoria já calculado — ver backend, migration
+   20260817215923_product_catalog_view_with_volume.sql), não a tabela
+   products direto. */
 const PRODUCT_COLUMNS =
-  'id, slug, sku, name, description, price_current, price_compare_at, is_sold_out, collection_label, product_images(role, storage_bucket, storage_path)';
+  'id, slug, sku, name, description, price_current, price_compare_at, is_sold_out, collection_label, drop_style, drop_volume, product_images(role, storage_bucket, storage_path)';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -61,37 +66,26 @@ function toCatalogItem(row: ProductRow): CatalogItem {
     sold: row.is_sold_out,
     description: row.description ?? undefined,
     collectionLabel: row.collection_label ?? undefined,
-    ...imagesFromRow(row),
-  };
-}
-
-function toProduct(row: ProductRow): Product {
-  return {
-    id: row.slug,
-    sku: row.sku,
-    collection: row.collection_label ?? '',
-    name: row.name,
-    price: row.price_current,
-    compareAtPrice: row.price_compare_at ?? undefined,
-    onSale: row.price_compare_at != null,
-    sold: row.is_sold_out,
+    style: row.drop_style ?? undefined,
+    volume: row.drop_volume ?? undefined,
+    designCount: row.product_images?.filter((img) => img.role === 'gallery').length ?? 0,
     ...imagesFromRow(row),
   };
 }
 
 export async function fetchScreensCatalog(): Promise<CatalogItem[]> {
   const { data, error } = await supabase
-    .from('products')
+    .from('product_catalog')
     .select(PRODUCT_COLUMNS)
     .eq('product_type_code', 'wallpaper_pack')
-    .order('sku');
+    .order('sort_order');
   if (error) throw error;
   return (data ?? []).map(toCatalogItem);
 }
 
 export async function fetchScreensEntry(slug: string): Promise<CatalogItem | undefined> {
   const { data, error } = await supabase
-    .from('products')
+    .from('product_catalog')
     .select(PRODUCT_COLUMNS)
     .eq('product_type_code', 'wallpaper_pack')
     .eq('slug', slug)
@@ -105,7 +99,7 @@ export async function fetchScreensEntry(slug: string): Promise<CatalogItem | und
 export async function fetchScreensEntriesBySlugs(slugs: string[]): Promise<CatalogItem[]> {
   if (slugs.length === 0) return [];
   const { data, error } = await supabase
-    .from('products')
+    .from('product_catalog')
     .select(PRODUCT_COLUMNS)
     .eq('product_type_code', 'wallpaper_pack')
     .in('slug', slugs);
@@ -117,33 +111,31 @@ export async function fetchScreensEntriesBySlugs(slugs: string[]): Promise<Catal
  * (`limit`), nunca traz o catálogo inteiro pro client. */
 export async function fetchScreensCatalogExcluding(excludeSlug: string, limit: number): Promise<CatalogItem[]> {
   const { data, error } = await supabase
-    .from('products')
+    .from('product_catalog')
     .select(PRODUCT_COLUMNS)
     .eq('product_type_code', 'wallpaper_pack')
     .eq('is_sold_out', false)
     .neq('slug', excludeSlug)
-    .order('sku')
+    .order('sort_order')
     .limit(limit);
   if (error) throw error;
   return (data ?? []).map(toCatalogItem);
 }
 
-export async function fetchWallpaperFeatured(): Promise<Product[]> {
+/** carrossel de mais vendidos da home (e mini-lista do menu mobile) — só
+ * produtos reais (screens/Supabase). 'sound' é mock, não entra em sugestão
+ * até virar produto de verdade (Fase 10). Retorna CatalogItem (não Product)
+ * pra quem renderiza poder aplicar o mesmo tratamento rico de categoria +
+ * "Vol. N" do grid principal do catálogo, via lib/richProductDisplay. */
+export async function fetchHomeBestSellers(): Promise<CatalogItem[]> {
   const { data, error } = await supabase
-    .from('products')
+    .from('product_catalog')
     .select(PRODUCT_COLUMNS)
     .eq('product_type_code', 'wallpaper_pack')
     .eq('attributes->>featured', 'true')
-    .order('sku');
+    .order('sort_order');
   if (error) throw error;
-  return (data ?? []).map(toProduct);
-}
-
-/** carrossel de mais vendidos da home: wallpapers em destaque (Supabase) +
- * sound (mock local, Fase 10 troca por real). */
-export async function fetchHomeBestSellers(): Promise<Product[]> {
-  const wallpapers = await fetchWallpaperFeatured();
-  return [...wallpapers, ...soundBestSellers];
+  return (data ?? []).map(toCatalogItem);
 }
 
 export interface FileBreakdownRow {

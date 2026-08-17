@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { MainLayout } from '@/components/templates/MainLayout';
 import { Eyebrow } from '@/components/atoms/Eyebrow';
 import { CtaLink } from '@/components/atoms/CtaLink';
+import { ComingSoon } from '@/components/organisms/ComingSoon';
+import { PageLoader } from '@/components/molecules/PageLoader';
 import { ProductCard } from '@/components/molecules/ProductCard';
-import { soundCatalog } from '@/data/catalog';
 import { fetchScreensCatalog } from '@/lib/catalogApi';
-import type { CatalogItem, CatalogSheet, Product } from '@/types/product';
+import { toRichProduct } from '@/lib/richProductDisplay';
+import type { CatalogSheet, Product } from '@/types/product';
 import * as S from './styles';
 
 const RATIO: Record<CatalogSheet, '4 / 5' | '1 / 1'> = { screens: '4 / 5', sound: '1 / 1' };
@@ -18,38 +20,35 @@ export interface CatalogProps {
 
 export function Catalog({ sheet }: CatalogProps) {
   const { t } = useTranslation();
-  const [items, setItems] = useState<CatalogItem[]>([]);
+  const [products, setProducts] = useState<Product[] | null>(sheet === 'sound' ? [] : null);
   const ratio = RATIO[sheet];
   const otherPath = OTHER_PATH[sheet];
-  const stats = t(`catalog.${sheet}.stats`, { returnObjects: true }) as string[];
 
   useEffect(() => {
-    let cancelled = false;
+    /* 'sound' ainda não tem produto real (ver ComingSoon abaixo) — não tem
+       o que buscar, então não entra no estado de loading. */
+    if (sheet === 'sound') {
+      setProducts([]);
+      return;
+    }
 
-    const load = sheet === 'screens' ? fetchScreensCatalog() : Promise.resolve(soundCatalog);
-    load.then((result) => {
-      if (!cancelled) setItems(result);
+    let cancelled = false;
+    setProducts(null);
+
+    fetchScreensCatalog().then((items) => {
+      if (cancelled) return;
+      setProducts(
+        items.map((item) => ({
+          ...toRichProduct(item, t),
+          tag: item.sold ? t(`catalog.${sheet}.retiredTag`) : undefined,
+        })),
+      );
     });
 
     return () => {
       cancelled = true;
     };
-  }, [sheet]);
-
-  const products: Product[] = items.map((item) => ({
-    id: item.id,
-    sku: item.sku,
-    collection: `${item.sku} / ${t(`catalog.variants.${item.variant}`)}`,
-    name: item.name,
-    price: item.price,
-    compareAtPrice: item.compareAtPrice,
-    onSale: item.compareAtPrice != null,
-    tag: item.sold ? t(`catalog.${sheet}.retiredTag`) : item.number,
-    sold: item.sold,
-    coverImage: item.coverImage,
-    coverAlt: item.coverAlt,
-    hoverImage: item.hoverImage,
-  }));
+  }, [sheet, t]);
 
   const tabs = (
     <S.Toggle>
@@ -66,6 +65,14 @@ export function Catalog({ sheet }: CatalogProps) {
     </S.Toggle>
   );
 
+  if (products === null) {
+    return (
+      <MainLayout>
+        <PageLoader />
+      </MainLayout>
+    );
+  }
+
   return (
     <MainLayout>
       <S.Container>
@@ -77,26 +84,25 @@ export function Catalog({ sheet }: CatalogProps) {
             </div>
             {tabs}
           </S.HeaderTop>
-          <S.Stats>
-            {stats.map((stat) => (
-              <span key={stat}>{stat}</span>
-            ))}
-          </S.Stats>
         </S.Header>
 
         <S.GridSection>
-          <S.Grid>
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                dense
-                metaLayout="row"
-                ratio={ratio}
-                to={`/products/${sheet}/${product.id}`}
-              />
-            ))}
-          </S.Grid>
+          {sheet === 'sound' ? (
+            <ComingSoon browseTo={otherPath} />
+          ) : (
+            <S.Grid>
+              {products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  dense
+                  metaLayout="row"
+                  ratio={ratio}
+                  to={`/products/${sheet}/${product.id}`}
+                />
+              ))}
+            </S.Grid>
+          )}
         </S.GridSection>
 
         <S.BottomBar>

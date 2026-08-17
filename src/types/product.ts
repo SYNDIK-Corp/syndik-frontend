@@ -1,6 +1,5 @@
 export interface Product {
   id: string;
-  collection: string;
   name: string;
   price: number;
   compareAtPrice?: number;
@@ -13,6 +12,9 @@ export interface Product {
   coverImage?: string;
   coverAlt?: string;
   hoverImage?: string;
+  /* eyebrow pequeno acima do nome (ex.: "MONEY / POWER") — só o grid
+     principal do catálogo usa isso; demais cards ficam sem */
+  category?: string;
 }
 
 export type CatalogSheet = 'screens' | 'sound';
@@ -39,4 +41,13 @@ export interface CatalogItem {
      undefined pra itens que ainda não têm (ex: catálogo 'sound' mockado) */
   description?: string;
   collectionLabel?: string;
+  /* categoria/estilo do Drop (drops.style) e a posição dele dentro dessa
+     categoria (Vol. N, calculado por row_number no banco) — undefined até
+     o Drop ser categorizado */
+  style?: string;
+  volume?: number;
+  /* quantidade de designs únicos (product_images com role='gallery') —
+     "7 Original Artworks", não é o total de arquivos pagos (esse é o dobro,
+     mobile+desktop) */
+  designCount?: number;
 }

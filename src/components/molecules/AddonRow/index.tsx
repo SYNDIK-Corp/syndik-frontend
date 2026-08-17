@@ -6,14 +6,16 @@ export interface AddonRowProps {
   name: string;
   description: string;
   price: number;
+  image?: string;
   onAdd: () => void;
 }
 
-export function AddonRow({ name, description, price, onAdd }: AddonRowProps) {
+export function AddonRow({ name, description, price, image, onAdd }: AddonRowProps) {
   const { t, i18n } = useTranslation();
 
   return (
     <S.Container>
+      <S.Thumb>{image && <S.ThumbImage src={image} alt="" />}</S.Thumb>
       <S.Info>
         <S.Name>{name}</S.Name>
         <S.Description>{description}</S.Description>

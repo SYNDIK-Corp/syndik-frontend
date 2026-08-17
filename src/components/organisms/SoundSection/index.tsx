@@ -16,10 +16,9 @@ export function SoundSection({ products }: SoundSectionProps) {
   const { t } = useTranslation();
   const tickerItems = t('sound.ticker', { returnObjects: true }) as string[];
 
-  /* traduz etiqueta e descrição do card; o valor do mock é o fallback */
+  /* traduz a etiqueta do card; o valor do mock é o fallback */
   const localizedProducts = products.map((product) => ({
     ...product,
-    collection: t(`sound.products.${product.id}.collection`, { defaultValue: product.collection }),
     tag: product.tag
       ? t(`sound.products.${product.id}.tag`, { defaultValue: product.tag })
       : undefined,

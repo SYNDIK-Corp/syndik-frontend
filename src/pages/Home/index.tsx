@@ -7,10 +7,12 @@ import { ArchiveSection } from '@/components/organisms/ArchiveSection';
 import { FaqSection } from '@/components/organisms/FaqSection';
 import { soundProducts } from '@/data/products';
 import { fetchHomeBestSellers } from '@/lib/catalogApi';
-import type { Product } from '@/types/product';
+import { fetchHeroBanners, type HeroBanner } from '@/lib/heroBanners';
+import type { CatalogItem } from '@/types/product';
 
 export function Home() {
-  const [bestSellers, setBestSellers] = useState<Product[]>([]);
+  const [bestSellers, setBestSellers] = useState<CatalogItem[]>([]);
+  const [heroBanners, setHeroBanners] = useState<HeroBanner[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -22,9 +24,19 @@ export function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    fetchHeroBanners().then((result) => {
+      if (!cancelled) setHeroBanners(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <MainLayout navbarVariant="overlay">
-      <Hero />
+      <Hero banners={heroBanners} />
       <BestSellers products={bestSellers} />
       <SoundSection products={soundProducts} />
       <ArchiveSection />

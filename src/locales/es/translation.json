@@ -151,18 +151,8 @@
       "total": "Total",
       "currency": "USD",
       "addToDrop": "Añade al lanzamiento",
-      "add": "Añadir"
-    },
-    "addons": {
-      "desktop-cut": {
-        "description": "El mismo pack recompuesto para escritorio 8K"
-      },
-      "single-cover": {
-        "description": "3000 × 3000, licencia de lanzamiento incluida"
-      },
-      "exclusive-rights": {
-        "description": "La obra sale de la tienda — un solo dueño"
-      }
+      "add": "Añadir",
+      "addonHint": "Descarga inmediata · Todas las pantallas"
     }
   },
   "account": {
@@ -335,6 +325,7 @@
       "screen": "Para tu pantalla",
       "sound": "Para tu sonido"
     },
+    "richTitle": "VOL.{{volume}} - {{name}} ({{count}} ORIGINAL ARTWORKS — MADE FOR EVERY SCREEN)",
     "variants": {
       "comboPack": "7 móvil + 7 escritorio",
       "mobile7": "7 móvil",
@@ -356,7 +347,13 @@
       "stats": ["10 obras", "3000 × 3000 RGB", "Un dueño por portada", "Licencia de lanzamiento incluida", "3 retiradas"],
       "retiredTag": "Un dueño — se fue",
       "endNote": "Fin de la hoja 002 — SYNDIK / Cultura digital / 2026",
-      "nextSheet": "Próxima hoja: para tu pantalla"
+      "nextSheet": "Próxima hoja: para tu pantalla",
+      "comingSoon": {
+        "badge": "Próximamente",
+        "title": "Las portadas están en camino.",
+        "body": "Estamos preparando los primeros Drops de portadas de álbum — la misma calidad cinematográfica de los wallpapers, muy pronto en la tienda.",
+        "cta": "Explorar wallpapers"
+      }
     }
   },
   "productDetail": {
@@ -373,7 +370,11 @@
     "useStripHint": "Usa la tira o las flechas",
     "hoverToZoom": "Pasa el mouse para ver el grano",
     "whatsIncluded": "Qué incluye",
-    "addToCart": "Añadir al carrito — {{price}}",
+    "addToCart": "Añadir al carrito",
+    "richSubtitle": "{{count}} Original Artworks — Made For Every Screen",
+    "showDetails": "Ver detalles del pack",
+    "hideDetails": "Ocultar detalles",
+    "trustLabel": "El estándar SYNDIK",
     "perks": {
       "instant": "Descarga inmediata",
       "noWatermark": "Sin marca de agua",

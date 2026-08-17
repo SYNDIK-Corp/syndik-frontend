@@ -85,42 +85,52 @@ export const Meta = styled.div<{ $layout: 'stack' | 'row' }>`
         `}
 `;
 
-export const MetaInfo = styled.div`
+export const TitleGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
+  min-width: 0;
 `;
 
-export const Collection = styled.span`
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+export const Category = styled.span`
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: 9px;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.16em;
   color: var(--card-muted);
 `;
 
 export const Name = styled.span<{ $layout: 'stack' | 'row' }>`
-  font-size: ${({ $layout }) => ($layout === 'row' ? '16px' : '15px')};
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-size: ${({ $layout }) => ($layout === 'row' ? '17px' : '16px')};
+  font-weight: 400;
+  letter-spacing: 0.01em;
 `;
 
 export const Prices = styled.div`
   margin-top: 4px;
+  flex: 0 0 auto;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 10px;
+  justify-content: flex-end;
+  gap: 4px 10px;
 `;
 
 export const Price = styled.span<{ $layout: 'stack' | 'row' }>`
-  font-size: ${({ $layout }) => ($layout === 'row' ? '16px' : '14px')};
-  font-weight: 500;
+  font-size: ${({ $layout }) => ($layout === 'row' ? '15px' : '14px')};
+  font-weight: 400;
+  color: var(--card-muted);
+  white-space: nowrap;
 `;
 
 export const ComparePrice = styled.span`
-  font-size: 12px;
-  color: var(--card-muted);
+  font-size: 13px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.danger};
   text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  white-space: nowrap;
 `;
 
 export const SoldLabel = styled.span<{ $layout: 'stack' | 'row' }>`
@@ -176,11 +186,6 @@ export const Container = styled(Link)<{ $tone: CardTone; $compact: boolean; $den
         gap: 4px;
       }
 
-      ${Collection} {
-        font-size: 9px;
-        letter-spacing: 0.16em;
-      }
-
       ${Name} {
         font-size: 12px;
       }
@@ -195,7 +200,7 @@ export const Container = styled(Link)<{ $tone: CardTone; $compact: boolean; $den
       }
 
       ${ComparePrice} {
-        font-size: 10px;
+        font-size: 11px;
       }
     `}
 
@@ -218,15 +223,6 @@ export const Container = styled(Link)<{ $tone: CardTone; $compact: boolean; $den
       ${Meta} {
         margin-top: 10px;
         gap: 10px;
-      }
-
-      ${MetaInfo} {
-        gap: 4px;
-        min-width: 0;
-      }
-
-      ${Collection} {
-        font-size: 8px;
       }
 
       ${Name} {

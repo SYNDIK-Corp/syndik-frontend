@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OrderSummaryLine } from '@/components/molecules/OrderSummaryLine';
 import { AddonRow } from '@/components/molecules/AddonRow';
 import { PaymentBrands } from '@/components/molecules/PaymentBrands';
 import { useCart } from '@/hooks/useCart';
 import { formatPrice } from '@/lib/format';
-import { checkoutAddons } from '@/data/checkoutAddons';
+import { getCartRecommendations, type CartRecommendation } from '@/data/cartRecommendations';
 import { getDiscountRate } from '@/data/discountCodes';
 import * as S from './styles';
 
@@ -33,9 +33,23 @@ export function OrderSummary() {
 
   const discountAmount = appliedDiscount ? total * appliedDiscount.rate : 0;
   const grandTotal = Math.max(0, total - discountAmount);
-  const visibleAddons = checkoutAddons.filter(
-    (addon) => !items.some((item) => item.sku === addon.sku),
-  );
+
+  /* upsell do checkout — mesma fonte de recomendação real (Drops em
+     promoção, excluindo o que já está na sacola) usada no drawer do
+     carrinho; antes disso era uma lista fixa com item mockado do catálogo
+     'sound' (SND-000) misturado. */
+  const excludeSkus = items.map((item) => item.sku).join(',');
+  const [recommendations, setRecommendations] = useState<CartRecommendation[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    getCartRecommendations(excludeSkus ? excludeSkus.split(',') : []).then((result) => {
+      if (!cancelled) setRecommendations(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [excludeSkus]);
 
   return (
     <S.Container>
@@ -94,19 +108,26 @@ export function OrderSummary() {
           </S.GrandTotalValue>
         </S.GrandTotal>
 
-        {visibleAddons.length > 0 && (
+        {recommendations.length > 0 && (
           <S.AddonsSection>
             <S.AddonsLabel>{t('checkout.summary.addToDrop')}</S.AddonsLabel>
             <S.AddonsList>
-              {visibleAddons.map((addon) => (
+              {recommendations.map((addon) => (
                 <AddonRow
                   key={addon.id}
                   name={addon.name}
-                  description={t(`checkout.addons.${addon.id}.description`)}
+                  description={t('checkout.summary.addonHint')}
                   price={addon.price}
+                  image={addon.image}
                   onAdd={() =>
                     addItem(
-                      { sku: addon.sku, name: addon.name, price: addon.price },
+                      {
+                        sku: addon.sku,
+                        name: addon.name,
+                        price: addon.price,
+                        compareAtPrice: addon.compareAtPrice,
+                        image: addon.image,
+                      },
                       { openCart: false },
                     )
                   }

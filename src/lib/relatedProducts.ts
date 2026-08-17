@@ -31,7 +31,6 @@ export async function buildRelatedProducts(ids: string[], t: TFunction): Promise
       return {
         id: entry.item.id,
         sku: entry.item.sku,
-        collection: `${entry.item.sku} / ${t(`catalog.variants.${entry.item.variant}`)}`,
         name: entry.item.name,
         price: entry.item.price,
         tag: t(`productDetail.related.sheetTag.${entry.sheet}`),

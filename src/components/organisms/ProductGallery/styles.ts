@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: sticky;
-  top: calc(${({ theme }) => theme.sizes.navbarHeight} + 20px);
+  top: calc(${({ theme }) => theme.sizes.navbarHeight} + 16px);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 
   @media (max-width: 900px) {
     position: static;
@@ -61,7 +61,7 @@ export const Arrow = styled.button`
 
 export const Zoomer = styled.div`
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   background: ${({ theme }) => theme.colors.black};
   overflow: hidden;
 `;
@@ -114,7 +114,7 @@ export const Filmstrip = styled.div`
 `;
 
 export const Thumb = styled.button<{ $active: boolean }>`
-  flex: 0 0 62px;
+  flex: 0 0 52px;
   aspect-ratio: 1 / 1;
   padding: 0;
   border: none;

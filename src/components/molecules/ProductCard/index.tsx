@@ -2,7 +2,7 @@ import type { MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@/components/atoms/Icon';
 import { useCart } from '@/hooks/useCart';
-import { formatPrice } from '@/lib/format';
+import { formatPriceCompact } from '@/lib/format';
 import type { Product } from '@/types/product';
 import * as S from './styles';
 
@@ -46,7 +46,7 @@ export function ProductCard({
       name: product.name,
       price: product.price,
       compareAtPrice: product.compareAtPrice,
-      description: product.collection,
+      image: product.coverImage,
     });
   };
 
@@ -54,9 +54,9 @@ export function ProductCard({
     <S.SoldLabel $layout={metaLayout}>{t('product.sold')}</S.SoldLabel>
   ) : (
     <S.Prices>
-      <S.Price $layout={metaLayout}>{formatPrice(product.price, i18n.language)}</S.Price>
+      <S.Price $layout={metaLayout}>{formatPriceCompact(product.price, i18n.language)}</S.Price>
       {product.compareAtPrice && (
-        <S.ComparePrice>{formatPrice(product.compareAtPrice, i18n.language)}</S.ComparePrice>
+        <S.ComparePrice>{formatPriceCompact(product.compareAtPrice, i18n.language)}</S.ComparePrice>
       )}
     </S.Prices>
   );
@@ -81,21 +81,11 @@ export function ProductCard({
       </S.Frame>
 
       <S.Meta $layout={metaLayout}>
-        {metaLayout === 'row' ? (
-          <>
-            <S.MetaInfo>
-              <S.Collection>{product.collection}</S.Collection>
-              <S.Name $layout={metaLayout}>{product.name}</S.Name>
-            </S.MetaInfo>
-            {prices}
-          </>
-        ) : (
-          <>
-            <S.Collection>{product.collection}</S.Collection>
-            <S.Name $layout={metaLayout}>{product.name}</S.Name>
-            {prices}
-          </>
-        )}
+        <S.TitleGroup>
+          {product.category && <S.Category>{product.category}</S.Category>}
+          <S.Name $layout={metaLayout}>{product.name}</S.Name>
+        </S.TitleGroup>
+        {prices}
       </S.Meta>
     </S.Container>
   );

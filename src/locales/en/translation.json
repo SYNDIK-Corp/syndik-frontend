@@ -151,18 +151,8 @@
       "total": "Total",
       "currency": "USD",
       "addToDrop": "Add to the drop",
-      "add": "Add"
-    },
-    "addons": {
-      "desktop-cut": {
-        "description": "Same pack recomposed for 8K desktop"
-      },
-      "single-cover": {
-        "description": "3000 × 3000, release licence included"
-      },
-      "exclusive-rights": {
-        "description": "The plate leaves the store — one owner"
-      }
+      "add": "Add",
+      "addonHint": "Instant download · Every screen"
     }
   },
   "account": {
@@ -335,6 +325,7 @@
       "screen": "For your screen",
       "sound": "For your sound"
     },
+    "richTitle": "VOL.{{volume}} - {{name}} ({{count}} ORIGINAL ARTWORKS — MADE FOR EVERY SCREEN)",
     "variants": {
       "comboPack": "7 mobile + 7 desktop",
       "mobile7": "7 mobile",
@@ -356,7 +347,13 @@
       "stats": ["10 plates", "3000 × 3000 RGB", "One owner per cover", "Release licence included", "3 retired"],
       "retiredTag": "One owner — gone",
       "endNote": "End of sheet 002 — SYNDIK / Digital culture / 2026",
-      "nextSheet": "Next sheet: for your screen"
+      "nextSheet": "Next sheet: for your screen",
+      "comingSoon": {
+        "badge": "Coming soon",
+        "title": "The cover archive is loading.",
+        "body": "We're preparing the first album cover Drops — same cinematic quality as the wallpapers, coming soon to the store.",
+        "cta": "Browse wallpapers"
+      }
     }
   },
   "productDetail": {
@@ -373,7 +370,11 @@
     "useStripHint": "Use the strip or the arrows",
     "hoverToZoom": "Hover to zoom grain",
     "whatsIncluded": "What's included",
-    "addToCart": "Add to cart — {{price}}",
+    "addToCart": "Add to cart",
+    "richSubtitle": "{{count}} Original Artworks — Made For Every Screen",
+    "showDetails": "Show pack details",
+    "hideDetails": "Hide details",
+    "trustLabel": "The SYNDIK Standard",
     "perks": {
       "instant": "Instant download",
       "noWatermark": "No watermark",

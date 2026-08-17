@@ -59,19 +59,6 @@ export const ToggleLink = styled(Link)`
   }
 `;
 
-export const Stats = styled.div`
-  margin-top: 26px;
-  padding-top: 14px;
-  border-top: 1px solid ${({ theme }) => theme.colors.black};
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 34px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
 
 export const GridSection = styled.section`
   max-width: 1700px;
@@ -81,8 +68,10 @@ export const GridSection = styled.section`
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 26px 14px;
+  /* máximo 5 colunas na largura do container (1700px) — abaixo disso reduz
+     naturalmente conforme a tela encolhe, nunca passa de 5 */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px 18px;
 `;
 
 export const BottomBar = styled.div`

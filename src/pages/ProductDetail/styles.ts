@@ -1,10 +1,25 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
+
+const reveal = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+export const Reveal = styled.div`
+  animation: ${reveal} 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+`;
 
 export const Breadcrumb = styled.div`
   max-width: 1700px;
   margin: 0 auto;
-  padding: 18px clamp(16px, 3vw, 40px) 0;
+  padding: 14px clamp(16px, 3vw, 40px) 0;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -42,7 +57,7 @@ export const BreadcrumbCurrent = styled.span`
 export const Section = styled.section`
   max-width: 1700px;
   margin: 0 auto;
-  padding: clamp(18px, 3vh, 32px) clamp(16px, 3vw, 40px) 0;
+  padding: clamp(12px, 2vh, 22px) clamp(16px, 3vw, 40px) 0;
 `;
 
 export const Grid = styled.div`
@@ -52,6 +67,10 @@ export const Grid = styled.div`
   align-items: start;
 
   @media (max-width: 900px) {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr), não só "1fr" — sem o mínimo 0 explícito, o grid usa o
+       min-content da coluna como piso (bug conhecido do CSS Grid) e deixa
+       qualquer linha sem quebra (ex.: badge do "o que está incluso") esticar
+       a coluna além da viewport, gerando scroll horizontal. */
+    grid-template-columns: minmax(0, 1fr);
   }
 `;

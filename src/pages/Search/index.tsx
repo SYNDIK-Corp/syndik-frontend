@@ -78,7 +78,6 @@ export function Search() {
   const lastDropProduct: Product | undefined = lastDropEntry && {
     id: lastDropEntry.id,
     sku: lastDropEntry.sku,
-    collection: `${lastDropEntry.sku} / ${t(`catalog.variants.${lastDropEntry.variant}`)}`,
     name: lastDropEntry.name,
     price: lastDropEntry.price,
   };
@@ -86,7 +85,6 @@ export function Search() {
   const results: SearchResultItem[] = hits.map((item) => ({
     id: item.id,
     sku: item.sku,
-    collection: `${item.sku} / ${item.kind}`,
     name: item.name,
     price: item.price,
     tag: item.sold ? t('search.soldBadge') : t(`productDetail.related.sheetTag.${item.sheet}`),

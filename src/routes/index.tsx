@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ScrollToTop } from './ScrollToTop';
 import { Home } from '@/pages/Home';
 import { Catalog } from '@/pages/Catalog';
 import { ProductDetail } from '@/pages/ProductDetail';
@@ -11,6 +12,7 @@ import { Contact } from '@/pages/Contact';
 export function AppRoutes() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Navigate to="/products/screens" replace />} />

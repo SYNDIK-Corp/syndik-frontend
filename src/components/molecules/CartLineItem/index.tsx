@@ -15,7 +15,7 @@ export function CartLineItem({ item, onRemove }: CartLineItemProps) {
 
   return (
     <S.Container>
-      <S.Thumb>{item.sku}</S.Thumb>
+      <S.Thumb>{item.image ? <S.ThumbImage src={item.image} alt={item.name} /> : item.sku}</S.Thumb>
 
       <S.Info>
         <S.Top>

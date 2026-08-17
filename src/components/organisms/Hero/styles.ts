@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.section`
   position: relative;
@@ -23,6 +24,15 @@ export const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+`;
+
+/* só usado quando o painel tem link_to cadastrado — cobre o painel inteiro,
+   fica atrás do S.Content (pointer-events:none) então não interfere no CTA
+   central. */
+export const PaneLink = styled(Link)`
+  position: absolute;
+  inset: 0;
   display: block;
 `;
 

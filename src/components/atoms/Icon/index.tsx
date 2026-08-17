@@ -7,7 +7,11 @@ export type IconName =
   | 'dots'
   | 'close'
   | 'trash'
-  | 'download';
+  | 'download'
+  | 'bolt'
+  | 'shield'
+  | 'no-watermark'
+  | 'chevron-down';
 
 const icons: Record<IconName, React.ReactNode> = {
   search: (
@@ -46,6 +50,20 @@ const icons: Record<IconName, React.ReactNode> = {
   ),
   trash: <path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13" />,
   download: <path d="M12 3v13M6.5 11.5 12 17l5.5-5.5M4 21h16" />,
+  bolt: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" strokeLinejoin="round" />,
+  shield: (
+    <>
+      <path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6l-7-3z" />
+      <path d="M9 12l2 2 4-4" />
+    </>
+  ),
+  'no-watermark': (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <line x1="6.5" y1="17.5" x2="17.5" y2="6.5" />
+    </>
+  ),
+  'chevron-down': <path d="M5 9.5 12 16l7-6.5" />,
 };
 
 export interface IconProps {

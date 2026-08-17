@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@/components/atoms/Icon';
 import { ProductCard } from '@/components/molecules/ProductCard';
 import { fetchHomeBestSellers } from '@/lib/catalogApi';
-import type { Product } from '@/types/product';
+import { toRichProduct } from '@/lib/richProductDisplay';
+import type { CatalogItem } from '@/types/product';
 import * as S from './styles';
 
 export interface MobileMenuProps {
@@ -13,7 +14,7 @@ export interface MobileMenuProps {
 
 export function MobileMenu({ open, onClose }: MobileMenuProps) {
   const { t } = useTranslation();
-  const [bestSellers, setBestSellers] = useState<Product[]>([]);
+  const [bestSellers, setBestSellers] = useState<CatalogItem[]>([]);
 
   useEffect(() => {
     if (!open) return;
@@ -61,11 +62,14 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
         <S.MiniSection>
           <S.MiniTitle>{t('bestSellers.title')}</S.MiniTitle>
           <S.MiniRail>
-            {bestSellers.map((product) => (
-              <S.MiniItem key={product.id} onClick={onClose}>
-                <ProductCard product={product} compact />
-              </S.MiniItem>
-            ))}
+            {bestSellers.map((item) => {
+              const product = toRichProduct(item, t);
+              return (
+                <S.MiniItem key={product.id} onClick={onClose}>
+                  <ProductCard product={product} compact dense to={`/products/screens/${product.id}`} />
+                </S.MiniItem>
+              );
+            })}
           </S.MiniRail>
         </S.MiniSection>
       </S.Drawer>

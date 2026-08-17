@@ -9,6 +9,23 @@ export const Container = styled.div`
   gap: 14px;
 `;
 
+export const Thumb = styled.div`
+  flex: 0 0 auto;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  background: ${({ theme }) => theme.colors.surface};
+`;
+
+export const ThumbImage = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 export const Info = styled.div`
   display: flex;
   flex-direction: column;

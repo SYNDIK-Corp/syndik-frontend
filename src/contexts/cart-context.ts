@@ -6,6 +6,7 @@ export interface CartItem {
   price: number;
   compareAtPrice?: number;
   description?: string;
+  image?: string;
 }
 
 export interface CartContextValue {
