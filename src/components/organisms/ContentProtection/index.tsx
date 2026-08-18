@@ -10,10 +10,12 @@ function isFormField(target: EventTarget | null): boolean {
 }
 
 /* Fase 11.7 — dissuasão, não proteção real (contornável via DevTools/
-   view-source): bloqueia clique direito e cópia no site inteiro, mostra um
-   toast curto avisando. `user-select: none` (styles/global.ts) já cobre a
-   maior parte da seleção; o listener de `copy` pega os casos que passam
-   disso (ex: seleção por atalho de teclado antes do CSS "pegar"). */
+   view-source): bloqueia clique direito, cópia e arrastar imagem no site
+   inteiro, mostra um toast curto avisando. `user-select: none`
+   (styles/global.ts) já cobre a maior parte da seleção — mas com nada
+   selecionado o evento `copy` nativo não dispara sozinho (não tem o que
+   copiar), então o atalho Ctrl/Cmd+C é pego direto no `keydown`, sem
+   depender de existir seleção. */
 export function ContentProtection() {
   const { t } = useTranslation();
   const [toastKey, setToastKey] = useState(0);
@@ -36,11 +38,30 @@ export function ContentProtection() {
       showToast();
     };
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const isCopyShortcut = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c';
+      if (!isCopyShortcut || isFormField(event.target)) return;
+      event.preventDefault();
+      showToast();
+    };
+
+    // impede salvar imagem só arrastando pro desktop/outra janela — achado
+    // real do usuário testando, funciona em qualquer <img> do site
+    const handleDragStart = (event: DragEvent) => {
+      if ((event.target as HTMLElement | null)?.tagName === 'IMG') {
+        event.preventDefault();
+      }
+    };
+
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('copy', handleCopy);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dragstart', handleDragStart);
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
       document.removeEventListener('copy', handleCopy);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('dragstart', handleDragStart);
     };
   }, []);
 
