@@ -6,6 +6,7 @@ export type CheckoutErrorCode =
   | 'empty_cart'
   | 'invalid_items'
   | 'payment_setup_failed'
+  | 'rate_limited'
   | 'unexpected';
 
 export interface CheckoutError {

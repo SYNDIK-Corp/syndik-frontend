@@ -1,7 +1,13 @@
 import { FunctionsHttpError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 
-export type DownloadErrorCode = 'unauthenticated' | 'missing_product_id' | 'not_entitled' | 'no_files' | 'unexpected';
+export type DownloadErrorCode =
+  | 'unauthenticated'
+  | 'missing_product_id'
+  | 'not_entitled'
+  | 'no_files'
+  | 'rate_limited'
+  | 'unexpected';
 
 export interface DownloadError {
   code: DownloadErrorCode;

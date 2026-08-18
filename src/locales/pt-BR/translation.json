@@ -109,7 +109,8 @@
       "empty_cart": "Sua sacola está vazia.",
       "invalid_items": "Algo na sua sacola não está mais disponível. Atualize a página e tente de novo.",
       "payment_setup_failed": "Não deu pra abrir o pagamento agora. Tente de novo em instantes.",
-      "unexpected": "Algo deu errado. Tente de novo."
+      "unexpected": "Algo deu errado. Tente de novo.",
+      "rate_limited": "Muitas tentativas em pouco tempo. Espere alguns minutos e tente de novo."
     },
     "note": {
       "secure": "Pagamento seguro · arquivos liberam na hora"

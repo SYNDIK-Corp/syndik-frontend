@@ -109,7 +109,8 @@
       "empty_cart": "Tu bolsa está vacía.",
       "invalid_items": "Algo en tu bolsa ya no está disponible. Actualiza la página e intenta de nuevo.",
       "payment_setup_failed": "No se pudo abrir el pago ahora. Intenta de nuevo en un momento.",
-      "unexpected": "Algo salió mal. Intenta de nuevo."
+      "unexpected": "Algo salió mal. Intenta de nuevo.",
+      "rate_limited": "Demasiados intentos en poco tiempo. Esperá unos minutos y probá de nuevo."
     },
     "note": {
       "secure": "Pago seguro · los archivos se desbloquean al instante"

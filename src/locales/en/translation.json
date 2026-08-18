@@ -109,7 +109,8 @@
       "empty_cart": "Your bag is empty.",
       "invalid_items": "Something in your bag is no longer available. Refresh the page and try again.",
       "payment_setup_failed": "Couldn't open payment right now. Try again in a moment.",
-      "unexpected": "Something went wrong. Try again."
+      "unexpected": "Something went wrong. Try again.",
+      "rate_limited": "Too many attempts in a short time. Wait a few minutes and try again."
     },
     "note": {
       "secure": "Secure payment · files unlock instantly"
