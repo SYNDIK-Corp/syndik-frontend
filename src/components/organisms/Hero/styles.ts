@@ -20,16 +20,28 @@ export const Pane = styled.div`
   background: #000;
 `;
 
-/* fade saindo do preto do Pane assim que a imagem termina de carregar
-   ($loaded, controlado no componente via onLoad/img.complete) — em vez do
-   pop abrupto de antes. */
-export const Image = styled.img<{ $loaded: boolean }>`
+/* Revelação saindo do preto do Pane quando a imagem termina de carregar
+   ($loaded, controlado no componente via onLoad/img.complete) — opacidade
+   pura ficava "seca"/abrupta demais (feedback real testando). Combina
+   blur→nítido + leve zoom-out-até-o-lugar + fade, com um easing tipo
+   "ease-out expo" (desacelera bem no final, sensação mais deliberada que o
+   `ease` padrão) — e um atraso por painel ($delayMs, ver componente) pra
+   os dois lados não nascerem no exato mesmo instante. */
+const REVEAL_EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+export const Image = styled.img<{ $loaded: boolean; $delayMs: number }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  will-change: opacity, transform, filter;
   opacity: ${({ $loaded }) => ($loaded ? 1 : 0)};
-  transition: opacity 0.5s ease;
+  transform: scale(${({ $loaded }) => ($loaded ? 1 : 1.06)});
+  filter: blur(${({ $loaded }) => ($loaded ? 0 : 16)}px);
+  transition:
+    opacity 1s ${REVEAL_EASE} ${({ $delayMs }) => $delayMs}ms,
+    transform 1.2s ${REVEAL_EASE} ${({ $delayMs }) => $delayMs}ms,
+    filter 0.9s ${REVEAL_EASE} ${({ $delayMs }) => $delayMs}ms;
 `;
 
 /* só usado quando o painel tem link_to cadastrado — cobre o painel inteiro,

@@ -30,6 +30,7 @@ export function Hero({ banners = [] }: HeroProps) {
         fetchPriority="high"
         loading="eager"
         $loaded={Boolean(loaded[banner.slot])}
+        $delayMs={index * 150}
         onLoad={() => markLoaded(banner.slot)}
         ref={(el) => {
           if (el?.complete) markLoaded(banner.slot);
