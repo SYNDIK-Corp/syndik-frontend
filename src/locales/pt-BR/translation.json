@@ -135,7 +135,6 @@
   },
   "account": {
     "eyebrow": "SYNDIK / Sua conta",
-    "mockEmail": "membro0417@syndik.store",
     "memberTag": "Membro {{id}}",
     "gate": {
       "title": "Quatro dígitos.\nSem senha.",
@@ -180,25 +179,20 @@
       "download": "Baixar",
       "downloadAgain": "Novamente",
       "downloadAll": "Baixar tudo",
-      "zipInfo": "Um zip · {{size}}",
-      "items": {
-        "scr-001": {
-          "kind": "7 wallpapers mobile",
-          "specNote": "1440 × 3120 + masters 8K"
-        },
-        "snd-001": {
-          "kind": "Capa de single",
-          "specNote": "3000 × 3000 RGB · licença de lançamento"
-        },
-        "scr-003": {
-          "kind": "7 wallpapers mobile",
-          "specNote": "1440 × 3120 + masters 8K"
-        }
-      }
+      "kind": "Pacote de wallpapers",
+      "breakdown": "{{mobile}} mobile + {{desktop}} desktop",
+      "filesCount": "{{count}} arquivos",
+      "empty": "Você ainda não comprou nada."
     },
     "orders": {
       "title": "Pedidos",
-      "receipt": "Recibo"
+      "receipt": "Recibo",
+      "empty": "Nenhum pedido ainda.",
+      "method": {
+        "card": "Cartão",
+        "paypal": "PayPal",
+        "unknown": "—"
+      }
     },
     "details": {
       "title": "Dados",
@@ -222,8 +216,6 @@
     "description": "Os arquivos já estão nesta página e na sua conta. Um recibo com os mesmos links está a caminho de <0>{{email}}</0>.",
     "downloadEverything": "Baixar tudo",
     "downloadedLabel": "Baixado — pegar de novo",
-    "zipNote": "Um zip · {{size}}",
-    "zipNoteBuilt": "Zip pronto · {{size}}",
     "files": {
       "title": "Seus arquivos",
       "neverExpire": "Links nunca expiram",
@@ -240,9 +232,18 @@
     "install": {
       "title": "Como instalar",
       "steps": [
-        { "title": "Descompacte no aparelho", "description": "Celular ou desktop — os dois funcionam." },
-        { "title": "Salve nas fotos", "description": "Depois defina como papel de parede ou tela de bloqueio." },
-        { "title": "Capas sobem direto", "description": "3000 × 3000 — sem redimensionar para nenhum DSP." }
+        {
+          "title": "Descompacte no aparelho",
+          "description": "Celular ou desktop — os dois funcionam."
+        },
+        {
+          "title": "Salve nas fotos",
+          "description": "Depois defina como papel de parede ou tela de bloqueio."
+        },
+        {
+          "title": "Capas sobem direto",
+          "description": "3000 × 3000 — sem redimensionar para nenhum DSP."
+        }
       ]
     },
     "receipt": {
@@ -271,6 +272,19 @@
     "related": {
       "title": "Já que você está aqui",
       "viewAll": "Acervo completo"
+    },
+    "filesCount": "{{count}} arquivos",
+    "notFound": {
+      "title": "Pedido não encontrado",
+      "body": "Não achamos esse pedido. Confira o link ou veja seu histórico na conta."
+    },
+    "confirming": {
+      "title": "Confirmando seu pagamento...",
+      "body": "Isso leva só um instante."
+    },
+    "pending": {
+      "title": "Ainda processando",
+      "body": "Seu pagamento está sendo confirmado. Os arquivos aparecem na sua conta assim que finalizar."
     }
   },
   "search": {
@@ -289,11 +303,26 @@
     "countIdle": "{{count}} artes no acervo",
     "mostWanted": "Mais buscadas",
     "suggestions": [
-      { "label": "Wallpapers mobile", "query": "mobile" },
-      { "label": "Capas trap", "query": "trap" },
-      { "label": "Packs de álbum", "query": "album" },
-      { "label": "Noite / escuro", "query": "night" },
-      { "label": "Abaixo de $5", "query": "3.99" }
+      {
+        "label": "Wallpapers mobile",
+        "query": "mobile"
+      },
+      {
+        "label": "Capas trap",
+        "query": "trap"
+      },
+      {
+        "label": "Packs de álbum",
+        "query": "album"
+      },
+      {
+        "label": "Noite / escuro",
+        "query": "night"
+      },
+      {
+        "label": "Abaixo de $5",
+        "query": "3.99"
+      }
     ],
     "collections": "Coleções",
     "collectionRows": {
@@ -327,7 +356,13 @@
     "screens": {
       "eyebrow": "SYNDIK / O acervo — folha 001",
       "title": "Para sua tela.",
-      "stats": ["12 artes", "14 arquivos por pack (7 mobile + 7 desktop)", "8K raw + corte mobile", "Atualizado toda semana", "2 aposentadas"],
+      "stats": [
+        "12 artes",
+        "14 arquivos por pack (7 mobile + 7 desktop)",
+        "8K raw + corte mobile",
+        "Atualizado toda semana",
+        "2 aposentadas"
+      ],
       "retiredTag": "Aposentada",
       "endNote": "Fim da folha 001 — SYNDIK / Cultura digital / 2026",
       "nextSheet": "Próxima folha: para seu som"
@@ -335,7 +370,13 @@
     "sound": {
       "eyebrow": "SYNDIK / O acervo — folha 002",
       "title": "Para seu som.",
-      "stats": ["10 artes", "3000 × 3000 RGB", "Um dono por capa", "Licença de lançamento incluída", "3 aposentadas"],
+      "stats": [
+        "10 artes",
+        "3000 × 3000 RGB",
+        "Um dono por capa",
+        "Licença de lançamento incluída",
+        "3 aposentadas"
+      ],
       "retiredTag": "Um dono — já era",
       "endNote": "Fim da folha 002 — SYNDIK / Cultura digital / 2026",
       "nextSheet": "Próxima folha: para sua tela",
@@ -396,23 +437,56 @@
     },
     "included": {
       "single": [
-        { "label": "Capa em alta resolução", "value": "3000 × 3000" },
-        { "label": "Licença de lançamento", "value": "Um projeto" },
-        { "label": "Pronta para DSP", "value": "Spotify · Apple · Deezer" },
-        { "label": "Readme + licença", "value": "PDF" }
+        {
+          "label": "Capa em alta resolução",
+          "value": "3000 × 3000"
+        },
+        {
+          "label": "Licença de lançamento",
+          "value": "Um projeto"
+        },
+        {
+          "label": "Pronta para DSP",
+          "value": "Spotify · Apple · Deezer"
+        },
+        {
+          "label": "Readme + licença",
+          "value": "PDF"
+        }
       ],
       "albumPack": [
-        { "label": "3 capas em alta resolução", "value": "3000 × 3000" },
-        { "label": "Licença de lançamento", "value": "Um projeto" },
-        { "label": "Pronta para DSP", "value": "Spotify · Apple · Deezer" },
-        { "label": "Readme + licença", "value": "PDF" }
+        {
+          "label": "3 capas em alta resolução",
+          "value": "3000 × 3000"
+        },
+        {
+          "label": "Licença de lançamento",
+          "value": "Um projeto"
+        },
+        {
+          "label": "Pronta para DSP",
+          "value": "Spotify · Apple · Deezer"
+        },
+        {
+          "label": "Readme + licença",
+          "value": "PDF"
+        }
       ]
     },
     "faq": {
       "sound": [
-        { "question": "Funciona no Spotify e Apple Music?", "answer": "Sim. Toda capa sai na especificação exata que os distribuidores pedem." },
-        { "question": "A licença cobre o lançamento?", "answer": "Sim, uma licença de lançamento para um projeto está inclusa na compra." },
-        { "question": "Posso revender?", "answer": "Não — cada capa é vendida uma única vez e sai do acervo em seguida." }
+        {
+          "question": "Funciona no Spotify e Apple Music?",
+          "answer": "Sim. Toda capa sai na especificação exata que os distribuidores pedem."
+        },
+        {
+          "question": "A licença cobre o lançamento?",
+          "answer": "Sim, uma licença de lançamento para um projeto está inclusa na compra."
+        },
+        {
+          "question": "Posso revender?",
+          "answer": "Não — cada capa é vendida uma única vez e sai do acervo em seguida."
+        }
       ]
     }
   },
@@ -447,23 +521,53 @@
     "description": "Um acervo, dois jeitos de vestir — a tela que você encara o dia todo e a capa do seu próximo lançamento. Desenhado aqui, vendido uma vez.",
     "coverTag": "Sound",
     "nowPlaying": "Tocando agora",
-    "captions": ["01 — Wallpaper / desktop + mobile", "02 — Capa / seu lançamento"],
+    "captions": [
+      "01 — Wallpaper / desktop + mobile",
+      "02 — Capa / seu lançamento"
+    ],
     "priceFrom": "a partir de {{price}}",
     "rows": {
-      "wallpapers": { "name": "Packs de wallpaper" },
-      "singleCover": { "name": "Capa de single" },
-      "albumPack": { "name": "Pack de álbum completo" },
-      "custom": { "name": "Comissão personalizada", "price": "Sob consulta" }
+      "wallpapers": {
+        "name": "Packs de wallpaper"
+      },
+      "singleCover": {
+        "name": "Capa de single"
+      },
+      "albumPack": {
+        "name": "Pack de álbum completo"
+      },
+      "custom": {
+        "name": "Comissão personalizada",
+        "price": "Sob consulta"
+      }
     },
     "cta": "Ver tudo",
     "specTitle": "A ficha técnica",
     "specs": [
-      { "title": "8K RAW", "description": "Masters em 7680 × 4320" },
-      { "title": "Finalizado à mão", "description": "Cor e grão, peça por peça" },
-      { "title": "Pronto para DSP", "description": "3000 × 3000 RGB — suba sem redimensionar" },
-      { "title": "Sem marca d'água", "description": "Sem packs de banco, sem upscale de IA" },
-      { "title": "Um dono", "description": "Vendido uma vez, depois aposentado" },
-      { "title": "Direto no celular", "description": "Zipado e baixado em um minuto" }
+      {
+        "title": "8K RAW",
+        "description": "Masters em 7680 × 4320"
+      },
+      {
+        "title": "Finalizado à mão",
+        "description": "Cor e grão, peça por peça"
+      },
+      {
+        "title": "Pronto para DSP",
+        "description": "3000 × 3000 RGB — suba sem redimensionar"
+      },
+      {
+        "title": "Sem marca d'água",
+        "description": "Sem packs de banco, sem upscale de IA"
+      },
+      {
+        "title": "Um dono",
+        "description": "Vendido uma vez, depois aposentado"
+      },
+      {
+        "title": "Direto no celular",
+        "description": "Zipado e baixado em um minuto"
+      }
     ]
   },
   "faq": {

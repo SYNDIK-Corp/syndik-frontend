@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/templates/MainLayout';
 import { PageLoader } from '@/components/molecules/PageLoader';
 import { AccountGate } from '@/components/organisms/AccountGate';
@@ -6,14 +6,22 @@ import { AccountSidebar, type AccountTab } from '@/components/organisms/AccountS
 import { AccountDownloads } from '@/components/organisms/AccountDownloads';
 import { AccountOrders } from '@/components/organisms/AccountOrders';
 import { AccountDetails } from '@/components/organisms/AccountDetails';
-import { accountDownloads } from '@/data/accountDownloads';
-import { accountOrders } from '@/data/accountOrders';
+import { fetchMyEntitlements } from '@/lib/entitlementsApi';
+import { fetchMyOrders } from '@/lib/ordersApi';
 import { useAuth } from '@/hooks/useAuth';
 import * as S from './styles';
 
 export function Account() {
   const { session, profile, loading, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<AccountTab>('downloads');
+  const [downloadsCount, setDownloadsCount] = useState(0);
+  const [ordersCount, setOrdersCount] = useState(0);
+
+  useEffect(() => {
+    if (!session) return;
+    fetchMyEntitlements().then((entitlements) => setDownloadsCount(entitlements.length));
+    fetchMyOrders().then((orders) => setOrdersCount(orders.length));
+  }, [session]);
 
   const handleSignOut = () => {
     signOut();
@@ -38,8 +46,8 @@ export function Account() {
             activeTab={activeTab}
             onTabChange={setActiveTab}
             onSignOut={handleSignOut}
-            downloadsCount={accountDownloads.length}
-            ordersCount={accountOrders.length}
+            downloadsCount={downloadsCount}
+            ordersCount={ordersCount}
           />
 
           {activeTab === 'downloads' && <AccountDownloads />}

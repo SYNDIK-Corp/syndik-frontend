@@ -1,41 +1,57 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
-import { getCatalogEntry } from '@/data/productDetails';
-import { accountDownloads } from '@/data/accountDownloads';
-import { formatDate, formatFileSize } from '@/lib/format';
+import { fetchMyEntitlements, type Entitlement } from '@/lib/entitlementsApi';
+import { fetchFileBreakdown } from '@/lib/catalogApi';
+import { requestDownload, triggerFileDownloads, isDownloadError } from '@/lib/downloadApi';
+import { formatDate } from '@/lib/format';
 import * as S from './styles';
 
-interface DownloadEntry {
-  id: string;
-  sku: string;
-  name: string;
+interface DownloadEntry extends Entitlement {
+  mobileCount: number;
+  desktopCount: number;
 }
 
 export function AccountDownloads() {
   const { t, i18n } = useTranslation();
-  const [downloaded, setDownloaded] = useState<Set<string>>(new Set());
   const [entries, setEntries] = useState<DownloadEntry[]>([]);
-
-  const totalMb = accountDownloads.reduce((sum, download) => sum + download.fileSizeMb, 0);
-
-  const markDownloaded = (id: string) => setDownloaded((prev) => new Set(prev).add(id));
-  const downloadAll = () => setDownloaded(new Set(accountDownloads.map((download) => download.id)));
+  const [loading, setLoading] = useState(true);
+  const [downloaded, setDownloaded] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all(
-      accountDownloads.map(async (download) => {
-        const entry = await getCatalogEntry(download.id);
-        return entry ? { id: download.id, sku: entry.item.sku, name: entry.item.name } : null;
-      }),
-    ).then((results) => {
-      if (!cancelled) setEntries(results.filter((entry): entry is DownloadEntry => entry !== null));
-    });
+    fetchMyEntitlements()
+      .then(async (entitlements) => {
+        const withBreakdown = await Promise.all(
+          entitlements.map(async (entitlement): Promise<DownloadEntry> => {
+            const breakdown = await fetchFileBreakdown(entitlement.product_id);
+            const mobileCount = breakdown.find((row) => row.device_variant === 'mobile')?.file_count ?? 0;
+            const desktopCount = breakdown.find((row) => row.device_variant === 'desktop')?.file_count ?? 0;
+            return { ...entitlement, mobileCount, desktopCount };
+          }),
+        );
+        if (!cancelled) setEntries(withBreakdown);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
     return () => {
       cancelled = true;
     };
   }, []);
+
+  const totalFiles = entries.reduce((sum, entry) => sum + entry.mobileCount + entry.desktopCount, 0);
+
+  const download = async (entry: DownloadEntry) => {
+    const result = await requestDownload(entry.product_id);
+    if (isDownloadError(result)) return;
+    triggerFileDownloads(result.files);
+    setDownloaded((prev) => new Set(prev).add(entry.entitlement_id));
+  };
+
+  const downloadAll = () => {
+    entries.forEach((entry) => download(entry));
+  };
 
   return (
     <div>
@@ -44,32 +60,33 @@ export function AccountDownloads() {
         <S.NeverExpire>{t('account.downloads.neverExpire')}</S.NeverExpire>
       </S.Header>
 
-      <S.List>
-        {entries.map((entry) => {
-          const download = accountDownloads.find((item) => item.id === entry.id);
-          if (!download) return null;
+      {!loading && entries.length === 0 ? (
+        <S.List>{t('account.downloads.empty')}</S.List>
+      ) : (
+        <>
+          <S.List>
+            {entries.map((entry) => (
+              <DownloadRow
+                key={entry.entitlement_id}
+                sku={entry.sku}
+                name={entry.name}
+                kind={t('account.downloads.kind')}
+                spec={t('account.downloads.breakdown', { mobile: entry.mobileCount, desktop: entry.desktopCount })}
+                meta={formatDate(entry.granted_at, i18n.language)}
+                downloaded={downloaded.has(entry.entitlement_id)}
+                onDownload={() => download(entry)}
+              />
+            ))}
+          </S.List>
 
-          return (
-            <DownloadRow
-              key={download.id}
-              sku={entry.sku}
-              name={entry.name}
-              kind={t(`account.downloads.items.${download.id}.kind`)}
-              spec={`${t(`account.downloads.items.${download.id}.specNote`)} · ${formatFileSize(download.fileSizeMb)}`}
-              meta={formatDate(download.boughtDate, i18n.language)}
-              downloaded={downloaded.has(download.id)}
-              onDownload={() => markDownloaded(download.id)}
-            />
-          );
-        })}
-      </S.List>
-
-      <S.Footer>
-        <S.DownloadAllButton type="button" onClick={downloadAll}>
-          {t('account.downloads.downloadAll')}
-        </S.DownloadAllButton>
-        <S.ZipInfo>{t('account.downloads.zipInfo', { size: formatFileSize(totalMb) })}</S.ZipInfo>
-      </S.Footer>
+          <S.Footer>
+            <S.DownloadAllButton type="button" onClick={downloadAll}>
+              {t('account.downloads.downloadAll')}
+            </S.DownloadAllButton>
+            <S.ZipInfo>{t('account.downloads.filesCount', { count: totalFiles })}</S.ZipInfo>
+          </S.Footer>
+        </>
+      )}
     </div>
   );
 }

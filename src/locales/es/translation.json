@@ -135,7 +135,6 @@
   },
   "account": {
     "eyebrow": "SYNDIK / Tu cuenta",
-    "mockEmail": "miembro0417@syndik.store",
     "memberTag": "Miembro {{id}}",
     "gate": {
       "title": "Cuatro dígitos.\nSin contraseña.",
@@ -180,25 +179,20 @@
       "download": "Descargar",
       "downloadAgain": "De nuevo",
       "downloadAll": "Descargar todo",
-      "zipInfo": "Un zip · {{size}}",
-      "items": {
-        "scr-001": {
-          "kind": "7 wallpapers para móvil",
-          "specNote": "1440 × 3120 + masters 8K"
-        },
-        "snd-001": {
-          "kind": "Portada de single",
-          "specNote": "3000 × 3000 RGB · licencia de lanzamiento"
-        },
-        "scr-003": {
-          "kind": "7 wallpapers para móvil",
-          "specNote": "1440 × 3120 + masters 8K"
-        }
-      }
+      "kind": "Pack de wallpapers",
+      "breakdown": "{{mobile}} móvil + {{desktop}} escritorio",
+      "filesCount": "{{count}} archivos",
+      "empty": "Todavía no compraste nada."
     },
     "orders": {
       "title": "Pedidos",
-      "receipt": "Recibo"
+      "receipt": "Recibo",
+      "empty": "Todavía no hay pedidos.",
+      "method": {
+        "card": "Tarjeta",
+        "paypal": "PayPal",
+        "unknown": "—"
+      }
     },
     "details": {
       "title": "Datos",
@@ -222,8 +216,6 @@
     "description": "Los archivos ya están en esta página y en tu cuenta. Un recibo con los mismos enlaces va en camino a <0>{{email}}</0>.",
     "downloadEverything": "Descargar todo",
     "downloadedLabel": "Descargado — obtenerlo de nuevo",
-    "zipNote": "Un zip · {{size}}",
-    "zipNoteBuilt": "Zip listo · {{size}}",
     "files": {
       "title": "Tus archivos",
       "neverExpire": "Los enlaces nunca expiran",
@@ -240,9 +232,18 @@
     "install": {
       "title": "Cómo instalar",
       "steps": [
-        { "title": "Descomprime en el dispositivo", "description": "Celular o escritorio — ambos funcionan." },
-        { "title": "Guarda en fotos", "description": "Luego configúralo como wallpaper o pantalla de bloqueo." },
-        { "title": "Las portadas suben directo", "description": "3000 × 3000 — sin redimensionar para ningún DSP." }
+        {
+          "title": "Descomprime en el dispositivo",
+          "description": "Celular o escritorio — ambos funcionan."
+        },
+        {
+          "title": "Guarda en fotos",
+          "description": "Luego configúralo como wallpaper o pantalla de bloqueo."
+        },
+        {
+          "title": "Las portadas suben directo",
+          "description": "3000 × 3000 — sin redimensionar para ningún DSP."
+        }
       ]
     },
     "receipt": {
@@ -271,6 +272,19 @@
     "related": {
       "title": "Ya que estás aquí",
       "viewAll": "Archivo completo"
+    },
+    "filesCount": "{{count}} archivos",
+    "notFound": {
+      "title": "Pedido no encontrado",
+      "body": "No encontramos ese pedido. Revisá el enlace o mirá tu historial en la cuenta."
+    },
+    "confirming": {
+      "title": "Confirmando tu pago...",
+      "body": "Esto solo toma un instante."
+    },
+    "pending": {
+      "title": "Todavía procesando",
+      "body": "Tu pago está siendo confirmado. Los archivos aparecen en tu cuenta apenas termine."
     }
   },
   "search": {
@@ -289,11 +303,26 @@
     "countIdle": "{{count}} obras en el archivo",
     "mostWanted": "Más buscadas",
     "suggestions": [
-      { "label": "Wallpapers para móvil", "query": "mobile" },
-      { "label": "Portadas trap", "query": "trap" },
-      { "label": "Packs de álbum", "query": "album" },
-      { "label": "Noche / oscuro", "query": "night" },
-      { "label": "Menos de $5", "query": "3.99" }
+      {
+        "label": "Wallpapers para móvil",
+        "query": "mobile"
+      },
+      {
+        "label": "Portadas trap",
+        "query": "trap"
+      },
+      {
+        "label": "Packs de álbum",
+        "query": "album"
+      },
+      {
+        "label": "Noche / oscuro",
+        "query": "night"
+      },
+      {
+        "label": "Menos de $5",
+        "query": "3.99"
+      }
     ],
     "collections": "Colecciones",
     "collectionRows": {
@@ -327,7 +356,13 @@
     "screens": {
       "eyebrow": "SYNDIK / El archivo — hoja 001",
       "title": "Para tu pantalla.",
-      "stats": ["12 obras", "14 archivos por pack (7 móvil + 7 escritorio)", "8K raw + corte móvil", "Actualizado cada semana", "2 retiradas"],
+      "stats": [
+        "12 obras",
+        "14 archivos por pack (7 móvil + 7 escritorio)",
+        "8K raw + corte móvil",
+        "Actualizado cada semana",
+        "2 retiradas"
+      ],
       "retiredTag": "Retirada",
       "endNote": "Fin de la hoja 001 — SYNDIK / Cultura digital / 2026",
       "nextSheet": "Próxima hoja: para tu sonido"
@@ -335,7 +370,13 @@
     "sound": {
       "eyebrow": "SYNDIK / El archivo — hoja 002",
       "title": "Para tu sonido.",
-      "stats": ["10 obras", "3000 × 3000 RGB", "Un dueño por portada", "Licencia de lanzamiento incluida", "3 retiradas"],
+      "stats": [
+        "10 obras",
+        "3000 × 3000 RGB",
+        "Un dueño por portada",
+        "Licencia de lanzamiento incluida",
+        "3 retiradas"
+      ],
       "retiredTag": "Un dueño — se fue",
       "endNote": "Fin de la hoja 002 — SYNDIK / Cultura digital / 2026",
       "nextSheet": "Próxima hoja: para tu pantalla",
@@ -396,23 +437,56 @@
     },
     "included": {
       "single": [
-        { "label": "Portada en alta resolución", "value": "3000 × 3000" },
-        { "label": "Licencia de lanzamiento", "value": "Un proyecto" },
-        { "label": "Lista para DSP", "value": "Spotify · Apple · Deezer" },
-        { "label": "Readme + licencia", "value": "PDF" }
+        {
+          "label": "Portada en alta resolución",
+          "value": "3000 × 3000"
+        },
+        {
+          "label": "Licencia de lanzamiento",
+          "value": "Un proyecto"
+        },
+        {
+          "label": "Lista para DSP",
+          "value": "Spotify · Apple · Deezer"
+        },
+        {
+          "label": "Readme + licencia",
+          "value": "PDF"
+        }
       ],
       "albumPack": [
-        { "label": "3 portadas en alta resolución", "value": "3000 × 3000" },
-        { "label": "Licencia de lanzamiento", "value": "Un proyecto" },
-        { "label": "Lista para DSP", "value": "Spotify · Apple · Deezer" },
-        { "label": "Readme + licencia", "value": "PDF" }
+        {
+          "label": "3 portadas en alta resolución",
+          "value": "3000 × 3000"
+        },
+        {
+          "label": "Licencia de lanzamiento",
+          "value": "Un proyecto"
+        },
+        {
+          "label": "Lista para DSP",
+          "value": "Spotify · Apple · Deezer"
+        },
+        {
+          "label": "Readme + licencia",
+          "value": "PDF"
+        }
       ]
     },
     "faq": {
       "sound": [
-        { "question": "¿Lista para Spotify y Apple Music?", "answer": "Sí. Cada portada sale con la especificación exacta que piden los distribuidores." },
-        { "question": "¿La licencia cubre el lanzamiento?", "answer": "Sí, la compra incluye una licencia de lanzamiento para un proyecto." },
-        { "question": "¿Puedo revenderla?", "answer": "No — cada portada se vende una sola vez y luego se retira del archivo." }
+        {
+          "question": "¿Lista para Spotify y Apple Music?",
+          "answer": "Sí. Cada portada sale con la especificación exacta que piden los distribuidores."
+        },
+        {
+          "question": "¿La licencia cubre el lanzamiento?",
+          "answer": "Sí, la compra incluye una licencia de lanzamiento para un proyecto."
+        },
+        {
+          "question": "¿Puedo revenderla?",
+          "answer": "No — cada portada se vende una sola vez y luego se retira del archivo."
+        }
       ]
     }
   },
@@ -447,23 +521,53 @@
     "description": "Un archivo, dos formas de llevarlo — la pantalla que miras todo el día y la portada de tu próximo drop. Dibujado aquí, vendido una vez.",
     "coverTag": "Sound",
     "nowPlaying": "Sonando ahora",
-    "captions": ["01 — Wallpaper / desktop + móvil", "02 — Portada / tu lanzamiento"],
+    "captions": [
+      "01 — Wallpaper / desktop + móvil",
+      "02 — Portada / tu lanzamiento"
+    ],
     "priceFrom": "desde {{price}}",
     "rows": {
-      "wallpapers": { "name": "Packs de wallpaper" },
-      "singleCover": { "name": "Portada de single" },
-      "albumPack": { "name": "Pack de álbum completo" },
-      "custom": { "name": "Comisión personalizada", "price": "Bajo pedido" }
+      "wallpapers": {
+        "name": "Packs de wallpaper"
+      },
+      "singleCover": {
+        "name": "Portada de single"
+      },
+      "albumPack": {
+        "name": "Pack de álbum completo"
+      },
+      "custom": {
+        "name": "Comisión personalizada",
+        "price": "Bajo pedido"
+      }
     },
     "cta": "Ver todo",
     "specTitle": "La ficha técnica",
     "specs": [
-      { "title": "8K RAW", "description": "Masters de 7680 × 4320" },
-      { "title": "Masterizado a mano", "description": "Color y grano, pieza por pieza" },
-      { "title": "Listo para DSP", "description": "3000 × 3000 RGB — sube sin redimensionar" },
-      { "title": "Sin marca de agua", "description": "Sin packs de stock, sin upscale con IA" },
-      { "title": "Un dueño", "description": "Vendido una vez, luego retirado" },
-      { "title": "Directo al teléfono", "description": "Comprimido y descargado en un minuto" }
+      {
+        "title": "8K RAW",
+        "description": "Masters de 7680 × 4320"
+      },
+      {
+        "title": "Masterizado a mano",
+        "description": "Color y grano, pieza por pieza"
+      },
+      {
+        "title": "Listo para DSP",
+        "description": "3000 × 3000 RGB — sube sin redimensionar"
+      },
+      {
+        "title": "Sin marca de agua",
+        "description": "Sin packs de stock, sin upscale con IA"
+      },
+      {
+        "title": "Un dueño",
+        "description": "Vendido una vez, luego retirado"
+      },
+      {
+        "title": "Directo al teléfono",
+        "description": "Comprimido y descargado en un minuto"
+      }
     ]
   },
   "faq": {

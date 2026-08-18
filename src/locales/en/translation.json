@@ -135,7 +135,6 @@
   },
   "account": {
     "eyebrow": "SYNDIK / Your account",
-    "mockEmail": "member0417@syndik.store",
     "memberTag": "Member {{id}}",
     "gate": {
       "title": "Four digits.\nNo password.",
@@ -180,25 +179,20 @@
       "download": "Download",
       "downloadAgain": "Again",
       "downloadAll": "Download everything",
-      "zipInfo": "One zip · {{size}}",
-      "items": {
-        "scr-001": {
-          "kind": "7 mobile wallpapers",
-          "specNote": "1440 × 3120 + 8K masters"
-        },
-        "snd-001": {
-          "kind": "Single cover",
-          "specNote": "3000 × 3000 RGB · release licence"
-        },
-        "scr-003": {
-          "kind": "7 mobile wallpapers",
-          "specNote": "1440 × 3120 + 8K masters"
-        }
-      }
+      "kind": "Wallpaper pack",
+      "breakdown": "{{mobile}} mobile + {{desktop}} desktop",
+      "filesCount": "{{count}} files",
+      "empty": "You haven't bought anything yet."
     },
     "orders": {
       "title": "Orders",
-      "receipt": "Receipt"
+      "receipt": "Receipt",
+      "empty": "No orders yet.",
+      "method": {
+        "card": "Card",
+        "paypal": "PayPal",
+        "unknown": "—"
+      }
     },
     "details": {
       "title": "Details",
@@ -222,8 +216,6 @@
     "description": "Files are live on this page and in your account. A receipt with the same links is on its way to <0>{{email}}</0>.",
     "downloadEverything": "Download everything",
     "downloadedLabel": "Downloaded — get it again",
-    "zipNote": "One zip · {{size}}",
-    "zipNoteBuilt": "Zip built · {{size}}",
     "files": {
       "title": "Your files",
       "neverExpire": "Links never expire",
@@ -240,9 +232,18 @@
     "install": {
       "title": "How to install",
       "steps": [
-        { "title": "Unzip on the device", "description": "Phone or desktop — both work." },
-        { "title": "Save to photos", "description": "Then set as wallpaper or lockscreen." },
-        { "title": "Covers go straight up", "description": "3000 × 3000 — no resizing for any DSP." }
+        {
+          "title": "Unzip on the device",
+          "description": "Phone or desktop — both work."
+        },
+        {
+          "title": "Save to photos",
+          "description": "Then set as wallpaper or lockscreen."
+        },
+        {
+          "title": "Covers go straight up",
+          "description": "3000 × 3000 — no resizing for any DSP."
+        }
       ]
     },
     "receipt": {
@@ -271,6 +272,19 @@
     "related": {
       "title": "While you're here",
       "viewAll": "Whole vault"
+    },
+    "filesCount": "{{count}} files",
+    "notFound": {
+      "title": "Order not found",
+      "body": "We couldn't find that order. Check the link or see your history in the account."
+    },
+    "confirming": {
+      "title": "Confirming your payment...",
+      "body": "This only takes a moment."
+    },
+    "pending": {
+      "title": "Still processing",
+      "body": "Your payment is being confirmed. The files show up in your account as soon as it's done."
     }
   },
   "search": {
@@ -289,11 +303,26 @@
     "countIdle": "{{count}} plates in the vault",
     "mostWanted": "Most wanted",
     "suggestions": [
-      { "label": "Mobile wallpapers", "query": "mobile" },
-      { "label": "Trap covers", "query": "trap" },
-      { "label": "Album packs", "query": "album" },
-      { "label": "Night / dark", "query": "night" },
-      { "label": "Under $5", "query": "3.99" }
+      {
+        "label": "Mobile wallpapers",
+        "query": "mobile"
+      },
+      {
+        "label": "Trap covers",
+        "query": "trap"
+      },
+      {
+        "label": "Album packs",
+        "query": "album"
+      },
+      {
+        "label": "Night / dark",
+        "query": "night"
+      },
+      {
+        "label": "Under $5",
+        "query": "3.99"
+      }
     ],
     "collections": "Collections",
     "collectionRows": {
@@ -327,7 +356,13 @@
     "screens": {
       "eyebrow": "SYNDIK / The vault — sheet 001",
       "title": "For your screen.",
-      "stats": ["12 plates", "14 files per pack (7 mobile + 7 desktop)", "8K raw + mobile cut", "Updated weekly", "2 retired"],
+      "stats": [
+        "12 plates",
+        "14 files per pack (7 mobile + 7 desktop)",
+        "8K raw + mobile cut",
+        "Updated weekly",
+        "2 retired"
+      ],
       "retiredTag": "Retired",
       "endNote": "End of sheet 001 — SYNDIK / Digital culture / 2026",
       "nextSheet": "Next sheet: for your sound"
@@ -335,7 +370,13 @@
     "sound": {
       "eyebrow": "SYNDIK / The vault — sheet 002",
       "title": "For your sound.",
-      "stats": ["10 plates", "3000 × 3000 RGB", "One owner per cover", "Release licence included", "3 retired"],
+      "stats": [
+        "10 plates",
+        "3000 × 3000 RGB",
+        "One owner per cover",
+        "Release licence included",
+        "3 retired"
+      ],
       "retiredTag": "One owner — gone",
       "endNote": "End of sheet 002 — SYNDIK / Digital culture / 2026",
       "nextSheet": "Next sheet: for your screen",
@@ -396,23 +437,56 @@
     },
     "included": {
       "single": [
-        { "label": "High-resolution cover", "value": "3000 × 3000" },
-        { "label": "Release licence", "value": "One project" },
-        { "label": "DSP ready", "value": "Spotify · Apple · Deezer" },
-        { "label": "Readme + licence", "value": "PDF" }
+        {
+          "label": "High-resolution cover",
+          "value": "3000 × 3000"
+        },
+        {
+          "label": "Release licence",
+          "value": "One project"
+        },
+        {
+          "label": "DSP ready",
+          "value": "Spotify · Apple · Deezer"
+        },
+        {
+          "label": "Readme + licence",
+          "value": "PDF"
+        }
       ],
       "albumPack": [
-        { "label": "3 high-resolution covers", "value": "3000 × 3000" },
-        { "label": "Release licence", "value": "One project" },
-        { "label": "DSP ready", "value": "Spotify · Apple · Deezer" },
-        { "label": "Readme + licence", "value": "PDF" }
+        {
+          "label": "3 high-resolution covers",
+          "value": "3000 × 3000"
+        },
+        {
+          "label": "Release licence",
+          "value": "One project"
+        },
+        {
+          "label": "DSP ready",
+          "value": "Spotify · Apple · Deezer"
+        },
+        {
+          "label": "Readme + licence",
+          "value": "PDF"
+        }
       ]
     },
     "faq": {
       "sound": [
-        { "question": "Spotify and Apple Music ready?", "answer": "Yes. Every cover ships at the exact spec distributors ask for." },
-        { "question": "Does the licence cover the release?", "answer": "Yes, a release licence for one project is included with the purchase." },
-        { "question": "Can I resell it?", "answer": "No — each cover is sold once and retired from the archive right after." }
+        {
+          "question": "Spotify and Apple Music ready?",
+          "answer": "Yes. Every cover ships at the exact spec distributors ask for."
+        },
+        {
+          "question": "Does the licence cover the release?",
+          "answer": "Yes, a release licence for one project is included with the purchase."
+        },
+        {
+          "question": "Can I resell it?",
+          "answer": "No — each cover is sold once and retired from the archive right after."
+        }
       ]
     }
   },
@@ -447,23 +521,53 @@
     "description": "One archive, two ways to wear it — the screen you stare at all day and the cover of your next drop. Drawn here, sold once.",
     "coverTag": "Sound",
     "nowPlaying": "Now playing",
-    "captions": ["01 — Wallpaper / desktop + mobile", "02 — Cover art / your release"],
+    "captions": [
+      "01 — Wallpaper / desktop + mobile",
+      "02 — Cover art / your release"
+    ],
     "priceFrom": "from {{price}}",
     "rows": {
-      "wallpapers": { "name": "Wallpaper packs" },
-      "singleCover": { "name": "Single cover" },
-      "albumPack": { "name": "Complete album pack" },
-      "custom": { "name": "Custom commission", "price": "On request" }
+      "wallpapers": {
+        "name": "Wallpaper packs"
+      },
+      "singleCover": {
+        "name": "Single cover"
+      },
+      "albumPack": {
+        "name": "Complete album pack"
+      },
+      "custom": {
+        "name": "Custom commission",
+        "price": "On request"
+      }
     },
     "cta": "See everything",
     "specTitle": "The spec sheet",
     "specs": [
-      { "title": "8K RAW", "description": "7680 × 4320 masters" },
-      { "title": "Mastered by hand", "description": "Grade and grain, piece by piece" },
-      { "title": "DSP ready", "description": "3000 × 3000 RGB — upload, don't resize" },
-      { "title": "No watermark", "description": "No stock packs, no AI upscale" },
-      { "title": "One owner", "description": "Sold once, then retired" },
-      { "title": "Straight to the phone", "description": "Zipped and downloaded in a minute" }
+      {
+        "title": "8K RAW",
+        "description": "7680 × 4320 masters"
+      },
+      {
+        "title": "Mastered by hand",
+        "description": "Grade and grain, piece by piece"
+      },
+      {
+        "title": "DSP ready",
+        "description": "3000 × 3000 RGB — upload, don't resize"
+      },
+      {
+        "title": "No watermark",
+        "description": "No stock packs, no AI upscale"
+      },
+      {
+        "title": "One owner",
+        "description": "Sold once, then retired"
+      },
+      {
+        "title": "Straight to the phone",
+        "description": "Zipped and downloaded in a minute"
+      }
     ]
   },
   "faq": {

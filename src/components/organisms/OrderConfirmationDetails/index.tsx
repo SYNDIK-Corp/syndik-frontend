@@ -4,15 +4,17 @@ import { Eyebrow } from '@/components/atoms/Eyebrow';
 import { Icon } from '@/components/atoms/Icon';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
 import { SpecList } from '@/components/molecules/SpecList';
-import { formatDateTime, formatFileSize } from '@/lib/format';
+import { requestDownload, triggerFileDownloads, isDownloadError } from '@/lib/downloadApi';
+import { formatDateTime } from '@/lib/format';
 import * as S from './styles';
 
 export interface OrderFile {
   sku: string;
+  productId: number;
   name: string;
   kind: string;
   spec: string;
-  fileSizeMb: number;
+  fileCount: number;
 }
 
 export interface OrderConfirmationDetailsProps {
@@ -28,16 +30,21 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files }: OrderCo
   const [pin, setPin] = useState('');
   const [pinSaved, setPinSaved] = useState(false);
 
-  const totalMb = files.reduce((sum, file) => sum + file.fileSizeMb, 0);
+  const totalFiles = files.reduce((sum, file) => sum + file.fileCount, 0);
   const installSteps = t('orderConfirmation.install.steps', { returnObjects: true }) as {
     title: string;
     description: string;
   }[];
 
-  const markDownloaded = (sku: string) => setDownloaded((prev) => new Set(prev).add(sku));
+  const downloadFile = async (file: OrderFile) => {
+    const result = await requestDownload(file.productId);
+    if (isDownloadError(result)) return;
+    triggerFileDownloads(result.files);
+    setDownloaded((prev) => new Set(prev).add(file.sku));
+  };
 
-  const downloadAll = () => {
-    setDownloaded(new Set(files.map((file) => file.sku)));
+  const downloadAll = async () => {
+    await Promise.all(files.map((file) => downloadFile(file)));
     setAllDownloaded(true);
   };
 
@@ -64,11 +71,7 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files }: OrderCo
             {allDownloaded ? t('orderConfirmation.downloadedLabel') : t('orderConfirmation.downloadEverything')}
           </span>
         </S.DownloadAllButton>
-        <S.ZipNote>
-          {allDownloaded
-            ? t('orderConfirmation.zipNoteBuilt', { size: formatFileSize(totalMb) })
-            : t('orderConfirmation.zipNote', { size: formatFileSize(totalMb) })}
-        </S.ZipNote>
+        <S.ZipNote>{t('orderConfirmation.filesCount', { count: totalFiles })}</S.ZipNote>
       </S.DownloadActions>
 
       <S.FilesSection>
@@ -90,7 +93,7 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files }: OrderCo
                   : t('orderConfirmation.files.ready')
               }
               downloaded={downloaded.has(file.sku)}
-              onDownload={() => markDownloaded(file.sku)}
+              onDownload={() => downloadFile(file)}
             />
           ))}
         </div>
