@@ -20,11 +20,16 @@ export const Pane = styled.div`
   background: #000;
 `;
 
-export const Image = styled.img`
+/* fade saindo do preto do Pane assim que a imagem termina de carregar
+   ($loaded, controlado no componente via onLoad/img.complete) — em vez do
+   pop abrupto de antes. */
+export const Image = styled.img<{ $loaded: boolean }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  opacity: ${({ $loaded }) => ($loaded ? 1 : 0)};
+  transition: opacity 0.5s ease;
 `;
 
 /* só usado quando o painel tem link_to cadastrado — cobre o painel inteiro,

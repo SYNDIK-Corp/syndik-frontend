@@ -8,6 +8,27 @@
          rodar — toda imagem/dado real do site vem de lá, achado testando
          velocidade da Hero (Fase 11.1) -->
     <link rel="preconnect" href="https://jxtbyfkoesgptcpkbqak.supabase.co" crossorigin />
+    <!-- Achado real (Fase 11.1): sem isso, a imagem só começa a baixar
+         DEPOIS da consulta ao hero_banners terminar (dois passos em série).
+         Com o preload, o navegador já busca o arquivo em paralelo com o
+         boot do JS + a consulta ao banco — corta a espera de verdade, não
+         só o flash de cor. Precisa acompanhar manualmente se o banner ativo
+         mudar (URL fixa aqui, dinâmica no banco) — preload de imagem errada
+         não quebra nada, só perde o ganho até atualizar. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      fetchpriority="high"
+      href="https://jxtbyfkoesgptcpkbqak.supabase.co/storage/v1/object/public/product-images/legends-never-die/hero/02.webp"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      fetchpriority="high"
+      href="https://jxtbyfkoesgptcpkbqak.supabase.co/storage/v1/object/public/product-images/legends-never-die/hero/04.webp"
+    />
     <title>syndik.store</title>
   </head>
   <body>
