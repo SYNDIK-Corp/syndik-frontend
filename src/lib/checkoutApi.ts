@@ -37,9 +37,10 @@ async function readCheckoutError(error: unknown): Promise<CheckoutError> {
  * quantidade, o resto a Edge Function busca direto de products. */
 export async function createOrder(
   items: { sku: string; quantity: number }[],
+  couponCode?: string | null,
 ): Promise<CreateOrderResult | CheckoutError> {
   const { data, error } = await supabase.functions.invoke<CreateOrderResult>('checkout-create-order', {
-    body: { items },
+    body: { items, couponCode: couponCode ?? undefined },
   });
   if (error) return readCheckoutError(error);
   if (!data) return { code: 'unexpected' };

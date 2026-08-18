@@ -6,32 +6,31 @@ import { PaymentBrands } from '@/components/molecules/PaymentBrands';
 import { useCart } from '@/hooks/useCart';
 import { formatPrice } from '@/lib/format';
 import { getCartRecommendations, type CartRecommendation } from '@/data/cartRecommendations';
-import { getDiscountRate } from '@/data/discountCodes';
+import { validateCoupon } from '@/lib/couponsApi';
 import * as S from './styles';
 
 const SUMMARY_BRANDS = ['visa', 'mastercard', 'amex', 'elo', 'applePay', 'gpay', 'stripe'] as const;
 
 export function OrderSummary() {
   const { t, i18n } = useTranslation();
-  const { items, total, removeItem, addItem } = useCart();
+  const { items, total, removeItem, addItem, appliedCoupon, setAppliedCoupon, bestDiscount } = useCart();
 
   const [code, setCode] = useState('');
-  const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; rate: number } | null>(null);
   const [codeStatus, setCodeStatus] = useState<'idle' | 'applied' | 'invalid'>('idle');
 
-  const handleApplyCode = () => {
+  const handleApplyCode = async () => {
     const normalized = code.trim().toUpperCase();
-    const rate = getDiscountRate(normalized);
-    if (rate) {
-      setAppliedDiscount({ code: normalized, rate });
+    const coupon = await validateCoupon(normalized, total);
+    if (coupon) {
+      setAppliedCoupon({ code: normalized, discountType: coupon.discount_type, discountValue: Number(coupon.discount_value) });
       setCodeStatus('applied');
     } else {
-      setAppliedDiscount(null);
+      setAppliedCoupon(null);
       setCodeStatus('invalid');
     }
   };
 
-  const discountAmount = appliedDiscount ? total * appliedDiscount.rate : 0;
+  const discountAmount = bestDiscount?.amount ?? 0;
   const grandTotal = Math.max(0, total - discountAmount);
 
   /* upsell do checkout — mesma fonte de recomendação real (Drops em
@@ -75,14 +74,15 @@ export function OrderSummary() {
           </S.ApplyButton>
         </S.CodeBox>
         <S.CodeNote>
-          {codeStatus === 'applied' &&
-            appliedDiscount &&
-            t('checkout.summary.codeApplied', {
-              code: appliedDiscount.code,
-              percent: Math.round(appliedDiscount.rate * 100),
-            })}
+          {codeStatus === 'applied' && bestDiscount?.source === 'coupon' && appliedCoupon && (
+            appliedCoupon.discountType === 'percent'
+              ? t('checkout.summary.codeApplied', { code: appliedCoupon.code, percent: Math.round(appliedCoupon.discountValue * 100) })
+              : t('checkout.summary.codeAppliedFixed', { code: appliedCoupon.code, amount: formatPrice(appliedCoupon.discountValue, i18n.language) })
+          )}
+          {codeStatus === 'applied' && bestDiscount?.source === 'tier' && t('checkout.summary.tierApplied')}
           {codeStatus === 'invalid' && t('checkout.summary.codeInvalid')}
-          {codeStatus === 'idle' && t('checkout.summary.codeHint')}
+          {codeStatus === 'idle' && bestDiscount?.source === 'tier' && t('checkout.summary.tierApplied')}
+          {codeStatus === 'idle' && !bestDiscount && t('checkout.summary.codeHint')}
         </S.CodeNote>
 
         <S.Totals>

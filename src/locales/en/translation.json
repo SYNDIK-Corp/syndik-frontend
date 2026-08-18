@@ -130,7 +130,9 @@
       "currency": "USD",
       "addToDrop": "Add to the drop",
       "add": "Add",
-      "addonHint": "Instant download · Every screen"
+      "addonHint": "Instant download · Every screen",
+      "codeAppliedFixed": "{{code}} applied — {{amount}} off",
+      "tierApplied": "Tier discount already applied automatically."
     }
   },
   "account": {

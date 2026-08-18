@@ -130,7 +130,9 @@
       "currency": "USD",
       "addToDrop": "Añade al lanzamiento",
       "add": "Añadir",
-      "addonHint": "Descarga inmediata · Todas las pantallas"
+      "addonHint": "Descarga inmediata · Todas las pantallas",
+      "codeAppliedFixed": "{{code}} aplicado — {{amount}} de descuento",
+      "tierApplied": "Descuento por monto ya aplicado automáticamente."
     }
   },
   "account": {

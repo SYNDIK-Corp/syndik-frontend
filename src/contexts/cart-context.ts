@@ -1,4 +1,17 @@
 import { createContext } from 'react';
+import type { DiscountTier } from '@/lib/couponsApi';
+
+export interface AppliedCoupon {
+  code: string;
+  discountType: 'percent' | 'fixed';
+  discountValue: number;
+}
+
+export interface BestDiscount {
+  amount: number;
+  source: 'coupon' | 'tier';
+  couponCode?: string;
+}
 
 export interface CartItem {
   sku: string;
@@ -24,6 +37,14 @@ export interface CartContextValue {
   clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
+  /* faixas de desconto reais (discount_tiers), buscadas uma vez no mount */
+  discountTiers: DiscountTier[];
+  appliedCoupon: AppliedCoupon | null;
+  setAppliedCoupon: (coupon: AppliedCoupon | null) => void;
+  clearCoupon: () => void;
+  /* cupom e faixa nunca empilham — o maior dos dois, mesma regra do
+     servidor (checkout-create-order), usada aqui só pra preview */
+  bestDiscount: BestDiscount | null;
 }
 
 export const CartContext = createContext<CartContextValue | null>(null);

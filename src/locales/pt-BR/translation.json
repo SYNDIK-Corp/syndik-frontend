@@ -130,7 +130,9 @@
       "currency": "USD",
       "addToDrop": "Adicione ao lançamento",
       "add": "Adicionar",
-      "addonHint": "Download imediato · Todas as telas"
+      "addonHint": "Download imediato · Todas as telas",
+      "codeAppliedFixed": "{{code}} aplicado — {{amount}} off",
+      "tierApplied": "Desconto de faixa já aplicado automaticamente."
     }
   },
   "account": {

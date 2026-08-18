@@ -19,7 +19,7 @@ function checkoutErrorMessage(t: ReturnType<typeof useTranslation>['t'], error: 
 
 export function CheckoutForm() {
   const { t, i18n } = useTranslation();
-  const { items, total } = useCart();
+  const { items, total, appliedCoupon } = useCart();
   const { session, profile, loginOrSignUp, requestPinReset, confirmPinReset } = useAuth();
 
   const [showPin, setShowPin] = useState(false);
@@ -99,7 +99,10 @@ export function CheckoutForm() {
     if (!canContinue) return;
     setCreatingOrder(true);
     setOrderError(null);
-    const result = await createOrder(items.map((item) => ({ sku: item.sku, quantity: 1 })));
+    const result = await createOrder(
+      items.map((item) => ({ sku: item.sku, quantity: 1 })),
+      appliedCoupon?.code,
+    );
     setCreatingOrder(false);
     if (isCheckoutError(result)) {
       setOrderError(result);
