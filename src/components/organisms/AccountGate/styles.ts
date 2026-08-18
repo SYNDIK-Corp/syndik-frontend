@@ -32,6 +32,9 @@ export const Description = styled.p`
 export const FormColumn = styled.div`
   max-width: 380px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const PinRow = styled.div`
@@ -67,11 +70,11 @@ export const EnterButton = styled.button`
   }
 `;
 
-export const PinHint = styled.span`
+export const PinHint = styled.span<{ $error?: boolean }>`
   display: block;
   margin-top: 10px;
   font-size: 11px;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: ${({ theme, $error }) => ($error ? theme.colors.danger : theme.colors.textMuted)};
 `;
 
 export const LostPinBox = styled.div`
@@ -83,12 +86,23 @@ export const LostPinBox = styled.div`
   gap: 10px;
 `;
 
-export const LostPinLabel = styled.span`
+export const LostPinLabel = styled.button`
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.textMuted};
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+  }
 `;
 
 export const LostPinDescription = styled.span`

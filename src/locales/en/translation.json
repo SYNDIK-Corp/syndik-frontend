@@ -86,13 +86,14 @@
       "title": "Contact",
       "signIn": "Sign in",
       "member": "Member {{id}}",
-      "mockEmail": "member0417@syndik.store",
       "pinLabel": "Enter your pin — no password",
       "pinPlaceholder": "0000",
       "pinEnter": "Enter",
-      "pinHintDefault": "Any 4 digits work in this prototype.",
-      "pinHintRetry": "Four digits, then Enter.",
-      "emailPlaceholder": "Email or mobile number",
+      "pinHint": "First purchase? These 4 digits create your account on the spot.",
+      "forgotPin": "Forgot the pin?",
+      "backToPin": "Back",
+      "resetLabel": "We sent an access code to your email.",
+      "emailPlaceholder": "Email",
       "newsletter": "Tell me when a new drop lands. Nothing else."
     },
     "payment": {
@@ -161,14 +162,26 @@
     "gate": {
       "title": "Four digits.\nNo password.",
       "description": "Your pin was set on your first order. It unlocks every file you've ever bought — re-download whenever, on any device.",
+      "emailPlaceholder": "you@email.com",
       "pinPlaceholder": "0000",
       "enter": "Enter",
-      "pinHintDefault": "Any 4 digits work in this prototype.",
-      "pinHintRetry": "Four digits, then Enter.",
+      "pinHint": "Email and your 4-digit PIN.",
+      "errors": {
+        "invalid_input": "Fill in your email and the 4-digit PIN.",
+        "account_not_found": "We couldn't find that account. Check the email you used to buy.",
+        "wrong_pin": "Wrong PIN — {{count}} attempts left.",
+        "locked": "Too many wrong attempts. Try again in {{minutes}} min.",
+        "rate_limited": "Too many attempts from here. Try again later.",
+        "session_pending": "Your account was created! We just couldn't sign you in automatically — try logging in with the PIN you just set.",
+        "unexpected": "Something went wrong. Try again."
+      },
       "lostPin": "Lost the pin?",
-      "lostPinDescription": "Enter the email you bought with and we'll send a one-time link.",
-      "emailPlaceholder": "you@email.com",
-      "sendLink": "Send the link"
+      "lostPinDescription": "Enter the email you bought with and we'll send an access code.",
+      "sendCode": "Send code",
+      "codeSentDescription": "We sent a code to your email — enter it and pick a new PIN.",
+      "codePlaceholder": "Code from your email",
+      "newPinPlaceholder": "New 4-digit PIN",
+      "confirmReset": "Confirm"
     },
     "sidebar": {
       "tabs": {
@@ -216,6 +229,7 @@
       "newPinPlaceholder": "New 4 digits",
       "save": "Save",
       "saved": "Saved",
+      "pinError": "4 digits — try again.",
       "newsletter": "Tell me when a new drop lands.",
       "dangerZone": "Danger zone",
       "dangerZoneBody": "Deleting the account removes your download links for good. The licence on files you already have stays valid.",

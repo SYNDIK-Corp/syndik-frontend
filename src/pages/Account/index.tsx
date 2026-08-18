@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { MainLayout } from '@/components/templates/MainLayout';
+import { PageLoader } from '@/components/molecules/PageLoader';
 import { AccountGate } from '@/components/organisms/AccountGate';
 import { AccountSidebar, type AccountTab } from '@/components/organisms/AccountSidebar';
 import { AccountDownloads } from '@/components/organisms/AccountDownloads';
@@ -8,25 +8,33 @@ import { AccountOrders } from '@/components/organisms/AccountOrders';
 import { AccountDetails } from '@/components/organisms/AccountDetails';
 import { accountDownloads } from '@/data/accountDownloads';
 import { accountOrders } from '@/data/accountOrders';
+import { useAuth } from '@/hooks/useAuth';
 import * as S from './styles';
 
 export function Account() {
-  const { t } = useTranslation();
-  const [signedIn, setSignedIn] = useState(false);
+  const { session, profile, loading, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<AccountTab>('downloads');
-  const memberEmail = t('account.mockEmail');
 
   const handleSignOut = () => {
-    setSignedIn(false);
+    signOut();
     setActiveTab('downloads');
   };
 
+  if (loading) {
+    return (
+      <MainLayout>
+        <PageLoader />
+      </MainLayout>
+    );
+  }
+
   return (
     <MainLayout>
-      {signedIn ? (
+      {session && profile ? (
         <S.Dashboard>
           <AccountSidebar
-            email={memberEmail}
+            email={profile.email}
+            userId={profile.id}
             activeTab={activeTab}
             onTabChange={setActiveTab}
             onSignOut={handleSignOut}
@@ -36,10 +44,10 @@ export function Account() {
 
           {activeTab === 'downloads' && <AccountDownloads />}
           {activeTab === 'orders' && <AccountOrders />}
-          {activeTab === 'details' && <AccountDetails email={memberEmail} />}
+          {activeTab === 'details' && <AccountDetails profile={profile} />}
         </S.Dashboard>
       ) : (
-        <AccountGate onSignIn={() => setSignedIn(true)} />
+        <AccountGate onSignIn={() => setActiveTab('downloads')} />
       )}
     </MainLayout>
   );

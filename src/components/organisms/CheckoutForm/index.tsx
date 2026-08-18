@@ -4,40 +4,90 @@ import { TextField } from '@/components/atoms/TextField';
 import { PaymentMethodOption } from '@/components/molecules/PaymentMethodOption';
 import { PaymentBrands } from '@/components/molecules/PaymentBrands';
 import { useCart } from '@/hooks/useCart';
+import { useAuth } from '@/hooks/useAuth';
 import { formatPrice } from '@/lib/format';
+import { authErrorMessage } from '@/lib/authErrorMessage';
+import type { AuthActionError } from '@/contexts/auth-context';
 import * as S from './styles';
 
 type PaymentMethod = 'card' | 'paypal' | 'pix';
 
-const EMAIL_OR_PHONE = /.+@.+\..+/;
-const PHONE_ONLY = /^\+?[\d\s()-]{8,}$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function CheckoutForm() {
   const { t, i18n } = useTranslation();
   const { items, total } = useCart();
+  const { session, profile, loginOrSignUp, requestPinReset, confirmPinReset } = useAuth();
 
   const [method, setMethod] = useState<PaymentMethod>('card');
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState('');
-  const [pinRetry, setPinRetry] = useState(false);
-  const [signedIn, setSignedIn] = useState(false);
+  const [authError, setAuthError] = useState<AuthActionError | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const [email, setEmail] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [paid, setPaid] = useState(false);
 
-  const emailValid = EMAIL_OR_PHONE.test(email) || PHONE_ONLY.test(email);
-  const canPay = emailValid && termsAccepted && items.length > 0;
+  const [resetMode, setResetMode] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+  const [resetCode, setResetCode] = useState('');
+  const [resetNewPin, setResetNewPin] = useState('');
+  const [resetError, setResetError] = useState<AuthActionError | null>(null);
+  const [resetSubmitting, setResetSubmitting] = useState(false);
 
-  const handleSignIn = () => {
+  const displayEmail = session ? (profile?.email ?? '') : email;
+  const emailValid = EMAIL_RE.test(displayEmail);
+  const canPay = session != null && emailValid && termsAccepted && items.length > 0;
+
+  /* PIN certo cria conta na hora se o email for novo (conta nasce no
+     primeiro pedido) — mesmo botão serve pra entrar e pra criar. */
+  const handlePinSubmit = async () => {
     const digits = pin.replace(/\D/g, '');
-    if (digits.length === 4) {
-      setShowPin(false);
-      setSignedIn(true);
-      setPinRetry(false);
-      if (!email) setEmail(t('checkout.contact.mockEmail'));
-    } else {
-      setPinRetry(true);
+    if (!emailValid || digits.length !== 4) {
+      setAuthError({ code: 'invalid_input' });
+      return;
     }
+    setSubmitting(true);
+    setAuthError(null);
+    const result = await loginOrSignUp(email, digits);
+    setSubmitting(false);
+    if (result) {
+      setAuthError(result);
+      return;
+    }
+    setShowPin(false);
+    setPin('');
+  };
+
+  const handleSendResetCode = async () => {
+    if (!emailValid) return;
+    setResetSubmitting(true);
+    setResetError(null);
+    const result = await requestPinReset(email);
+    setResetSubmitting(false);
+    if (result) {
+      setResetError(result);
+      return;
+    }
+    setResetSent(true);
+  };
+
+  const handleConfirmReset = async () => {
+    const newDigits = resetNewPin.replace(/\D/g, '');
+    if (!resetCode || newDigits.length !== 4) {
+      setResetError({ code: 'invalid_input' });
+      return;
+    }
+    setResetSubmitting(true);
+    setResetError(null);
+    const result = await confirmPinReset(email, resetCode, newDigits);
+    setResetSubmitting(false);
+    if (result) {
+      setResetError(result);
+      return;
+    }
+    setShowPin(false);
+    setResetMode(false);
   };
 
   const handlePay = () => {
@@ -70,34 +120,83 @@ export function CheckoutForm() {
         <S.SectionHeader>
           <S.SectionTitle>{t('checkout.contact.title')}</S.SectionTitle>
           <S.SignInButton type="button" onClick={() => setShowPin((v) => !v)}>
-            {signedIn ? t('checkout.contact.member', { id: '0417' }) : t('checkout.contact.signIn')}
+            {session
+              ? t('checkout.contact.member', { id: session.user.id.slice(0, 4).toUpperCase() })
+              : t('checkout.contact.signIn')}
           </S.SignInButton>
         </S.SectionHeader>
 
         <S.PinBox $open={showPin}>
-          <S.PinLabel>{t('checkout.contact.pinLabel')}</S.PinLabel>
-          <S.PinRow>
-            <S.PinInput
-              maxLength={4}
-              inputMode="numeric"
-              placeholder={t('checkout.contact.pinPlaceholder')}
-              value={pin}
-              onChange={(event) => setPin(event.target.value)}
-            />
-            <S.PinEnterButton type="button" onClick={handleSignIn}>
-              {t('checkout.contact.pinEnter')}
-            </S.PinEnterButton>
-          </S.PinRow>
-          <S.PinHint>
-            {pinRetry ? t('checkout.contact.pinHintRetry') : t('checkout.contact.pinHintDefault')}
-          </S.PinHint>
+          {!resetMode ? (
+            <>
+              <S.PinLabel>{t('checkout.contact.pinLabel')}</S.PinLabel>
+              <S.PinRow>
+                <S.PinInput
+                  maxLength={4}
+                  inputMode="numeric"
+                  placeholder={t('checkout.contact.pinPlaceholder')}
+                  value={pin}
+                  onChange={(event) => setPin(event.target.value)}
+                />
+                <S.PinEnterButton type="button" onClick={handlePinSubmit} disabled={submitting}>
+                  {t('checkout.contact.pinEnter')}
+                </S.PinEnterButton>
+              </S.PinRow>
+              <S.PinHint $error={Boolean(authError)}>
+                {authError ? authErrorMessage(t, authError) : t('checkout.contact.pinHint')}
+              </S.PinHint>
+              <S.ForgotPinLink type="button" onClick={() => setResetMode(true)}>
+                {t('checkout.contact.forgotPin')}
+              </S.ForgotPinLink>
+            </>
+          ) : (
+            <>
+              {!resetSent ? (
+                <>
+                  <S.PinLabel>{t('checkout.contact.resetLabel')}</S.PinLabel>
+                  <S.PinEnterButton type="button" onClick={handleSendResetCode} disabled={resetSubmitting}>
+                    {t('account.gate.sendCode')}
+                  </S.PinEnterButton>
+                </>
+              ) : (
+                <>
+                  <S.PinLabel>{t('account.gate.codeSentDescription')}</S.PinLabel>
+                  <S.PinRow>
+                    <S.PinInput
+                      inputMode="numeric"
+                      placeholder={t('account.gate.codePlaceholder')}
+                      value={resetCode}
+                      onChange={(event) => setResetCode(event.target.value)}
+                    />
+                  </S.PinRow>
+                  <S.PinRow>
+                    <S.PinInput
+                      maxLength={4}
+                      inputMode="numeric"
+                      placeholder={t('account.gate.newPinPlaceholder')}
+                      value={resetNewPin}
+                      onChange={(event) => setResetNewPin(event.target.value)}
+                    />
+                    <S.PinEnterButton type="button" onClick={handleConfirmReset} disabled={resetSubmitting}>
+                      {t('account.gate.confirmReset')}
+                    </S.PinEnterButton>
+                  </S.PinRow>
+                </>
+              )}
+              {resetError && <S.PinHint $error>{authErrorMessage(t, resetError)}</S.PinHint>}
+              <S.ForgotPinLink type="button" onClick={() => setResetMode(false)}>
+                {t('checkout.contact.backToPin')}
+              </S.ForgotPinLink>
+            </>
+          )}
         </S.PinBox>
 
         <S.FieldGroup>
           <TextField
             type="email"
             placeholder={t('checkout.contact.emailPlaceholder')}
-            value={email}
+            value={displayEmail}
+            disabled={Boolean(session)}
             onChange={(event) => setEmail(event.target.value)}
           />
         </S.FieldGroup>

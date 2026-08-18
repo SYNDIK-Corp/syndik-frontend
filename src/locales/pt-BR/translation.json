@@ -86,13 +86,14 @@
       "title": "Contato",
       "signIn": "Entrar",
       "member": "Membro {{id}}",
-      "mockEmail": "membro0417@syndik.store",
       "pinLabel": "Digite seu PIN — sem senha",
       "pinPlaceholder": "0000",
       "pinEnter": "Entrar",
-      "pinHintDefault": "Qualquer 4 dígitos funcionam neste protótipo.",
-      "pinHintRetry": "Quatro dígitos, depois Entrar.",
-      "emailPlaceholder": "Email ou celular",
+      "pinHint": "Primeira compra? Esses 4 dígitos criam sua conta na hora.",
+      "forgotPin": "Esqueceu o PIN?",
+      "backToPin": "Voltar",
+      "resetLabel": "Enviamos um código de acesso pro seu email.",
+      "emailPlaceholder": "Email",
       "newsletter": "Me avise quando um novo lançamento chegar. Só isso."
     },
     "payment": {
@@ -161,14 +162,26 @@
     "gate": {
       "title": "Quatro dígitos.\nSem senha.",
       "description": "Seu pin foi criado no seu primeiro pedido. Ele libera todos os arquivos que você já comprou — baixe de novo quando quiser, em qualquer aparelho.",
+      "emailPlaceholder": "voce@email.com",
       "pinPlaceholder": "0000",
       "enter": "Entrar",
-      "pinHintDefault": "Qualquer 4 dígitos funcionam neste protótipo.",
-      "pinHintRetry": "Quatro dígitos, depois Entrar.",
+      "pinHint": "Email e os 4 dígitos do seu PIN.",
+      "errors": {
+        "invalid_input": "Preencha o email e os 4 dígitos do PIN.",
+        "account_not_found": "Não encontramos essa conta. Confira o email usado na sua compra.",
+        "wrong_pin": "PIN incorreto — {{count}} tentativas restantes.",
+        "locked": "Muitas tentativas erradas. Tente de novo em {{minutes}} min.",
+        "rate_limited": "Muitas tentativas por aqui. Tente de novo mais tarde.",
+        "session_pending": "Sua conta foi criada! Só não deu pra entrar automaticamente — tente entrar com o PIN que você acabou de criar.",
+        "unexpected": "Algo deu errado. Tente de novo."
+      },
       "lostPin": "Perdeu o pin?",
-      "lostPinDescription": "Digite o email que você usou na compra e enviamos um link de acesso único.",
-      "emailPlaceholder": "voce@email.com",
-      "sendLink": "Enviar o link"
+      "lostPinDescription": "Digite o email que você usou na compra e enviamos um código de acesso.",
+      "sendCode": "Enviar código",
+      "codeSentDescription": "Enviamos um código pro seu email — digite ele e escolha um novo PIN.",
+      "codePlaceholder": "Código recebido por email",
+      "newPinPlaceholder": "Novo PIN de 4 dígitos",
+      "confirmReset": "Confirmar"
     },
     "sidebar": {
       "tabs": {
@@ -216,6 +229,7 @@
       "newPinPlaceholder": "Novos 4 dígitos",
       "save": "Salvar",
       "saved": "Salvo",
+      "pinError": "4 dígitos — tente de novo.",
       "newsletter": "Me avise quando um novo lançamento chegar.",
       "dangerZone": "Zona de risco",
       "dangerZoneBody": "Excluir a conta remove seus links de download definitivamente. A licença dos arquivos que você já tem continua válida.",

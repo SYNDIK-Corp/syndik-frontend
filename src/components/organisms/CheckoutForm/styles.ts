@@ -199,9 +199,28 @@ export const PinEnterButton = styled.button`
   }
 `;
 
-export const PinHint = styled.span`
+export const PinHint = styled.span<{ $error?: boolean }>`
   font-size: 11px;
+  color: ${({ theme, $error }) => ($error ? theme.colors.danger : theme.colors.textMuted)};
+`;
+
+export const ForgotPinLink = styled.button`
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: ${({ theme }) => theme.colors.textMuted};
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+  }
 `;
 
 export const FieldGroup = styled.div`

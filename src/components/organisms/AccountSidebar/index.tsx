@@ -5,6 +5,7 @@ export type AccountTab = 'downloads' | 'orders' | 'details';
 
 export interface AccountSidebarProps {
   email: string;
+  userId: string;
   activeTab: AccountTab;
   onTabChange: (tab: AccountTab) => void;
   onSignOut: () => void;
@@ -14,6 +15,7 @@ export interface AccountSidebarProps {
 
 export function AccountSidebar({
   email,
+  userId,
   activeTab,
   onTabChange,
   onSignOut,
@@ -21,6 +23,9 @@ export function AccountSidebar({
   ordersCount,
 }: AccountSidebarProps) {
   const { t } = useTranslation();
+  /* "Membro ####" — 4 primeiros caracteres do uuid real, só decorativo
+     (não é um id sequencial de verdade, é o próprio id do usuário) */
+  const memberId = userId.slice(0, 4).toUpperCase();
 
   const tabs: { key: AccountTab; label: string; count?: number }[] = [
     { key: 'downloads', label: t('account.sidebar.tabs.downloads'), count: downloadsCount },
@@ -30,7 +35,7 @@ export function AccountSidebar({
 
   return (
     <S.Container>
-      <S.MemberTag>{t('account.memberTag', { id: '0417' })}</S.MemberTag>
+      <S.MemberTag>{t('account.memberTag', { id: memberId })}</S.MemberTag>
       <S.Email>{email}</S.Email>
 
       <S.Nav>
