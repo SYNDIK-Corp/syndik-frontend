@@ -78,10 +78,6 @@
     }
   },
   "checkout": {
-    "express": {
-      "title": "Checkout expresso",
-      "or": "Ou"
-    },
     "contact": {
       "title": "Contato",
       "signIn": "Entrar",
@@ -99,42 +95,24 @@
     "payment": {
       "title": "Pagamento",
       "subtitle": "Todas as transações são seguras e criptografadas. Os arquivos liberam assim que a compra é confirmada.",
-      "methods": {
-        "card": "Cartão de crédito",
-        "paypal": "PayPal",
-        "pix": "Pix",
-        "pixBadge": "Instantâneo"
-      },
-      "cardBrands": {
-        "visa": "Visa",
-        "mc": "MC",
-        "amex": "Amex"
-      },
-      "moreCount": "+{{count}}",
-      "cardNumber": "Número do cartão",
-      "expiration": "Validade (MM / AA)",
-      "securityCode": "Código de segurança",
-      "nameOnCard": "Nome no cartão",
-      "pixNote": "Um QR code aparece assim que você confirmar. Costuma cair em menos de 30 segundos."
-    },
-    "billing": {
-      "title": "Endereço de cobrança",
-      "subtitle": "Produtos digitais — só precisamos disso para a nota fiscal.",
-      "fullName": "Nome completo",
-      "country": "País",
-      "postalCode": "CEP"
+      "notConfigured": "Pagamento ainda não configurado neste ambiente."
     },
     "terms": {
       "text": "Li os <0>termos de licença</0> e a <1>política de reembolso</1> para arquivos digitais, e concordo com eles."
     },
     "cta": {
       "incomplete": "Complete os campos acima",
-      "pay": "Pagar agora • {{total}}",
-      "paid": "Pago — confira sua caixa de entrada"
+      "continueToPayment": "Continuar para o pagamento • {{total}}"
+    },
+    "errors": {
+      "unauthenticated": "Entre com seu PIN antes de continuar.",
+      "empty_cart": "Sua sacola está vazia.",
+      "invalid_items": "Algo na sua sacola não está mais disponível. Atualize a página e tente de novo.",
+      "payment_setup_failed": "Não deu pra abrir o pagamento agora. Tente de novo em instantes.",
+      "unexpected": "Algo deu errado. Tente de novo."
     },
     "note": {
-      "secure": "Pagamento seguro · arquivos liberam na hora",
-      "paid": "Recibo enviado. Os arquivos estão na sua conta."
+      "secure": "Pagamento seguro · arquivos liberam na hora"
     },
     "summary": {
       "empty": "Sua sacola está vazia. Tire algo do acervo.",

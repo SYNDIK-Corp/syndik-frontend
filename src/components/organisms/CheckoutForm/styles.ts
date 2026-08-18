@@ -17,87 +17,8 @@ export const Pane = styled.div`
   flex-direction: column;
 `;
 
-export const ExpressLabel = styled.span`
-  text-align: center;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
-export const ExpressGrid = styled.div`
-  margin-top: 14px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const expressButtonBase = css`
-  height: 50px;
-  cursor: pointer;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease;
-`;
-
-export const ExpressPrimaryButton = styled.button`
-  ${expressButtonBase}
-  background: ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.white};
-  border: 0;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.black};
-    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.black};
-  }
-`;
-
-export const ExpressOutlineButton = styled.button`
-  ${expressButtonBase}
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.black};
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.white};
-  }
-`;
-
-export const Divider = styled.div`
-  margin: 26px 0 0;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-`;
-
-export const DividerLine = styled.span`
-  flex: 1;
-  height: 1px;
-  background: ${({ theme }) => theme.colors.border};
-`;
-
-export const DividerLabel = styled.span`
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
 export const SectionHeader = styled.div`
-  margin-top: 26px;
+  margin-top: 0;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -255,43 +176,19 @@ export const CheckboxText = styled.span`
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
-export const PaymentBox = styled.div`
+export const EmbeddedCheckoutWrap = styled.div`
   margin-top: 16px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+
+  /* o iframe do Stripe já traz o próprio espaçamento/estilo interno — só
+     garante que não fica com altura 0 antes de montar */
+  min-height: 320px;
 `;
 
-export const Brand = styled.span`
-  height: 24px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 0 8px;
-  display: flex;
-  align-items: center;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
-export const MoreBrands = styled.span`
-  font-size: 10px;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
-export const CardPanel = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-export const PixNote = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 16px;
-  font-size: 13px;
-  line-height: 1.7;
-  color: ${({ theme }) => theme.colors.textMuted};
+export const PaymentError = styled.p`
+  margin-top: 14px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: ${({ theme }) => theme.colors.danger};
 `;
 
 export const TermsLabel = styled.label`

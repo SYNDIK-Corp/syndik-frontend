@@ -78,10 +78,6 @@
     }
   },
   "checkout": {
-    "express": {
-      "title": "Pago exprés",
-      "or": "O"
-    },
     "contact": {
       "title": "Contacto",
       "signIn": "Iniciar sesión",
@@ -99,42 +95,24 @@
     "payment": {
       "title": "Pago",
       "subtitle": "Todas las transacciones son seguras y están encriptadas. Los archivos se liberan en cuanto se confirma el pago.",
-      "methods": {
-        "card": "Tarjeta de crédito",
-        "paypal": "PayPal",
-        "pix": "Pix",
-        "pixBadge": "Instantáneo"
-      },
-      "cardBrands": {
-        "visa": "Visa",
-        "mc": "MC",
-        "amex": "Amex"
-      },
-      "moreCount": "+{{count}}",
-      "cardNumber": "Número de tarjeta",
-      "expiration": "Vencimiento (MM / AA)",
-      "securityCode": "Código de seguridad",
-      "nameOnCard": "Nombre en la tarjeta",
-      "pixNote": "Aparece un código QR después de confirmar. Suele procesarse en menos de 30 segundos."
-    },
-    "billing": {
-      "title": "Dirección de facturación",
-      "subtitle": "Productos digitales — solo lo necesitamos para la factura.",
-      "fullName": "Nombre completo",
-      "country": "País",
-      "postalCode": "Código postal"
+      "notConfigured": "El pago todavía no está configurado en este entorno."
     },
     "terms": {
       "text": "Leí los <0>términos de licencia</0> y la <1>política de reembolso</1> para archivos digitales, y estoy de acuerdo."
     },
     "cta": {
       "incomplete": "Completa los campos de arriba",
-      "pay": "Pagar ahora • {{total}}",
-      "paid": "Pagado — revisa tu bandeja de entrada"
+      "continueToPayment": "Continuar al pago • {{total}}"
+    },
+    "errors": {
+      "unauthenticated": "Inicia sesión con tu PIN antes de continuar.",
+      "empty_cart": "Tu bolsa está vacía.",
+      "invalid_items": "Algo en tu bolsa ya no está disponible. Actualiza la página e intenta de nuevo.",
+      "payment_setup_failed": "No se pudo abrir el pago ahora. Intenta de nuevo en un momento.",
+      "unexpected": "Algo salió mal. Intenta de nuevo."
     },
     "note": {
-      "secure": "Pago seguro · los archivos se desbloquean al instante",
-      "paid": "Recibo enviado. Los archivos están en tu cuenta."
+      "secure": "Pago seguro · los archivos se desbloquean al instante"
     },
     "summary": {
       "empty": "Tu bolsa está vacía. Saca algo del archivo.",

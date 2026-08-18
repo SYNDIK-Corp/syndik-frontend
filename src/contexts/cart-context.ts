@@ -20,6 +20,8 @@ export interface CartContextValue {
   holdSecondsRemaining: number;
   addItem: (item: CartItem, options?: { openCart?: boolean }) => void;
   removeItem: (index: number) => void;
+  /* esvazia o carrinho — usado depois de um pedido pago de verdade */
+  clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
 }

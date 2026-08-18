@@ -78,10 +78,6 @@
     }
   },
   "checkout": {
-    "express": {
-      "title": "Express checkout",
-      "or": "Or"
-    },
     "contact": {
       "title": "Contact",
       "signIn": "Sign in",
@@ -99,42 +95,24 @@
     "payment": {
       "title": "Payment",
       "subtitle": "All transactions are secure and encrypted. Files release the second it clears.",
-      "methods": {
-        "card": "Credit card",
-        "paypal": "PayPal",
-        "pix": "Pix",
-        "pixBadge": "Instant"
-      },
-      "cardBrands": {
-        "visa": "Visa",
-        "mc": "MC",
-        "amex": "Amex"
-      },
-      "moreCount": "+{{count}}",
-      "cardNumber": "Card number",
-      "expiration": "Expiration date (MM / YY)",
-      "securityCode": "Security code",
-      "nameOnCard": "Name on card",
-      "pixNote": "A QR code appears after you confirm. Usually clears in under 30 seconds."
-    },
-    "billing": {
-      "title": "Billing address",
-      "subtitle": "Digital goods — we only need this for the invoice.",
-      "fullName": "Full name",
-      "country": "Country",
-      "postalCode": "Postal code"
+      "notConfigured": "Payment isn't configured in this environment yet."
     },
     "terms": {
       "text": "I've read the <0>licence terms</0> and the <1>refund policy</1> for digital files, and I agree to them."
     },
     "cta": {
       "incomplete": "Complete the fields above",
-      "pay": "Pay now • {{total}}",
-      "paid": "Paid — check your inbox"
+      "continueToPayment": "Continue to payment • {{total}}"
+    },
+    "errors": {
+      "unauthenticated": "Sign in with your PIN before continuing.",
+      "empty_cart": "Your bag is empty.",
+      "invalid_items": "Something in your bag is no longer available. Refresh the page and try again.",
+      "payment_setup_failed": "Couldn't open payment right now. Try again in a moment.",
+      "unexpected": "Something went wrong. Try again."
     },
     "note": {
-      "secure": "Secure payment · files unlock instantly",
-      "paid": "Receipt sent. Files are in your account."
+      "secure": "Secure payment · files unlock instantly"
     },
     "summary": {
       "empty": "Your bag is empty. Pull something out of the vault.",

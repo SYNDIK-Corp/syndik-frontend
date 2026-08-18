@@ -44,6 +44,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         if (options?.openCart ?? true) setIsOpen(true);
       },
       removeItem: (index) => setItems((prev) => prev.filter((_, i) => i !== index)),
+      clearCart: () => setItems([]),
       openCart: () => setIsOpen(true),
       closeCart: () => setIsOpen(false),
     }),

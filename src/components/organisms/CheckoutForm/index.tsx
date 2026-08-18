@@ -1,32 +1,33 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import { TextField } from '@/components/atoms/TextField';
-import { PaymentMethodOption } from '@/components/molecules/PaymentMethodOption';
-import { PaymentBrands } from '@/components/molecules/PaymentBrands';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { formatPrice } from '@/lib/format';
 import { authErrorMessage } from '@/lib/authErrorMessage';
+import { createOrder, isCheckoutError, type CheckoutError } from '@/lib/checkoutApi';
+import { stripePromise } from '@/lib/stripe';
 import type { AuthActionError } from '@/contexts/auth-context';
 import * as S from './styles';
 
-type PaymentMethod = 'card' | 'paypal' | 'pix';
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function checkoutErrorMessage(t: ReturnType<typeof useTranslation>['t'], error: CheckoutError): string {
+  return t(`checkout.errors.${error.code}`, { defaultValue: t('checkout.errors.unexpected') });
+}
 
 export function CheckoutForm() {
   const { t, i18n } = useTranslation();
   const { items, total } = useCart();
   const { session, profile, loginOrSignUp, requestPinReset, confirmPinReset } = useAuth();
 
-  const [method, setMethod] = useState<PaymentMethod>('card');
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState('');
   const [authError, setAuthError] = useState<AuthActionError | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [email, setEmail] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [paid, setPaid] = useState(false);
 
   const [resetMode, setResetMode] = useState(false);
   const [resetSent, setResetSent] = useState(false);
@@ -35,9 +36,13 @@ export function CheckoutForm() {
   const [resetError, setResetError] = useState<AuthActionError | null>(null);
   const [resetSubmitting, setResetSubmitting] = useState(false);
 
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [orderError, setOrderError] = useState<CheckoutError | null>(null);
+  const [creatingOrder, setCreatingOrder] = useState(false);
+
   const displayEmail = session ? (profile?.email ?? '') : email;
   const emailValid = EMAIL_RE.test(displayEmail);
-  const canPay = session != null && emailValid && termsAccepted && items.length > 0;
+  const canContinue = session != null && emailValid && termsAccepted && items.length > 0;
 
   /* PIN certo cria conta na hora se o email for novo (conta nasce no
      primeiro pedido) — mesmo botão serve pra entrar e pra criar. */
@@ -90,33 +95,26 @@ export function CheckoutForm() {
     setResetMode(false);
   };
 
-  const handlePay = () => {
-    if (!canPay) return;
-    setPaid(true);
+  const handleContinueToPayment = async () => {
+    if (!canContinue) return;
+    setCreatingOrder(true);
+    setOrderError(null);
+    const result = await createOrder(items.map((item) => ({ sku: item.sku, quantity: 1 })));
+    setCreatingOrder(false);
+    if (isCheckoutError(result)) {
+      setOrderError(result);
+      return;
+    }
+    setClientSecret(result.clientSecret);
   };
 
-  const ctaLabel = paid
-    ? t('checkout.cta.paid')
-    : canPay
-      ? t('checkout.cta.pay', { total: formatPrice(total, i18n.language) })
-      : t('checkout.cta.incomplete');
+  const ctaLabel = canContinue
+    ? t('checkout.cta.continueToPayment', { total: formatPrice(total, i18n.language) })
+    : t('checkout.cta.incomplete');
 
   return (
     <S.Container>
       <S.Pane>
-        <S.ExpressLabel>{t('checkout.express.title')}</S.ExpressLabel>
-        <S.ExpressGrid>
-          <S.ExpressPrimaryButton type="button">{t('cart.payment.applePay')}</S.ExpressPrimaryButton>
-          <S.ExpressOutlineButton type="button">{t('cart.payment.payPal')}</S.ExpressOutlineButton>
-          <S.ExpressOutlineButton type="button">{t('cart.payment.brands.gpay')}</S.ExpressOutlineButton>
-        </S.ExpressGrid>
-
-        <S.Divider>
-          <S.DividerLine />
-          <S.DividerLabel>{t('checkout.express.or')}</S.DividerLabel>
-          <S.DividerLine />
-        </S.Divider>
-
         <S.SectionHeader>
           <S.SectionTitle>{t('checkout.contact.title')}</S.SectionTitle>
           <S.SignInButton type="button" onClick={() => setShowPin((v) => !v)}>
@@ -206,65 +204,6 @@ export function CheckoutForm() {
           <S.CheckboxText>{t('checkout.contact.newsletter')}</S.CheckboxText>
         </S.CheckboxLabel>
 
-        <S.Section>
-          <S.SectionTitle>{t('checkout.payment.title')}</S.SectionTitle>
-          <S.SectionSubtitle>{t('checkout.payment.subtitle')}</S.SectionSubtitle>
-        </S.Section>
-
-        <S.PaymentBox>
-          <PaymentMethodOption
-            label={t('checkout.payment.methods.card')}
-            active={method === 'card'}
-            onSelect={() => setMethod('card')}
-            trailing={
-              <>
-                <S.Brand>{t('checkout.payment.cardBrands.visa')}</S.Brand>
-                <S.Brand>{t('checkout.payment.cardBrands.mc')}</S.Brand>
-                <S.Brand>{t('checkout.payment.cardBrands.amex')}</S.Brand>
-                <S.MoreBrands>{t('checkout.payment.moreCount', { count: 2 })}</S.MoreBrands>
-              </>
-            }
-          />
-          {method === 'card' && (
-            <S.CardPanel>
-              <TextField placeholder={t('checkout.payment.cardNumber')} inputMode="numeric" />
-              <S.FieldRow>
-                <TextField placeholder={t('checkout.payment.expiration')} inputMode="numeric" />
-                <TextField placeholder={t('checkout.payment.securityCode')} inputMode="numeric" />
-              </S.FieldRow>
-              <TextField placeholder={t('checkout.payment.nameOnCard')} />
-            </S.CardPanel>
-          )}
-
-          <PaymentMethodOption
-            label={t('checkout.payment.methods.paypal')}
-            active={method === 'paypal'}
-            onSelect={() => setMethod('paypal')}
-            trailing={<PaymentBrands brands={['paypal']} />}
-          />
-
-          <PaymentMethodOption
-            label={t('checkout.payment.methods.pix')}
-            active={method === 'pix'}
-            onSelect={() => setMethod('pix')}
-            trailing={<S.Brand>{t('checkout.payment.methods.pixBadge')}</S.Brand>}
-          />
-          {method === 'pix' && <S.PixNote>{t('checkout.payment.pixNote')}</S.PixNote>}
-        </S.PaymentBox>
-
-        <S.Section>
-          <S.SectionTitle>{t('checkout.billing.title')}</S.SectionTitle>
-          <S.SectionSubtitle>{t('checkout.billing.subtitle')}</S.SectionSubtitle>
-        </S.Section>
-
-        <S.FieldGroup>
-          <TextField placeholder={t('checkout.billing.fullName')} />
-          <S.FieldRow>
-            <TextField placeholder={t('checkout.billing.country')} />
-            <TextField placeholder={t('checkout.billing.postalCode')} />
-          </S.FieldRow>
-        </S.FieldGroup>
-
         <S.TermsLabel>
           <S.Checkbox
             type="checkbox"
@@ -282,10 +221,30 @@ export function CheckoutForm() {
           </S.TermsText>
         </S.TermsLabel>
 
-        <S.PayButton type="button" $enabled={canPay} disabled={!canPay} onClick={handlePay}>
-          {ctaLabel}
-        </S.PayButton>
-        <S.PayNote>{paid ? t('checkout.note.paid') : t('checkout.note.secure')}</S.PayNote>
+        <S.Section>
+          <S.SectionTitle>{t('checkout.payment.title')}</S.SectionTitle>
+          <S.SectionSubtitle>{t('checkout.payment.subtitle')}</S.SectionSubtitle>
+        </S.Section>
+
+        {clientSecret ? (
+          stripePromise ? (
+            <S.EmbeddedCheckoutWrap>
+              <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
+                <EmbeddedCheckout />
+              </EmbeddedCheckoutProvider>
+            </S.EmbeddedCheckoutWrap>
+          ) : (
+            <S.PaymentError>{t('checkout.payment.notConfigured')}</S.PaymentError>
+          )
+        ) : (
+          <>
+            <S.PayButton type="button" $enabled={canContinue} disabled={!canContinue || creatingOrder} onClick={handleContinueToPayment}>
+              {ctaLabel}
+            </S.PayButton>
+            {orderError && <S.PaymentError>{checkoutErrorMessage(t, orderError)}</S.PaymentError>}
+            <S.PayNote>{t('checkout.note.secure')}</S.PayNote>
+          </>
+        )}
       </S.Pane>
     </S.Container>
   );

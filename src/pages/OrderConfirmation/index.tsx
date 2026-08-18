@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { OrderConfirmationLayout } from '@/components/templates/OrderConfirmationLayout';
 import { OrderConfirmationDetails, type OrderFile } from '@/components/organisms/OrderConfirmationDetails';
@@ -9,6 +10,7 @@ import { accountOrders } from '@/data/accountOrders';
 import { accountDownloads } from '@/data/accountDownloads';
 import { buildRelatedProducts } from '@/lib/relatedProducts';
 import { formatDate } from '@/lib/format';
+import { useCart } from '@/hooks/useCart';
 import * as S from './styles';
 
 /* mesma seleção "combina com isso" da tela de produto, curada à mão */
@@ -16,12 +18,23 @@ const RELATED_IDS = ['static', 'snd-003', 'smoke', 'grid-44'];
 
 export function OrderConfirmation() {
   const { t, i18n } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const { clearCart } = useCart();
   const order = accountOrders[0];
   const memberEmail = t('account.mockEmail');
 
   const [files, setFiles] = useState<OrderFile[]>([]);
   const [subtotal, setSubtotal] = useState(0);
   const [related, setRelated] = useState<RelatedProduct[]>([]);
+
+  /* chegou de volta do Stripe Embedded Checkout (return_url leva
+     ?session_id=...) — a confirmação de verdade é o webhook, não esta
+     página; aqui só esvazia o carrinho local pra não mostrar os itens já
+     comprados como se ainda estivessem na sacola. */
+  useEffect(() => {
+    if (searchParams.get('session_id')) clearCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
