@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchLayout } from '@/components/templates/SearchLayout';
 import { SearchBar } from '@/components/organisms/SearchBar';
@@ -6,27 +6,23 @@ import { SearchControls } from '@/components/organisms/SearchControls';
 import { SearchIdle, type CollectionRow } from '@/components/organisms/SearchIdle';
 import { SearchResults, type SearchResultItem } from '@/components/organisms/SearchResults';
 import { SearchEmpty } from '@/components/organisms/SearchEmpty';
-import { buildSearchIndex, searchCatalog, type SearchableItem, type SearchFilter } from '@/lib/search';
+import { searchCatalog, type SearchableItem, type SearchFilter } from '@/lib/search';
+import { searchProductIds } from '@/lib/searchApi';
 import { fetchScreensCatalog } from '@/lib/catalogApi';
 import type { CatalogItem, Product } from '@/types/product';
 import * as S from './styles';
+
+const DEBOUNCE_MS = 300;
 
 export function Search() {
   const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<SearchFilter>('all');
-  const [index, setIndex] = useState<SearchableItem[]>([]);
+  const [hits, setHits] = useState<SearchableItem[]>([]);
   const [screensCatalog, setScreensCatalog] = useState<CatalogItem[]>([]);
+  const [suggestionCounts, setSuggestionCounts] = useState<number[]>([]);
 
-  useEffect(() => {
-    let cancelled = false;
-    buildSearchIndex(t).then((result) => {
-      if (!cancelled) setIndex(result);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [t]);
+  const active = query.trim() !== '' || filter !== 'all';
 
   useEffect(() => {
     let cancelled = false;
@@ -38,38 +34,60 @@ export function Search() {
     };
   }, []);
 
-  const hits = useMemo(() => searchCatalog(index, query, filter), [index, query, filter]);
-  const active = query.trim() !== '' || filter !== 'all';
-
-  const plateCountLabel = (count: number) =>
-    count === 1 ? t('search.plateSingular', { count }) : t('search.platePlural', { count });
-
-  const countLabel = active ? plateCountLabel(hits.length) : t('search.countIdle', { count: index.length });
+  // debounced — busca real via RPC (Fase 8), não dispara uma requisição por tecla
+  useEffect(() => {
+    if (!active) {
+      setHits([]);
+      return;
+    }
+    let cancelled = false;
+    const timeout = setTimeout(() => {
+      searchCatalog(query, filter, t).then((result) => {
+        if (!cancelled) setHits(result);
+      });
+    }, DEBOUNCE_MS);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, [query, filter, t, active]);
 
   const suggestionDefs = t('search.suggestions', { returnObjects: true }) as {
     label: string;
     query: string;
   }[];
-  const suggestions = suggestionDefs.map((suggestion) => ({
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all(suggestionDefs.map((suggestion) => searchProductIds(suggestion.query).then((ids) => ids.length))).then(
+      (counts) => {
+        if (!cancelled) setSuggestionCounts(counts);
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [t]);
+
+  const suggestions = suggestionDefs.map((suggestion, index) => ({
     ...suggestion,
-    hits: searchCatalog(index, suggestion.query, 'all').length,
+    hits: suggestionCounts[index] ?? 0,
   }));
 
+  const plateCountLabel = (count: number) =>
+    count === 1 ? t('search.plateSingular', { count }) : t('search.platePlural', { count });
+
+  const countLabel = active ? plateCountLabel(hits.length) : t('search.countIdle', { count: screensCatalog.length });
+
   const collections: CollectionRow[] = [
-    {
-      label: t('search.collectionRows.sheetScreens'),
-      count: index.filter((item) => item.sheet === 'screens').length,
-      to: '/products/screens',
-    },
-    {
-      label: t('search.collectionRows.sheetSound'),
-      count: index.filter((item) => item.sheet === 'sound').length,
-      to: '/products/sound',
-    },
+    { label: t('search.collectionRows.sheetScreens'), count: screensCatalog.length, to: '/products/screens' },
+    // 'sound' ainda não tem produto real (Fase 10) — sempre 0
+    { label: t('search.collectionRows.sheetSound'), count: 0, to: '/products/sound' },
     { label: t('search.collectionRows.newThisWeek'), count: 3, to: '/products/screens' },
     {
       label: t('search.collectionRows.retired'),
-      count: index.filter((item) => item.sold).length,
+      count: screensCatalog.filter((item) => item.sold).length,
       to: '/products/sound',
     },
   ];

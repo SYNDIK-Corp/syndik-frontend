@@ -107,6 +107,21 @@ export async function fetchScreensEntriesBySlugs(slugs: string[]): Promise<Catal
   return (data ?? []).map(toCatalogItem);
 }
 
+/** vários ids numa query só — usada pela busca (Fase 8), que já resolveu
+ * *quais* ids batem via RPC e só precisa dos dados completos (imagem,
+ * preço) pra montar o card. Não preserva a ordem de relevância da RPC —
+ * quem chama reordena pelo array de ids original. */
+export async function fetchScreensCatalogByIds(ids: number[]): Promise<CatalogItem[]> {
+  if (ids.length === 0) return [];
+  const { data, error } = await supabase
+    .from('product_catalog')
+    .select(PRODUCT_COLUMNS)
+    .eq('product_type_code', 'wallpaper_pack')
+    .in('id', ids);
+  if (error) throw error;
+  return (data ?? []).map(toCatalogItem);
+}
+
 /** fallback de relacionados sem curadoria manual — limitado no banco
  * (`limit`), nunca traz o catálogo inteiro pro client. */
 export async function fetchScreensCatalogExcluding(excludeSlug: string, limit: number): Promise<CatalogItem[]> {

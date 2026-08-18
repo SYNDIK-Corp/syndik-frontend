@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next';
-import { fetchScreensCatalog } from '@/lib/catalogApi';
-import { searchTags } from '@/data/searchTags';
+import { fetchScreensCatalogByIds } from '@/lib/catalogApi';
+import { searchProductIds } from '@/lib/searchApi';
 import type { CatalogSheet, CatalogVariant } from '@/types/product';
 
 export type SearchFormat = 'mobile' | 'desktop' | 'cover' | 'combo';
@@ -22,42 +22,41 @@ export interface SearchableItem {
   kind: string;
   price: number;
   sold: boolean;
-  tags: string[];
-}
-
-/* 'sound' ainda não tem produto real (Fase 10) — não entra mais no índice
-   de busca, senão a busca levaria pra "capas de álbum" mockadas que não
-   existem de verdade na loja. */
-export async function buildSearchIndex(t: TFunction): Promise<SearchableItem[]> {
-  const screensCatalog = await fetchScreensCatalog();
-  const entries = screensCatalog.map((item) => ({ item, sheet: 'screens' as CatalogSheet }));
-
-  return entries.map(({ item, sheet }) => ({
-    id: item.id,
-    sku: item.sku,
-    name: item.name,
-    sheet,
-    format: FORMAT_BY_VARIANT[item.variant],
-    kind: t(`catalog.variants.${item.variant}`),
-    price: item.price,
-    sold: item.sold ?? false,
-    tags: searchTags[item.sku] ?? [],
-  }));
 }
 
 export type SearchFilter = 'all' | 'screen' | 'sound' | 'mobile' | 'desktop';
 
-export function searchCatalog(index: SearchableItem[], query: string, filter: SearchFilter): SearchableItem[] {
-  const normalizedQuery = query.trim().toLowerCase();
+/* Busca real (Fase 8): search_products (Postgres full-text + trigram,
+   tolera erro de digitação) devolve só os ids em ordem de relevância; busca
+   os dados completos (imagem, preço) via fetchScreensCatalogByIds,
+   reaproveitando o mesmo mapeamento CatalogItem do resto do catálogo.
+   'sound' ainda não tem produto real (Fase 10) — a RPC só busca
+   wallpaper_pack publicado, nunca aparece aqui. */
+export async function searchCatalog(query: string, filter: SearchFilter, t: TFunction): Promise<SearchableItem[]> {
+  const ids = await searchProductIds(query);
+  if (ids.length === 0) return [];
 
-  return index.filter((item) => {
+  const items = await fetchScreensCatalogByIds(ids);
+  const byId = new Map(items.map((item) => [item.dbId, item]));
+  // .in() não garante ordem — preserva a ordem de relevância da RPC
+  const ordered = ids.map((id) => byId.get(id)).filter((item): item is (typeof items)[number] => Boolean(item));
+
+  const results: SearchableItem[] = ordered.map((item) => ({
+    id: item.id,
+    sku: item.sku,
+    name: item.name,
+    sheet: 'screens',
+    format: FORMAT_BY_VARIANT[item.variant],
+    kind: t(`catalog.variants.${item.variant}`),
+    price: item.price,
+    sold: item.sold ?? false,
+  }));
+
+  return results.filter((item) => {
     if (filter === 'screen' && item.sheet !== 'screens') return false;
     if (filter === 'sound' && item.sheet !== 'sound') return false;
     if (filter === 'mobile' && item.format !== 'mobile' && item.format !== 'combo') return false;
     if (filter === 'desktop' && item.format !== 'desktop' && item.format !== 'combo') return false;
-    if (!normalizedQuery) return true;
-
-    const haystack = `${item.name} ${item.sku} ${item.kind} ${item.tags.join(' ')} ${item.price}`.toLowerCase();
-    return haystack.includes(normalizedQuery);
+    return true;
   });
 }
