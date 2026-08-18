@@ -15,7 +15,9 @@ export function Hero({ banners = [] }: HeroProps) {
   const panes = [left, right].map((banner, index) => {
     if (!banner) return <S.Pane key={index} />;
 
-    const image = <S.Image src={banner.image} alt={banner.alt} />;
+    // fetchPriority="high": é a maior imagem da primeira tela (LCP) —
+    // carrega antes de qualquer outra coisa não crítica na página
+    const image = <S.Image src={banner.image} alt={banner.alt} fetchPriority="high" loading="eager" />;
     return (
       <S.Pane key={banner.slot}>
         {banner.linkTo ? <S.PaneLink to={banner.linkTo}>{image}</S.PaneLink> : image}

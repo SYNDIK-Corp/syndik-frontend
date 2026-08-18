@@ -3,7 +3,6 @@ import { MainLayout } from '@/components/templates/MainLayout';
 import { Hero } from '@/components/organisms/Hero';
 import { BestSellers } from '@/components/organisms/BestSellers';
 import { SoundSection } from '@/components/organisms/SoundSection';
-import { ArchiveSection } from '@/components/organisms/ArchiveSection';
 import { FaqSection } from '@/components/organisms/FaqSection';
 import { soundProducts } from '@/data/products';
 import { fetchHomeBestSellers } from '@/lib/catalogApi';
@@ -39,7 +38,9 @@ export function Home() {
       <Hero banners={heroBanners} />
       <BestSellers products={bestSellers} />
       <SoundSection products={soundProducts} />
-      <ArchiveSection />
+      {/* ArchiveSection ("SYNDIK / Tudo o que fazemos") desativada a pedido do
+          usuário (Fase 11.3) — componente mantido no código, sem rota/uso
+          nenhum por enquanto, pronto pra reativar depois. */}
       <FaqSection />
     </MainLayout>
   );

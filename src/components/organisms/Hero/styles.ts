@@ -10,14 +10,14 @@ export const Container = styled.section`
   grid-template-columns: 1fr 1fr;
 `;
 
+/* fundo neutro (preto — combina com data-navbar-theme="dark" do Hero)
+   enquanto a imagem de marketing ainda não chegou do Supabase; antes era um
+   gradiente slate bem diferente do resto do site, dava um "flash" visível
+   antes da imagem real aparecer (achado real, Fase 11.1). */
 export const Pane = styled.div`
   position: relative;
   overflow: hidden;
-  background: linear-gradient(160deg, #334155 0%, #0f172a 100%);
-
-  &:last-of-type {
-    background: linear-gradient(200deg, #1e293b 0%, #0f172a 100%);
-  }
+  background: #000;
 `;
 
 export const Image = styled.img`

@@ -613,5 +613,8 @@
   "footer": {
     "rights": "© {{year}} Syndik — Todos los derechos reservados",
     "terms": "Términos de Uso y Políticas de Privacidad"
+  },
+  "security": {
+    "contentProtected": "Este contenido está protegido."
   }
 }
