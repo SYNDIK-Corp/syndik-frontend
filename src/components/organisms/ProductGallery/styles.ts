@@ -14,9 +14,15 @@ const bleedLeft = css`
   width: calc(100% + max(0px, (100vw - 1700px) / 2) + clamp(16px, 3vw, 40px));
 `;
 
+/* wrapper neutro — vira o único item de grid que o <Grid> do ProductDetail
+ * enxerga; por dentro, Container (desktop) e o preview+grid mobile
+ * coexistem no DOM e se alternam só por CSS, sem remount ao redimensionar. */
+export const Root = styled.div``;
+
 /* sticky preenchendo a viewport inteira (menos a navbar); o scroll de
  * verdade acontece dentro de Scroll, não aqui — Container só posiciona e
- * corta (overflow: hidden) pra caber o ScrollHint sobreposto. */
+ * corta (overflow: hidden) pra caber o ScrollHint sobreposto. Só desktop —
+ * no mobile o preview+grid abaixo assume. */
 export const Container = styled.div`
   position: sticky;
   top: ${({ theme }) => theme.sizes.navbarHeight};
@@ -26,11 +32,7 @@ export const Container = styled.div`
   ${bleedLeft}
 
   @media (max-width: 900px) {
-    position: static;
-    height: auto;
-    overflow: visible;
-    margin-left: 0;
-    width: 100%;
+    display: none;
   }
 `;
 
@@ -95,4 +97,52 @@ export const ScrollHint = styled.button`
   @media (max-width: 900px) {
     display: none;
   }
+`;
+
+/* mobile — volta ao padrão anterior: uma imagem em destaque + grid de
+ * miniaturas clicáveis abaixo pra trocar qual imagem aparece em destaque. */
+export const MobilePreview = styled.div`
+  display: none;
+
+  @media (max-width: 900px) {
+    display: block;
+  }
+`;
+
+export const MobileImage = styled.img`
+  display: block;
+  width: 100%;
+  height: auto;
+`;
+
+export const MobileGrid = styled.div`
+  display: none;
+
+  @media (max-width: 900px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-top: 6px;
+  }
+`;
+
+export const MobileThumb = styled.button<{ $active: boolean }>`
+  display: block;
+  padding: 0;
+  border: 2px solid ${({ theme, $active }) => ($active ? theme.colors.text : 'transparent')};
+  border-radius: ${({ theme }) => theme.radii.sm};
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+  opacity: ${({ $active }) => ($active ? 1 : 0.6)};
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease;
+`;
+
+export const MobileThumbImage = styled.img`
+  display: block;
+  width: 100%;
+  height: 96px;
+  object-fit: cover;
 `;

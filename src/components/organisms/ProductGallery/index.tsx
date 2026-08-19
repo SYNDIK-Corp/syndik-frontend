@@ -15,6 +15,8 @@ export function ProductGallery({ coverImage, hoverImage, alt }: ProductGalleryPr
   const { t } = useTranslation();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
+  const [mobileActive, setMobileActive] = useState<'cover' | 'hover'>('cover');
+  const mobileImage = mobileActive === 'hover' && hoverImage ? hoverImage : coverImage;
 
   const checkOverflow = () => {
     const el = scrollRef.current;
@@ -64,26 +66,52 @@ export function ProductGallery({ coverImage, hoverImage, alt }: ProductGalleryPr
   };
 
   return (
-    <S.Container>
-      <S.Scroll ref={scrollRef} onScroll={checkOverflow}>
-        {coverImage && (
-          <S.Plate>
-            <S.Image src={coverImage} alt={alt} onLoad={checkOverflow} />
-          </S.Plate>
+    <S.Root>
+      <S.Container>
+        <S.Scroll ref={scrollRef} onScroll={checkOverflow}>
+          {coverImage && (
+            <S.Plate>
+              <S.Image src={coverImage} alt={alt} onLoad={checkOverflow} />
+            </S.Plate>
+          )}
+          {hoverImage && (
+            <S.Plate>
+              <S.Image src={hoverImage} alt={alt} onLoad={checkOverflow} />
+            </S.Plate>
+          )}
+        </S.Scroll>
+        {showScrollHint && (
+          <S.ScrollHint type="button" aria-label={t('productDetail.scrollForMore')} onClick={handleHintClick}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </S.ScrollHint>
         )}
-        {hoverImage && (
-          <S.Plate>
-            <S.Image src={hoverImage} alt={alt} onLoad={checkOverflow} />
-          </S.Plate>
-        )}
-      </S.Scroll>
-      {showScrollHint && (
-        <S.ScrollHint type="button" aria-label={t('productDetail.scrollForMore')} onClick={handleHintClick}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </S.ScrollHint>
+      </S.Container>
+
+      <S.MobilePreview>{mobileImage && <S.MobileImage src={mobileImage} alt={alt} />}</S.MobilePreview>
+      {coverImage && hoverImage && (
+        <S.MobileGrid>
+          <S.MobileThumb
+            type="button"
+            $active={mobileActive === 'cover'}
+            aria-label={`${alt} 1`}
+            aria-current={mobileActive === 'cover'}
+            onClick={() => setMobileActive('cover')}
+          >
+            <S.MobileThumbImage src={coverImage} alt="" />
+          </S.MobileThumb>
+          <S.MobileThumb
+            type="button"
+            $active={mobileActive === 'hover'}
+            aria-label={`${alt} 2`}
+            aria-current={mobileActive === 'hover'}
+            onClick={() => setMobileActive('hover')}
+          >
+            <S.MobileThumbImage src={hoverImage} alt="" />
+          </S.MobileThumb>
+        </S.MobileGrid>
       )}
-    </S.Container>
+    </S.Root>
   );
 }
