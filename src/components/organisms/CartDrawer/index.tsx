@@ -47,17 +47,21 @@ export function CartDrawer() {
   const progressPercent = lastTier ? Math.min(100, (total / lastTier.threshold) * 100) : 0;
 
   const excludeSkus = items.map((item) => item.sku).join(',');
+  const cartCategories = items.map((item) => item.category ?? '').join(',');
   const [recommendations, setRecommendations] = useState<CartRecommendation[]>([]);
 
   useEffect(() => {
     let cancelled = false;
-    getCartRecommendations(excludeSkus ? excludeSkus.split(',') : []).then((result) => {
+    getCartRecommendations(
+      excludeSkus ? excludeSkus.split(',') : [],
+      cartCategories ? cartCategories.split(',') : [],
+    ).then((result) => {
       if (!cancelled) setRecommendations(result);
     });
     return () => {
       cancelled = true;
     };
-  }, [excludeSkus]);
+  }, [excludeSkus, cartCategories]);
 
   const canCheckout = termsAccepted && items.length > 0;
 

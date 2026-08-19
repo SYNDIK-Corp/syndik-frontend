@@ -96,8 +96,11 @@ export const Bottom = styled.div`
   gap: 12px;
 `;
 
+/* MVP 2.2.3: tratamento de cor dedicado pra economia/desconto — antes era
+   preto/branco igual a qualquer outro elemento da UI, sem se destacar como
+   "isso é vantagem financeira" à primeira vista */
 export const SaveTag = styled.span`
-  background: ${({ theme }) => theme.colors.black};
+  background: ${({ theme }) => theme.colors.success};
   color: ${({ theme }) => theme.colors.white};
   padding: 5px 9px;
   font-size: 9px;

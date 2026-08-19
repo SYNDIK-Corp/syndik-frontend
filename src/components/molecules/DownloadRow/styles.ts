@@ -12,6 +12,12 @@ export const Container = styled.div`
   &:hover {
     background: ${({ theme }) => theme.colors.surface};
   }
+
+  @media (max-width: 760px) {
+    padding: 11px 0;
+    grid-template-columns: 48px 1fr auto;
+    gap: 10px;
+  }
 `;
 
 export const Thumb = styled.div`
@@ -27,6 +33,13 @@ export const Thumb = styled.div`
   font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.12em;
+
+  @media (max-width: 760px) {
+    width: 48px;
+    height: 48px;
+    font-size: 7px;
+    padding: 4px;
+  }
 `;
 
 export const Info = styled.div`
@@ -34,6 +47,10 @@ export const Info = styled.div`
   flex-direction: column;
   gap: 6px;
   min-width: 0;
+
+  @media (max-width: 760px) {
+    gap: 3px;
+  }
 `;
 
 export const Kind = styled.span`

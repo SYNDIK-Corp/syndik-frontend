@@ -27,6 +27,10 @@ export const NeverExpire = styled.span`
 export const List = styled.div`
   margin-top: 24px;
   border-top: 1px solid ${({ theme }) => theme.colors.black};
+
+  @media (max-width: 760px) {
+    margin-top: 14px;
+  }
 `;
 
 export const Footer = styled.div`
@@ -35,6 +39,10 @@ export const Footer = styled.div`
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
+
+  @media (max-width: 760px) {
+    margin-top: 16px;
+  }
 `;
 
 export const DownloadAllButton = styled.button`

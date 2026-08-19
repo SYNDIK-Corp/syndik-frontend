@@ -46,11 +46,12 @@ export const Badge = styled.span`
 `;
 
 export const Meta = styled.div`
-  margin-top: 14px;
+  margin-top: 16px;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 16px;
+  gap: 4px 16px;
 `;
 
 export const Name = styled.span`

@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Frame as ProductCardFrame } from '@/components/molecules/ProductCard/styles';
 
 export const Container = styled.div`
   padding-bottom: 64px;
@@ -72,6 +73,17 @@ export const Grid = styled.div`
      naturalmente conforme a tela encolhe, nunca passa de 5 */
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px 18px;
+
+  /* MVP 1.3: grid deliberado de 2 colunas no mobile (em vez do auto-fill
+     genérico) + cards bem mais altos pra visualização melhor */
+  @media (max-width: 720px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 12px;
+
+    ${ProductCardFrame} {
+      aspect-ratio: 2 / 3;
+    }
+  }
 `;
 
 export const BottomBar = styled.div`

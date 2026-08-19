@@ -17,6 +17,11 @@ export const Fields = styled.div`
   display: flex;
   flex-direction: column;
   gap: 18px;
+
+  @media (max-width: 760px) {
+    margin-top: 16px;
+    gap: 14px;
+  }
 `;
 
 export const Field = styled.div`

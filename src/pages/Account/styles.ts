@@ -9,7 +9,10 @@ export const Dashboard = styled.section`
   gap: clamp(32px, 6vw, 64px);
   align-items: start;
 
+  /* MVP 1.4: compacta pra reduzir o scroll no mobile */
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
+    padding: 28px clamp(16px, 4vw, 24px) 56px;
+    gap: 28px;
   }
 `;

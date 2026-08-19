@@ -11,4 +11,8 @@ export const Title = styled.h1`
 export const List = styled.div`
   margin-top: 24px;
   border-top: 1px solid ${({ theme }) => theme.colors.black};
+
+  @media (max-width: 760px) {
+    margin-top: 14px;
+  }
 `;

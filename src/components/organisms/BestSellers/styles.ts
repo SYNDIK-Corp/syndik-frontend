@@ -53,7 +53,8 @@ export const Arrow = styled.button`
   color: ${({ theme }) => theme.colors.text};
   transition:
     border-color 0.35s ease,
-    background 0.35s ease;
+    background 0.35s ease,
+    color 0.35s ease;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.text};
@@ -61,6 +62,17 @@ export const Arrow = styled.button`
 
   &:active {
     background: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.white};
+  }
+
+  /* achado real (MVP 1.2): as setas passavam despercebidas no mobile —
+     borda fina/baixo contraste sumia perto do resto do cabeçalho. Preenche
+     sólido no touch, sem depender de :hover (que não existe em touch) */
+  @media (max-width: 640px) {
+    width: 38px;
+    height: 38px;
+    background: ${({ theme }) => theme.colors.black};
+    border-color: ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.white};
   }
 `;

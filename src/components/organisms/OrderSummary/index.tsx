@@ -38,17 +38,21 @@ export function OrderSummary() {
      carrinho; antes disso era uma lista fixa com item mockado do catálogo
      'sound' (SND-000) misturado. */
   const excludeSkus = items.map((item) => item.sku).join(',');
+  const cartCategories = items.map((item) => item.category ?? '').join(',');
   const [recommendations, setRecommendations] = useState<CartRecommendation[]>([]);
 
   useEffect(() => {
     let cancelled = false;
-    getCartRecommendations(excludeSkus ? excludeSkus.split(',') : []).then((result) => {
+    getCartRecommendations(
+      excludeSkus ? excludeSkus.split(',') : [],
+      cartCategories ? cartCategories.split(',') : [],
+    ).then((result) => {
       if (!cancelled) setRecommendations(result);
     });
     return () => {
       cancelled = true;
     };
-  }, [excludeSkus]);
+  }, [excludeSkus, cartCategories]);
 
   return (
     <S.Container>

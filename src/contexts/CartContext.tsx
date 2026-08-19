@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CartContext, type AppliedCoupon, type BestDiscount, type CartContextValue, type CartItem } from './cart-context';
 import { fetchDiscountTiers, type DiscountTier } from '@/lib/couponsApi';
 
@@ -39,6 +39,30 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  /* MVP 2.2.2: a reserva expira de verdade — produto digital, sem estoque
+     físico limitado, então "esgotar" aqui é soltar a sacola (não tem o que
+     "vender pra outro cliente" de fato, mas mantém a urgência que o banner
+     promete honesta em vez de decorativa). */
+  useEffect(() => {
+    if (holdSecondsRemaining > 0 || items.length === 0) return;
+    setItems([]);
+    setAppliedCoupon(null);
+    setHoldSecondsRemaining(HOLD_DURATION_SECONDS);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [holdSecondsRemaining]);
+
+  /* contagem reinicia quando a sacola sai de vazia pra ter o primeiro item
+     (nova "sessão" de hold) — não reinicia a cada item novo adicionado
+     depois disso, senão nunca esgotaria de verdade pra quem continua
+     navegando/comprando */
+  const previousItemCount = useRef(items.length);
+  useEffect(() => {
+    if (previousItemCount.current === 0 && items.length > 0) {
+      setHoldSecondsRemaining(HOLD_DURATION_SECONDS);
+    }
+    previousItemCount.current = items.length;
+  }, [items.length]);
 
   const value = useMemo<CartContextValue>(() => {
     const total = items.reduce((sum, item) => sum + item.price, 0);

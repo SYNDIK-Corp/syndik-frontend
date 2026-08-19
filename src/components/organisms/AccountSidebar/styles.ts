@@ -24,12 +24,20 @@ export const Email = styled.div`
 export const Nav = styled.div`
   margin-top: 26px;
   border-top: 1px solid ${({ theme }) => theme.colors.black};
+
+  @media (max-width: 760px) {
+    margin-top: 16px;
+  }
 `;
 
 export const NavLink = styled.button<{ $active: boolean }>`
   width: 100%;
   cursor: pointer;
   padding: 12px 0;
+
+  @media (max-width: 760px) {
+    padding: 9px 0;
+  }
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,6 +67,10 @@ export const NavLinkCount = styled.span`
 
 export const SignOutButton = styled.button`
   margin-top: 22px;
+
+  @media (max-width: 760px) {
+    margin-top: 14px;
+  }
   background: none;
   border: 0;
   padding: 0;
@@ -80,6 +92,11 @@ export const MemberRateBox = styled.div`
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   padding: 18px;
+
+  @media (max-width: 760px) {
+    margin-top: 20px;
+    padding: 14px;
+  }
 `;
 
 export const MemberRateLabel = styled.span`

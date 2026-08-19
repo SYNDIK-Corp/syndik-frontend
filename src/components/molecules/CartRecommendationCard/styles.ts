@@ -74,7 +74,7 @@ export const ComparePrice = styled.span`
 
 export const SaveTag = styled.span`
   align-self: flex-start;
-  background: ${({ theme }) => theme.colors.black};
+  background: ${({ theme }) => theme.colors.success};
   color: ${({ theme }) => theme.colors.white};
   padding: 4px 8px;
   font-size: 8px;

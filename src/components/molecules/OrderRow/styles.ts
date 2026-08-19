@@ -13,6 +13,11 @@ export const Container = styled.div`
   &:hover {
     background: ${({ theme }) => theme.colors.surface};
   }
+
+  @media (max-width: 760px) {
+    padding: 12px 0;
+    gap: 10px;
+  }
 `;
 
 export const Info = styled.div`
@@ -20,6 +25,10 @@ export const Info = styled.div`
   flex-direction: column;
   gap: 7px;
   min-width: 0;
+
+  @media (max-width: 760px) {
+    gap: 4px;
+  }
 `;
 
 export const Meta = styled.span`

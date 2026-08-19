@@ -97,12 +97,11 @@ export const Perks = styled.div`
 export const CardSlot = styled.div<{ $span: number }>`
   grid-column: span ${({ $span }) => $span};
 
+  /* achado real (MVP 1.1): full-width abaixo de 560px deixava o card
+     quadrado gigante, ocupando a tela inteira sozinho — mantém os dois
+     lado a lado (metade cada) até o mobile mais estreito, bem menor */
   @media (max-width: 900px) {
     grid-column: span 6;
-  }
-
-  @media (max-width: 560px) {
-    grid-column: 1 / -1;
   }
 `;
 

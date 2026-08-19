@@ -129,9 +129,12 @@ export const UnlockMessage = styled.div`
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
+/* MVP 2.2.3: valores de economia/desconto em destaque próprio (verde,
+   theme.colors.success — token já existia no design system, nunca usado em
+   lugar nenhum) em vez de se misturar com o resto do texto em preto */
 export const Emphasis = styled.strong`
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.success};
 `;
 
 export const ProgressTrack = styled.div`
@@ -147,7 +150,7 @@ export const ProgressFill = styled.div<{ $percent: number }>`
   top: 0;
   bottom: 0;
   width: ${({ $percent }) => $percent}%;
-  background: ${({ theme }) => theme.colors.black};
+  background: ${({ theme }) => theme.colors.success};
   transition: width 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 `;
 
@@ -158,11 +161,12 @@ export const ProgressTick = styled.span<{ $position: number; $hit: boolean }>`
   width: 13px;
   height: 13px;
   margin-left: -6.5px;
-  background: ${({ theme, $hit }) => ($hit ? theme.colors.black : theme.colors.white)};
-  box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.black};
+  background: ${({ theme, $hit }) => ($hit ? theme.colors.success : theme.colors.white)};
+  box-shadow: inset 0 0 0 1px ${({ theme, $hit }) => ($hit ? theme.colors.success : theme.colors.black)};
   transform: scale(${({ $hit }) => ($hit ? 1.15 : 1)});
   transition:
     background 0.4s ease,
+    box-shadow 0.4s ease,
     transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
 `;
 
@@ -179,8 +183,8 @@ export const TierLabel = styled.span<{ $hit: boolean }>`
   justify-content: center;
   gap: 4px;
   height: 24px;
-  border: 1px solid ${({ theme, $hit }) => ($hit ? theme.colors.black : theme.colors.border)};
-  background: ${({ theme, $hit }) => ($hit ? theme.colors.black : 'transparent')};
+  border: 1px solid ${({ theme, $hit }) => ($hit ? theme.colors.success : theme.colors.border)};
+  background: ${({ theme, $hit }) => ($hit ? theme.colors.success : 'transparent')};
   color: ${({ theme, $hit }) => ($hit ? theme.colors.white : theme.colors.textMuted)};
   font-size: 9px;
   font-weight: 600;
