@@ -497,23 +497,20 @@
     "eyebrow": "SYNDIK / Sound — 001",
     "title": "Que te vean\no que te\nsalten.",
     "description": "Tu tema pelea con un millón de miniaturas por un tap. Llega armado.",
-    "cta": "Consigue tu portada",
-    "secondaryCta": "Ver el archivo",
-    "perks": "Entrega en minutos · 3000 × 3000 · Licencia de lanzamiento · Nunca revendido",
+    "comingSoon": "Próximamente",
+    "perks": "3000 × 3000 · Licencia de lanzamiento · Portada + single artwork",
     "products": {
       "single-cover": {
-        "collection": "Single",
-        "tag": "Un lanzamiento"
+        "collection": "Single"
       },
       "album-pack": {
-        "collection": "Portada + single + pista final",
-        "tag": "3 piezas"
+        "collection": "Portada + single + pista final"
       }
     },
     "ticker": [
       "Sin portada, no hay culto",
+      "— Próximamente",
       "— Listo para Spotify · Apple · Deezer",
-      "— Entrega inmediata",
       "— Una obra, un dueño",
       "— Comisiones abiertas"
     ]
@@ -577,7 +574,7 @@
     "eyebrow": "SYNDIK / Soporte",
     "title": "FAQs",
     "description": "Todo lo que necesitas saber antes de comprar — archivos, tamaños, licencia y entrega.",
-    "note": "¿No encuentras lo que buscas? Escríbenos por Instagram — respondemos en un día.",
+    "note": "¿No encuentras lo que buscas? Escríbenos — respondemos en 2-3 días hábiles.",
     "cta": "Contactar soporte",
     "items": [
       {
@@ -601,6 +598,14 @@
         "answer": "Inmediata — el enlace está en la pantalla de confirmación y en tu cuenta."
       },
       {
+        "question": "¿Puedo volver a descargar más tarde?",
+        "answer": "Sí — ilimitado, cuando quieras. Tus archivos quedan en tu cuenta y el enlace de descarga nunca caduca."
+      },
+      {
+        "question": "¿Cuál es la política de reembolso?",
+        "answer": "Todas las ventas son finales. Son archivos digitales de entrega instantánea, así que no ofrecemos reembolsos después de la compra."
+      },
+      {
         "question": "¿Spotify y Apple Music?",
         "answer": "Sí. Cada portada sale con la especificación exacta que piden los distribuidores."
       }
@@ -608,7 +613,36 @@
   },
   "contact": {
     "title": "Contacto",
-    "description": "Pronto estarán disponibles aquí los canales de contacto."
+    "description": "¿Pregunta sobre un pedido, una licencia o algo totalmente distinto? Escríbenos. Una persona real lee cada mensaje, normalmente en 2-3 días hábiles.",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "Opcional",
+      "social": "Red social",
+      "socialHandlePlaceholder": "@usuario",
+      "socialOptions": {
+        "none": "Ninguna",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "twitter": "X / Twitter",
+        "other": "Otra"
+      },
+      "subject": "Asunto",
+      "subjectPlaceholder": "¿De qué se trata?",
+      "comment": "Mensaje",
+      "commentPlaceholder": "Cuéntanos qué pasa...",
+      "submit": "Enviar mensaje",
+      "submitting": "Enviando...",
+      "success": "Mensaje enviado — te responderemos en 2-3 días hábiles.",
+      "errors": {
+        "invalid_input": "Revisa los campos marcados e inténtalo de nuevo.",
+        "rate_limited": "Demasiados mensajes enviados — inténtalo de nuevo en un momento.",
+        "unexpected": "Algo salió mal. Inténtalo de nuevo en un momento."
+      }
+    }
   },
   "footer": {
     "rights": "© {{year}} Syndik — Todos los derechos reservados",

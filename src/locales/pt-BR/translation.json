@@ -497,23 +497,20 @@
     "eyebrow": "SYNDIK / Sound — 001",
     "title": "Seja visto\nou seja\npulado.",
     "description": "Sua faixa disputa um toque com um milhão de thumbnails. Chegue armado.",
-    "cta": "Garanta sua capa",
-    "secondaryCta": "Ver o acervo",
-    "perks": "Entrega em minutos · 3000 × 3000 · Licença de lançamento · Nunca revendido",
+    "comingSoon": "Em breve",
+    "perks": "3000 × 3000 · Licença de lançamento · Capa + single artwork",
     "products": {
       "single-cover": {
-        "collection": "Single",
-        "tag": "Um lançamento"
+        "collection": "Single"
       },
       "album-pack": {
-        "collection": "Capa + single + faixa final",
-        "tag": "3 peças"
+        "collection": "Capa + single + faixa final"
       }
     },
     "ticker": [
       "Sem capa, sem culto",
+      "— Em breve",
       "— Pronto para Spotify · Apple · Deezer",
-      "— Entrega imediata",
       "— Uma arte, um dono",
       "— Comissões abertas"
     ]
@@ -577,7 +574,7 @@
     "eyebrow": "SYNDIK / Suporte",
     "title": "FAQs",
     "description": "Tudo o que você precisa saber antes de comprar — arquivos, tamanhos, licença e entrega.",
-    "note": "Não achou o que procurava? Chama a gente no Instagram — respondemos em até um dia.",
+    "note": "Não achou o que procurava? Manda uma mensagem — respondemos em 2-3 dias úteis.",
     "cta": "Falar com o suporte",
     "items": [
       {
@@ -601,6 +598,14 @@
         "answer": "Imediata — o link aparece na tela de confirmação e na sua conta."
       },
       {
+        "question": "Posso baixar de novo depois?",
+        "answer": "Sim — ilimitado, quando quiser. Seus arquivos ficam na sua conta e o link de download nunca expira."
+      },
+      {
+        "question": "Qual a política de reembolso?",
+        "answer": "Toda venda é final. São arquivos digitais entregues na hora, então não oferecemos reembolso após a compra."
+      },
+      {
         "question": "Spotify e Apple Music?",
         "answer": "Sim. Toda capa sai na especificação exata que os distribuidores pedem."
       }
@@ -608,7 +613,36 @@
   },
   "contact": {
     "title": "Contato",
-    "description": "Em breve, os canais de contato estarão disponíveis aqui."
+    "description": "Dúvida sobre um pedido, uma licença ou qualquer outra coisa? Manda pra gente — uma pessoa de verdade lê cada mensagem, geralmente em 2-3 dias úteis.",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "Seu nome",
+      "email": "Email",
+      "emailPlaceholder": "voce@email.com",
+      "phone": "Telefone",
+      "phonePlaceholder": "Opcional",
+      "social": "Rede social",
+      "socialHandlePlaceholder": "@usuario",
+      "socialOptions": {
+        "none": "Nenhuma",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "twitter": "X / Twitter",
+        "other": "Outra"
+      },
+      "subject": "Assunto",
+      "subjectPlaceholder": "Sobre o que é?",
+      "comment": "Mensagem",
+      "commentPlaceholder": "Conta o que está acontecendo...",
+      "submit": "Enviar mensagem",
+      "submitting": "Enviando...",
+      "success": "Mensagem enviada — respondemos em até 2-3 dias úteis.",
+      "errors": {
+        "invalid_input": "Confira os campos destacados e tente de novo.",
+        "rate_limited": "Muitas mensagens enviadas — tente de novo em instantes.",
+        "unexpected": "Algo deu errado. Tente de novo em instantes."
+      }
+    }
   },
   "footer": {
     "rights": "© {{year}} Syndik — Todos os direitos reservados",

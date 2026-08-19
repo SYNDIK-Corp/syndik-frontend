@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Container = styled.section`
   background: ${({ theme }) => theme.colors.black};
@@ -62,22 +61,26 @@ export const Actions = styled.div`
   flex-wrap: wrap;
 `;
 
-export const PrimaryCta = styled(Link)`
-  background: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.black};
-  padding: 15px 24px;
+/* pill informativo, não interativo — a seção não vende nada ainda
+   (Fase 11.2), então não existe CTA de verdade pra levar a lugar nenhum */
+export const ComingSoonPill = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: ${({ theme }) => theme.colors.white};
+  padding: 13px 22px;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease;
 
-  &:hover {
-    background: ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.white};
-    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.white};
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.colors.white};
   }
 `;
 

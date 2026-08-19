@@ -497,23 +497,20 @@
     "eyebrow": "SYNDIK / Sound — 001",
     "title": "Get seen\nor get\nskipped.",
     "description": "Your track fights a million thumbnails for one tap. Turn up armed.",
-    "cta": "Grab your cover",
-    "secondaryCta": "See the vault",
-    "perks": "Delivered in minutes · 3000 × 3000 · Release licence · Never resold",
+    "comingSoon": "Coming soon",
+    "perks": "3000 × 3000 · Release licence · Cover + single artwork",
     "products": {
       "single-cover": {
-        "collection": "Single",
-        "tag": "One release"
+        "collection": "Single"
       },
       "album-pack": {
-        "collection": "Cover + single + closer",
-        "tag": "3 pieces"
+        "collection": "Cover + single + closer"
       }
     },
     "ticker": [
       "No cover, no cult",
+      "— Coming soon",
       "— Spotify · Apple · Deezer ready",
-      "— Instant delivery",
       "— One artwork, one owner",
       "— Commissions open"
     ]
@@ -577,7 +574,7 @@
     "eyebrow": "SYNDIK / Support",
     "title": "FAQs",
     "description": "Everything you need to know before you buy — files, sizes, licence and delivery.",
-    "note": "Can't find what you're looking for? Message us on Instagram — we answer within a day.",
+    "note": "Can't find what you're looking for? Send us a message — we reply within 2-3 business days.",
     "cta": "Contact support",
     "items": [
       {
@@ -601,6 +598,14 @@
         "answer": "Instant — the link is on the confirmation screen and in your account."
       },
       {
+        "question": "Can I re-download later?",
+        "answer": "Yes — unlimited, anytime. Your files stay in your account and the download link never expires."
+      },
+      {
+        "question": "What's the refund policy?",
+        "answer": "All sales are final. These are digital files delivered instantly, so we don't offer refunds after purchase."
+      },
+      {
         "question": "Spotify and Apple Music?",
         "answer": "Yes. Every cover ships at the exact spec distributors ask for."
       }
@@ -608,7 +613,36 @@
   },
   "contact": {
     "title": "Contact",
-    "description": "Contact channels will be available here soon."
+    "description": "Question about an order, a licence, or something else entirely — send it over. A real person reads every message, usually within 2-3 business days.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "Optional",
+      "social": "Social",
+      "socialHandlePlaceholder": "@handle",
+      "socialOptions": {
+        "none": "None",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "twitter": "X / Twitter",
+        "other": "Other"
+      },
+      "subject": "Subject",
+      "subjectPlaceholder": "What's this about?",
+      "comment": "Message",
+      "commentPlaceholder": "Tell us what's going on...",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "success": "Message sent — we'll get back to you within 2-3 business days.",
+      "errors": {
+        "invalid_input": "Check the highlighted fields and try again.",
+        "rate_limited": "Too many messages sent — try again in a bit.",
+        "unexpected": "Something went wrong. Try again in a moment."
+      }
+    }
   },
   "footer": {
     "rights": "© {{year}} Syndik — All rights reserved",

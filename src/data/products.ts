@@ -1,19 +1,12 @@
-import type { Product } from '@/types/product';
+/* seção de branding 'sound' da home (SoundSection) — sem venda ativa nem
+   preço (Fase 11.2, decisão do usuário: catálogo indisponível pra compra
+   até ter arte de marketing real e virar produto de verdade, Fase 10). */
+export interface SoundComingSoonItem {
+  id: string;
+  name: string;
+}
 
-/* seção de branding 'sound' da home (SoundSection) — mockado até virar
-   produto de verdade (Fase 10). Não entra em sugestão/carrinho/relacionados
-   (esses são só produtos reais agora); isso aqui é só a vitrine da seção. */
-export const soundProducts: Product[] = [
-  {
-    id: 'single-cover',
-    name: 'SINGLE COVER',
-    price: 5.0,
-    tag: 'One release',
-  },
-  {
-    id: 'album-pack',
-    name: 'ALBUM PACK',
-    price: 19.99,
-    tag: '3 pieces',
-  },
+export const soundProducts: SoundComingSoonItem[] = [
+  { id: 'single-cover', name: 'SINGLE COVER' },
+  { id: 'album-pack', name: 'ALBUM PACK' },
 ];

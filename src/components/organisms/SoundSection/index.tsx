@@ -1,28 +1,19 @@
 import { useTranslation } from 'react-i18next';
 import { Eyebrow } from '@/components/atoms/Eyebrow';
-import { CtaLink } from '@/components/atoms/CtaLink';
-import { ProductCard } from '@/components/molecules/ProductCard';
+import { SoundComingSoonCard } from '@/components/molecules/SoundComingSoonCard';
 import { Marquee } from '@/components/molecules/Marquee';
-import type { Product } from '@/types/product';
+import type { SoundComingSoonItem } from '@/data/products';
 import * as S from './styles';
 
 const CARD_SPANS = [4, 3];
 
 export interface SoundSectionProps {
-  products: Product[];
+  products: SoundComingSoonItem[];
 }
 
 export function SoundSection({ products }: SoundSectionProps) {
   const { t } = useTranslation();
   const tickerItems = t('sound.ticker', { returnObjects: true }) as string[];
-
-  /* traduz a etiqueta do card; o valor do mock é o fallback */
-  const localizedProducts = products.map((product) => ({
-    ...product,
-    tag: product.tag
-      ? t(`sound.products.${product.id}.tag`, { defaultValue: product.tag })
-      : undefined,
-  }));
 
   return (
     <S.Container data-navbar-theme="black">
@@ -32,19 +23,17 @@ export function SoundSection({ products }: SoundSectionProps) {
           <S.Title>{t('sound.title')}</S.Title>
           <S.Description>{t('sound.description')}</S.Description>
           <S.Actions>
-            <S.PrimaryCta to="/products">
-              {t('sound.cta')} <span aria-hidden="true">→</span>
-            </S.PrimaryCta>
-            <CtaLink to="/products" arrow={false}>
-              {t('sound.secondaryCta')}
-            </CtaLink>
+            <S.ComingSoonPill>{t('sound.comingSoon')}</S.ComingSoonPill>
           </S.Actions>
           <S.Perks>{t('sound.perks')}</S.Perks>
         </S.TextColumn>
 
-        {localizedProducts.map((product, index) => (
+        {products.map((product, index) => (
           <S.CardSlot key={product.id} $span={CARD_SPANS[index] ?? 3}>
-            <ProductCard product={product} tone="dark" ratio="1 / 1" metaLayout="row" />
+            <SoundComingSoonCard
+              name={product.name}
+              collection={t(`sound.products.${product.id}.collection`)}
+            />
           </S.CardSlot>
         ))}
       </S.Grid>
