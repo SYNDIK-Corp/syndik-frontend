@@ -30,6 +30,35 @@ export function ProductGallery({ coverImage, hoverImage, alt }: ProductGalleryPr
     return () => window.removeEventListener('resize', checkOverflow);
   }, [coverImage, hoverImage]);
 
+  /* scroll da galeria não depende do mouse estar em cima dela — enquanto a
+   * galeria estiver visível na viewport, qualquer wheel na página (em
+   * qualquer lugar) rola as imagens primeiro; só libera pro scroll normal
+   * da página quando a galeria já chegou no topo/fim na direção do gesto. */
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      if (window.matchMedia('(max-width: 900px)').matches) return;
+
+      const el = scrollRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!isVisible) return;
+
+      const atTop = el.scrollTop <= 0;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+
+      if (event.deltaY > 0 && atBottom) return;
+      if (event.deltaY < 0 && atTop) return;
+
+      event.preventDefault();
+      el.scrollTop += event.deltaY;
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, []);
+
   const handleHintClick = () => {
     scrollRef.current?.scrollBy({ top: scrollRef.current.clientHeight * 0.8, behavior: 'smooth' });
   };
