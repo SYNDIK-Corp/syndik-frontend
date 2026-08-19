@@ -82,13 +82,6 @@
       "title": "Kontakt",
       "signIn": "Anmelden",
       "member": "Mitglied {{id}}",
-      "pinLabel": "Gib deine PIN ein — kein Passwort",
-      "pinPlaceholder": "0000",
-      "pinEnter": "Bestätigen",
-      "pinHint": "Erster Einkauf? Diese 4 Ziffern erstellen sofort dein Konto.",
-      "forgotPin": "PIN vergessen?",
-      "backToPin": "Zurück",
-      "resetLabel": "Wir haben einen Zugangscode an deine E-Mail gesendet.",
       "emailPlaceholder": "E-Mail",
       "newsletter": "Benachrichtige mich bei neuen Drops. Sonst nichts."
     },
@@ -150,6 +143,7 @@
         "invalid_input": "Gib deine E-Mail und die 4-stellige PIN ein.",
         "account_not_found": "Wir konnten dieses Konto nicht finden. Überprüfe die E-Mail, mit der du gekauft hast.",
         "wrong_pin": "Falsche PIN — noch {{count}} Versuche übrig.",
+        "invalid_code": "Dieser Code ist nicht richtig — überprüfe deine E-Mail und versuche es erneut.",
         "locked": "Zu viele falsche Versuche. Versuche es in {{minutes}} Min. erneut.",
         "rate_limited": "Zu viele Versuche von hier aus. Versuche es später erneut.",
         "session_pending": "Dein Konto wurde erstellt! Die automatische Anmeldung hat nicht geklappt — versuche dich mit der eben festgelegten PIN anzumelden.",
@@ -639,6 +633,20 @@
         "unexpected": "Etwas ist schiefgelaufen. Versuche es gleich noch einmal."
       }
     }
+  },
+  "login": {
+    "title": "Nur deine\nE-Mail.",
+    "description": "Kein Passwort zu merken. Wir senden dir einen Code — gib ihn ein und du bist drin.",
+    "emailPlaceholder": "du@email.com",
+    "continueCta": "Weiter",
+    "sending": "Wird gesendet...",
+    "codeTitle": "Schau in dein\nPostfach.",
+    "codeSentDescription": "Wir haben einen Code an {{email}} gesendet.",
+    "codePlaceholder": "Code aus deiner E-Mail",
+    "confirmCta": "Bestätigen",
+    "verifying": "Wird überprüft...",
+    "changeEmail": "Andere E-Mail verwenden",
+    "terms": "Mit dem Fortfahren stimmst du unseren <0>Nutzungsbedingungen</0> und der <1>Datenschutzrichtlinie</1> zu."
   },
   "footer": {
     "rights": "© {{year}} Syndik — Alle Rechte vorbehalten",

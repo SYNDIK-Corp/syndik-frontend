@@ -12,6 +12,7 @@ export type AuthErrorCode =
   | 'account_exists'
   | 'account_not_found'
   | 'wrong_pin'
+  | 'invalid_code'
   | 'locked'
   | 'rate_limited'
   /* não é bem um erro: a conta foi criada, mas a sessão não pôde ser
@@ -40,6 +41,11 @@ export interface AuthContextValue {
   changePin: (newPin: string) => Promise<AuthActionError | null>;
   requestPinReset: (email: string) => Promise<AuthActionError | null>;
   confirmPinReset: (email: string, code: string, newPin: string) => Promise<AuthActionError | null>;
+  /* MVP 2.3.1 — entrada do checkout: email + token, sem PIN nenhum.
+     shouldCreateUser:true (diferente de requestPinReset) — funciona pra
+     cliente novo também, não só recuperação de conta existente. */
+  requestAccessCode: (email: string) => Promise<AuthActionError | null>;
+  confirmAccessCode: (email: string, code: string) => Promise<AuthActionError | null>;
   setNewsletterOptIn: (value: boolean) => Promise<void>;
   signOut: () => Promise<void>;
 }

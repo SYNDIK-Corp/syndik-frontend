@@ -82,13 +82,6 @@
       "title": "Contact",
       "signIn": "Se connecter",
       "member": "Membre {{id}}",
-      "pinLabel": "Entrez votre code — pas de mot de passe",
-      "pinPlaceholder": "0000",
-      "pinEnter": "Valider",
-      "pinHint": "Premier achat ? Ces 4 chiffres créent votre compte immédiatement.",
-      "forgotPin": "Code oublié ?",
-      "backToPin": "Retour",
-      "resetLabel": "Nous avons envoyé un code d'accès à votre email.",
       "emailPlaceholder": "Email",
       "newsletter": "Prévenez-moi des nouveaux drops. Rien d'autre."
     },
@@ -150,6 +143,7 @@
         "invalid_input": "Renseignez votre email et le code à 4 chiffres.",
         "account_not_found": "Nous n'avons pas trouvé ce compte. Vérifiez l'email utilisé pour l'achat.",
         "wrong_pin": "Code incorrect — {{count}} tentatives restantes.",
+        "invalid_code": "Ce code n'est pas correct — vérifiez votre email et réessayez.",
         "locked": "Trop de tentatives incorrectes. Réessayez dans {{minutes}} min.",
         "rate_limited": "Trop de tentatives depuis cet appareil. Réessayez plus tard.",
         "session_pending": "Votre compte a été créé ! La connexion automatique a échoué — essayez de vous connecter avec le code que vous venez de définir.",
@@ -639,6 +633,20 @@
         "unexpected": "Une erreur est survenue. Réessayez dans un instant."
       }
     }
+  },
+  "login": {
+    "title": "Juste votre\nemail.",
+    "description": "Pas de mot de passe à retenir. On vous envoie un code — entrez-le et c'est fait.",
+    "emailPlaceholder": "vous@email.com",
+    "continueCta": "Continuer",
+    "sending": "Envoi en cours...",
+    "codeTitle": "Vérifiez votre\nboîte mail.",
+    "codeSentDescription": "Nous avons envoyé un code à {{email}}.",
+    "codePlaceholder": "Code reçu par email",
+    "confirmCta": "Entrer",
+    "verifying": "Vérification...",
+    "changeEmail": "Utiliser un autre email",
+    "terms": "En continuant, vous acceptez nos <0>Conditions d'utilisation</0> et notre <1>Politique de confidentialité</1>."
   },
   "footer": {
     "rights": "© {{year}} Syndik — Tous droits réservés",

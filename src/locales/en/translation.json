@@ -82,13 +82,6 @@
       "title": "Contact",
       "signIn": "Sign in",
       "member": "Member {{id}}",
-      "pinLabel": "Enter your pin — no password",
-      "pinPlaceholder": "0000",
-      "pinEnter": "Enter",
-      "pinHint": "First purchase? These 4 digits create your account on the spot.",
-      "forgotPin": "Forgot the pin?",
-      "backToPin": "Back",
-      "resetLabel": "We sent an access code to your email.",
       "emailPlaceholder": "Email",
       "newsletter": "Tell me when a new drop lands. Nothing else."
     },
@@ -150,6 +143,7 @@
         "invalid_input": "Fill in your email and the 4-digit PIN.",
         "account_not_found": "We couldn't find that account. Check the email you used to buy.",
         "wrong_pin": "Wrong PIN — {{count}} attempts left.",
+        "invalid_code": "That code isn't right — check your email and try again.",
         "locked": "Too many wrong attempts. Try again in {{minutes}} min.",
         "rate_limited": "Too many attempts from here. Try again later.",
         "session_pending": "Your account was created! We just couldn't sign you in automatically — try logging in with the PIN you just set.",
@@ -639,6 +633,20 @@
         "unexpected": "Something went wrong. Try again in a moment."
       }
     }
+  },
+  "login": {
+    "title": "Just your\nemail.",
+    "description": "No password to remember. We'll send a code — enter it and you're in.",
+    "emailPlaceholder": "you@email.com",
+    "continueCta": "Continue",
+    "sending": "Sending...",
+    "codeTitle": "Check your\ninbox.",
+    "codeSentDescription": "We sent a code to {{email}}.",
+    "codePlaceholder": "Code from your email",
+    "confirmCta": "Enter",
+    "verifying": "Verifying...",
+    "changeEmail": "Use a different email",
+    "terms": "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
   },
   "footer": {
     "rights": "© {{year}} Syndik — All rights reserved",

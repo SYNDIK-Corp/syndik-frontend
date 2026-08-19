@@ -115,6 +115,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return changePin(newPin);
   };
 
+  const requestAccessCode: AuthContextValue['requestAccessCode'] = async (email) => {
+    const { error } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: true } });
+    if (error) return { code: 'unexpected' };
+    return null;
+  };
+
+  const confirmAccessCode: AuthContextValue['confirmAccessCode'] = async (email, code) => {
+    const { error } = await supabase.auth.verifyOtp({ email, token: code, type: 'email' });
+    if (error) return { code: 'invalid_code' };
+    // best-effort — a sessão já é válida de qualquer forma; isso só garante
+    // que account_credentials existe (Conta/FAQ/emails continuam
+    // funcionando pra quem chegou aqui sem nunca ter definido um PIN)
+    supabase.functions.invoke('auth-ensure-credentials').catch(() => {});
+    return null;
+  };
+
   const setNewsletterOptIn: AuthContextValue['setNewsletterOptIn'] = async (value) => {
     if (!session?.user.id) return;
     await supabase.from('profiles').update({ newsletter_opt_in: value }).eq('id', session.user.id);
@@ -136,6 +152,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       changePin,
       requestPinReset,
       confirmPinReset,
+      requestAccessCode,
+      confirmAccessCode,
       setNewsletterOptIn,
       signOut,
     }),

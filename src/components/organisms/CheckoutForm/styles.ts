@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { TextField } from '@/components/atoms/TextField';
 
 export const Container = styled.div`
   display: flex;
@@ -67,80 +66,6 @@ export const SignInButton = styled.button`
 
   &:hover::after {
     width: 100%;
-  }
-`;
-
-export const PinBox = styled.div<{ $open: boolean }>`
-  margin-top: 14px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
-  padding: 16px;
-  display: ${({ $open }) => ($open ? 'flex' : 'none')};
-  flex-direction: column;
-  gap: 12px;
-`;
-
-export const PinLabel = styled.span`
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
-export const PinRow = styled.div`
-  display: flex;
-  gap: 8px;
-`;
-
-export const PinInput = styled(TextField)`
-  letter-spacing: 0.5em;
-  text-align: center;
-  font-size: 18px;
-`;
-
-export const PinEnterButton = styled.button`
-  flex: 0 0 88px;
-  height: 50px;
-  background: ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.white};
-  border: 0;
-  cursor: pointer;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.black};
-    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.black};
-  }
-`;
-
-export const PinHint = styled.span<{ $error?: boolean }>`
-  font-size: 11px;
-  color: ${({ theme, $error }) => ($error ? theme.colors.danger : theme.colors.textMuted)};
-`;
-
-export const ForgotPinLink = styled.button`
-  align-self: flex-start;
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-  text-decoration: underline;
-  text-underline-offset: 3px;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.text};
   }
 `;
 
