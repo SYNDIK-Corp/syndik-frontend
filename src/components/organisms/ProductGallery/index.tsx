@@ -1,86 +1,60 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from '@/components/atoms/Icon';
 import * as S from './styles';
 
-export interface GalleryPlate {
-  name: string;
-  image?: string;
-}
-
 export interface ProductGalleryProps {
-  plates: GalleryPlate[];
+  coverImage?: string;
+  hoverImage?: string;
+  alt: string;
 }
 
-export function ProductGallery({ plates }: ProductGalleryProps) {
+/* MVP 2.1 — galeria simplificada pra cover + hover empilhados; sem
+ * miniaturas/zoom/pranchas do Drop, decisão do usuário de deixar só essas
+ * duas imagens, iguais em todo produto. */
+export function ProductGallery({ coverImage, hoverImage, alt }: ProductGalleryProps) {
   const { t } = useTranslation();
-  const [active, setActive] = useState(0);
-  const total = plates.length;
-  const multiple = total > 1;
-  const plateNames = plates.map((plate) => plate.name);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showScrollHint, setShowScrollHint] = useState(false);
 
-  const step = (direction: -1 | 1) => {
-    setActive((current) => (current + direction + total) % total);
+  const checkOverflow = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const hasOverflow = el.scrollHeight - el.clientHeight > 4;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 4;
+    setShowScrollHint(hasOverflow && !atBottom);
+  };
+
+  useEffect(() => {
+    checkOverflow();
+    window.addEventListener('resize', checkOverflow);
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, [coverImage, hoverImage]);
+
+  const handleHintClick = () => {
+    scrollRef.current?.scrollBy({ top: scrollRef.current.clientHeight * 0.8, behavior: 'smooth' });
   };
 
   return (
     <S.Container>
-      {multiple && (
-        <S.Header>
-          <S.Counter>
-            {t('productDetail.plateCounter', {
-              current: String(active + 1).padStart(2, '0'),
-              total: String(total).padStart(2, '0'),
-              name: plateNames[active],
-            })}
-          </S.Counter>
-          <S.Arrows>
-            <S.Arrow type="button" aria-label={t('productDetail.previousPlate')} onClick={() => step(-1)}>
-              <Icon name="chevron-left" size={15} />
-            </S.Arrow>
-            <S.Arrow type="button" aria-label={t('productDetail.nextPlate')} onClick={() => step(1)}>
-              <Icon name="chevron-right" size={15} />
-            </S.Arrow>
-          </S.Arrows>
-        </S.Header>
+      <S.Scroll ref={scrollRef} onScroll={checkOverflow}>
+        {coverImage && (
+          <S.Plate>
+            <S.Image src={coverImage} alt={alt} onLoad={checkOverflow} />
+          </S.Plate>
+        )}
+        {hoverImage && (
+          <S.Plate>
+            <S.Image src={hoverImage} alt={alt} onLoad={checkOverflow} />
+          </S.Plate>
+        )}
+      </S.Scroll>
+      {showScrollHint && (
+        <S.ScrollHint type="button" aria-label={t('productDetail.scrollForMore')} onClick={handleHintClick}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </S.ScrollHint>
       )}
-
-      <S.Zoomer>
-        <S.ZoomImage>
-          {plates.map((plate, index) => (
-            <S.Layer key={plate.name} $active={index === active}>
-              {plate.image && <S.Image src={plate.image} alt={plate.name} />}
-            </S.Layer>
-          ))}
-        </S.ZoomImage>
-        <S.ZoomHint>{t('productDetail.hoverToZoom')}</S.ZoomHint>
-      </S.Zoomer>
-
-      {multiple && (
-        <S.Filmstrip>
-          {plates.map((plate, index) => (
-            <S.Thumb
-              key={plate.name}
-              type="button"
-              $active={index === active}
-              aria-label={plate.name}
-              aria-current={index === active}
-              onClick={() => setActive(index)}
-            >
-              {plate.image && <S.Image src={plate.image} alt="" />}
-            </S.Thumb>
-          ))}
-        </S.Filmstrip>
-      )}
-
-      <S.Footer>
-        <span>
-          {multiple
-            ? t('productDetail.allPlatesIncluded', { count: total })
-            : t('productDetail.singleFileIncluded')}
-        </span>
-        {multiple && <S.FooterHighlight>{t('productDetail.useStripHint')}</S.FooterHighlight>}
-      </S.Footer>
     </S.Container>
   );
 }

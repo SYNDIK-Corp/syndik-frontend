@@ -390,14 +390,6 @@
       "screens": "Blatt 001 / Für deinen Bildschirm",
       "sound": "Blatt 002 / Für deinen Sound"
     },
-    "plateCounter": "Motiv {{current}} von {{total}} — {{name}}",
-    "genericPlateName": "Motiv {{number}}",
-    "previousPlate": "Vorheriges Motiv",
-    "nextPlate": "Nächstes Motiv",
-    "allPlatesIncluded": "Alle {{count}} Motive enthalten",
-    "singleFileIncluded": "Datei enthalten",
-    "useStripHint": "Nutze die Leiste oder die Pfeile",
-    "hoverToZoom": "Zum Zoomen der Körnung darüberfahren",
     "whatsIncluded": "Was enthalten ist",
     "addToCart": "In den Warenkorb",
     "richSubtitle": "{{count}} Originalwerke — Für jeden Bildschirm gemacht",
@@ -485,7 +477,8 @@
           "answer": "Nein — jedes Cover wird nur einmal verkauft und danach aus dem Archiv entfernt."
         }
       ]
-    }
+    },
+    "scrollForMore": "Scrollen, um mehr zu sehen"
   },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",

@@ -390,14 +390,6 @@
       "screens": "Hoja 001 / Para tu pantalla",
       "sound": "Hoja 002 / Para tu sonido"
     },
-    "plateCounter": "Lámina {{current}} de {{total}} — {{name}}",
-    "genericPlateName": "Lámina {{number}}",
-    "previousPlate": "Lámina anterior",
-    "nextPlate": "Siguiente lámina",
-    "allPlatesIncluded": "Las {{count}} láminas incluidas",
-    "singleFileIncluded": "Archivo incluido",
-    "useStripHint": "Usa la tira o las flechas",
-    "hoverToZoom": "Pasa el mouse para ver el grano",
     "whatsIncluded": "Qué incluye",
     "addToCart": "Añadir al carrito",
     "richSubtitle": "{{count}} Original Artworks — Made For Every Screen",
@@ -485,7 +477,8 @@
           "answer": "No — cada portada se vende una sola vez y luego se retira del archivo."
         }
       ]
-    }
+    },
+    "scrollForMore": "Desplázate para ver más"
   },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",

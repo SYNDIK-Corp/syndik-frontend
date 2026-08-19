@@ -390,14 +390,6 @@
       "screens": "Feuille 001 / Pour votre écran",
       "sound": "Feuille 002 / Pour votre son"
     },
-    "plateCounter": "Pièce {{current}} sur {{total}} — {{name}}",
-    "genericPlateName": "Pièce {{number}}",
-    "previousPlate": "Pièce précédente",
-    "nextPlate": "Pièce suivante",
-    "allPlatesIncluded": "Les {{count}} pièces incluses",
-    "singleFileIncluded": "Fichier inclus",
-    "useStripHint": "Utilisez la bande ou les flèches",
-    "hoverToZoom": "Survolez pour zoomer sur le grain",
     "whatsIncluded": "Ce qui est inclus",
     "addToCart": "Ajouter au panier",
     "richSubtitle": "{{count}} Œuvres Originales — Créées Pour Chaque Écran",
@@ -485,7 +477,8 @@
           "answer": "Non — chaque pochette est vendue une seule fois puis retirée des archives."
         }
       ]
-    }
+    },
+    "scrollForMore": "Faites défiler pour en voir plus"
   },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",

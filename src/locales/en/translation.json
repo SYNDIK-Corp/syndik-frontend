@@ -390,14 +390,6 @@
       "screens": "Sheet 001 / For your screen",
       "sound": "Sheet 002 / For your sound"
     },
-    "plateCounter": "Plate {{current}} of {{total}} — {{name}}",
-    "genericPlateName": "Plate {{number}}",
-    "previousPlate": "Previous plate",
-    "nextPlate": "Next plate",
-    "allPlatesIncluded": "All {{count}} plates included",
-    "singleFileIncluded": "File included",
-    "useStripHint": "Use the strip or the arrows",
-    "hoverToZoom": "Hover to zoom grain",
     "whatsIncluded": "What's included",
     "addToCart": "Add to cart",
     "richSubtitle": "{{count}} Original Artworks — Made For Every Screen",
@@ -485,7 +477,8 @@
           "answer": "No — each cover is sold once and retired from the archive right after."
         }
       ]
-    }
+    },
+    "scrollForMore": "Scroll to see more"
   },
   "sound": {
     "eyebrow": "SYNDIK / Sound — 001",

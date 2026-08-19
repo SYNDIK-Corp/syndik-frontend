@@ -59,7 +59,7 @@ export function ProductDetail() {
     );
   }
 
-  const { item, sheet: itemSheet, plateCount, galleryImages, fileBreakdown, includedRows, faq } = state.detail;
+  const { item, sheet: itemSheet, plateCount, fileBreakdown, includedRows, faq } = state.detail;
   const compareAtPrice = item.compareAtPrice;
   const onSale = item.compareAtPrice != null;
 
@@ -93,24 +93,6 @@ export function ProductDetail() {
       ? t('productDetail.genericFileInfoSingular')
       : t('productDetail.genericFileInfo', { count: plateCount });
 
-  /* a capa do produto entra como a 1ª imagem da galeria (antes da própria
-     galeria de preview) — só quando já existe galeria real, pra não
-     interferir no placeholder genérico de Drop sem cluster/ ainda. */
-  const previewImages =
-    itemSheet === 'screens' && galleryImages.length > 0 && item.coverImage
-      ? [item.coverImage, ...galleryImages]
-      : galleryImages;
-
-  /* contagem da galeria (imagens de preview reais, se existirem) é
-     independente de plateCount (quantos arquivos pagos vêm no pack) — um
-     Drop com cluster/ enviado mostra os previews reais; sem cluster ainda,
-     cai no placeholder genérico do tamanho de plateCount. */
-  const galleryCount = previewImages.length > 0 ? previewImages.length : plateCount;
-  const plateNames = Array.from({ length: galleryCount }, (_, index) =>
-    t('productDetail.genericPlateName', { number: String(index + 1).padStart(2, '0') }),
-  );
-  const plates = plateNames.map((name, index) => ({ name, image: previewImages[index] }));
-
   const deviceLabel: Record<string, string> = {
     mobile: t('productDetail.deviceLabel.mobile'),
     desktop: t('productDetail.deviceLabel.desktop'),
@@ -142,7 +124,7 @@ export function ProductDetail() {
 
         <S.Section>
           <S.Grid>
-            <ProductGallery plates={plates} />
+            <ProductGallery coverImage={item.coverImage} hoverImage={item.hoverImage} alt={displayName} />
             <ProductInfo
               sku={item.sku}
               collectionLabel={collectionLabel}

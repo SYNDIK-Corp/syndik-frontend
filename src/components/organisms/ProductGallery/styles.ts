@@ -1,146 +1,105 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
+const bounce = keyframes`
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+`;
+
+/* a galeria vaza até a borda esquerda real da viewport — a conta desfaz, só
+ * pra este componente, o centering (max-width 1700px + margin auto) e o
+ * padding esquerdo do <Section> em pages/ProductDetail/styles.ts; mudou um
+ * dos dois valores lá, muda aqui também. */
+const bleedLeft = css`
+  margin-left: calc(-1 * (max(0px, (100vw - 1700px) / 2) + clamp(16px, 3vw, 40px)));
+  width: calc(100% + max(0px, (100vw - 1700px) / 2) + clamp(16px, 3vw, 40px));
+`;
+
+/* sticky preenchendo a viewport inteira (menos a navbar); o scroll de
+ * verdade acontece dentro de Scroll, não aqui — Container só posiciona e
+ * corta (overflow: hidden) pra caber o ScrollHint sobreposto. */
 export const Container = styled.div`
   position: sticky;
-  top: calc(${({ theme }) => theme.sizes.navbarHeight} + 16px);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  top: ${({ theme }) => theme.sizes.navbarHeight};
+  height: calc(100vh - ${({ theme }) => theme.sizes.navbarHeight});
+  overflow: hidden;
+
+  ${bleedLeft}
 
   @media (max-width: 900px) {
     position: static;
+    height: auto;
+    overflow: visible;
+    margin-left: 0;
+    width: 100%;
   }
 `;
 
-export const Header = styled.div`
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-`;
-
-export const Counter = styled.span`
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
-`;
-
-export const CounterValue = styled.span`
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-export const Arrows = styled.div`
-  display: flex;
-  gap: 8px;
-`;
-
-export const Arrow = styled.button`
-  background: none;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${({ theme }) => theme.colors.text};
-  transition:
-    border-color 0.35s ease,
-    background 0.35s ease;
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.text};
-  }
-
-  &:active {
-    background: ${({ theme }) => theme.colors.text};
-    color: ${({ theme }) => theme.colors.white};
-  }
-`;
-
-export const Zoomer = styled.div`
-  position: relative;
-  aspect-ratio: 3 / 2;
-  background: ${({ theme }) => theme.colors.black};
-  overflow: hidden;
-`;
-
-export const ZoomImage = styled.div`
-  position: absolute;
-  inset: 0;
-  transition: transform 1.1s cubic-bezier(0.2, 0.7, 0.2, 1);
-
-  ${Zoomer}:hover & {
-    transform: scale(1.45);
-  }
-`;
-
-export const Layer = styled.div<{ $active: boolean }>`
-  position: absolute;
-  inset: 0;
-  opacity: ${({ $active }) => ($active ? 1 : 0)};
-  transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-`;
-
-export const Image = styled.img`
-  width: 100%;
+/* scroll próprio: o usuário rola as imagens primeiro; só quando chega ao
+ * fim desse scroll interno o encadeamento nativo do navegador passa a
+ * rolar a página (comportamento padrão do browser, nenhum JS precisa
+ * simular isso). */
+export const Scroll = styled.div`
   height: 100%;
-  object-fit: cover;
-`;
-
-export const ZoomHint = styled.span`
-  position: absolute;
-  left: 0;
-  top: 14px;
-  background: ${({ theme }) => theme.colors.white};
-  padding: 6px 11px;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  pointer-events: none;
-`;
-
-export const Filmstrip = styled.div`
+  overflow-y: auto;
   display: flex;
+  flex-direction: column;
   gap: 8px;
-  overflow-x: auto;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
   }
-`;
 
-export const Thumb = styled.button<{ $active: boolean }>`
-  flex: 0 0 52px;
-  aspect-ratio: 1 / 1;
-  padding: 0;
-  border: none;
-  background: ${({ theme }) => theme.colors.black};
-  cursor: pointer;
-  opacity: ${({ $active }) => ($active ? 1 : 0.45)};
-  box-shadow: ${({ $active, theme }) => ($active ? `inset 0 0 0 1px ${theme.colors.text}` : 'none')};
-  transition: opacity 0.3s ease;
-
-  &:hover {
-    opacity: ${({ $active }) => ($active ? 1 : 0.8)};
+  @media (max-width: 900px) {
+    height: auto;
+    overflow: visible;
   }
 `;
 
-export const Footer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
+export const Plate = styled.div`
+  flex: none;
 `;
 
-export const FooterHighlight = styled.span`
-  color: ${({ theme }) => theme.colors.text};
+export const Image = styled.img`
+  display: block;
+  width: 100%;
+  height: 64vh;
+  object-fit: cover;
+  object-position: top center;
+
+  @media (max-width: 900px) {
+    height: auto;
+    object-fit: initial;
+  }
+`;
+
+export const ScrollHint = styled.button`
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: ${({ theme }) => theme.radii.full};
+  background: rgba(17, 17, 17, 0.72);
+  color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
+
+  svg {
+    animation: ${bounce} 1.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    svg {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
