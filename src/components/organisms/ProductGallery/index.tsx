@@ -5,18 +5,25 @@ import * as S from './styles';
 export interface ProductGalleryProps {
   coverImage?: string;
   hoverImage?: string;
+  galleryImages?: string[];
   alt: string;
 }
 
-/* MVP 2.1 — galeria simplificada pra cover + hover empilhados; sem
- * miniaturas/zoom/pranchas do Drop, decisão do usuário de deixar só essas
- * duas imagens, iguais em todo produto. */
-export function ProductGallery({ coverImage, hoverImage, alt }: ProductGalleryProps) {
+/* MVP 2.1 — desktop simplificado pra cover + hover empilhados (sem
+ * miniaturas/zoom/pranchas). Mobile voltou a pedido do usuário a mostrar as
+ * imagens reais do cluster do Drop (`galleryImages`, ex.: as 7 artes do
+ * pack) num grid clicável; sem cluster, cai de volta pro par cover/hover. */
+export function ProductGallery({ coverImage, hoverImage, galleryImages, alt }: ProductGalleryProps) {
   const { t } = useTranslation();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
-  const [mobileActive, setMobileActive] = useState<'cover' | 'hover'>('cover');
-  const mobileImage = mobileActive === 'hover' && hoverImage ? hoverImage : coverImage;
+  const [mobileActive, setMobileActive] = useState(0);
+
+  const mobileImages: string[] =
+    galleryImages && galleryImages.length > 0
+      ? galleryImages
+      : [coverImage, hoverImage].filter((src): src is string => Boolean(src));
+  const mobileImage = mobileImages[mobileActive] ?? mobileImages[0];
 
   const checkOverflow = () => {
     const el = scrollRef.current;
@@ -31,6 +38,10 @@ export function ProductGallery({ coverImage, hoverImage, alt }: ProductGalleryPr
     window.addEventListener('resize', checkOverflow);
     return () => window.removeEventListener('resize', checkOverflow);
   }, [coverImage, hoverImage]);
+
+  useEffect(() => {
+    setMobileActive(0);
+  }, [coverImage, hoverImage, galleryImages]);
 
   /* scroll da galeria não depende do mouse estar em cima dela — enquanto a
    * galeria estiver visível na viewport, qualquer wheel na página (em
@@ -90,26 +101,20 @@ export function ProductGallery({ coverImage, hoverImage, alt }: ProductGalleryPr
       </S.Container>
 
       <S.MobilePreview>{mobileImage && <S.MobileImage src={mobileImage} alt={alt} />}</S.MobilePreview>
-      {coverImage && hoverImage && (
+      {mobileImages.length > 1 && (
         <S.MobileGrid>
-          <S.MobileThumb
-            type="button"
-            $active={mobileActive === 'cover'}
-            aria-label={`${alt} 1`}
-            aria-current={mobileActive === 'cover'}
-            onClick={() => setMobileActive('cover')}
-          >
-            <S.MobileThumbImage src={coverImage} alt="" />
-          </S.MobileThumb>
-          <S.MobileThumb
-            type="button"
-            $active={mobileActive === 'hover'}
-            aria-label={`${alt} 2`}
-            aria-current={mobileActive === 'hover'}
-            onClick={() => setMobileActive('hover')}
-          >
-            <S.MobileThumbImage src={hoverImage} alt="" />
-          </S.MobileThumb>
+          {mobileImages.map((image, index) => (
+            <S.MobileThumb
+              key={image}
+              type="button"
+              $active={mobileActive === index}
+              aria-label={`${alt} ${index + 1}`}
+              aria-current={mobileActive === index}
+              onClick={() => setMobileActive(index)}
+            >
+              <S.MobileThumbImage src={image} alt="" />
+            </S.MobileThumb>
+          ))}
         </S.MobileGrid>
       )}
     </S.Root>

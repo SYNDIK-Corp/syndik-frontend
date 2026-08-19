@@ -120,7 +120,7 @@ export const MobileGrid = styled.div`
 
   @media (max-width: 900px) {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 6px;
     margin-top: 6px;
   }

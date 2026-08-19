@@ -59,7 +59,7 @@ export function ProductDetail() {
     );
   }
 
-  const { item, sheet: itemSheet, plateCount, fileBreakdown, includedRows, faq } = state.detail;
+  const { item, sheet: itemSheet, plateCount, galleryImages, fileBreakdown, includedRows, faq } = state.detail;
   const compareAtPrice = item.compareAtPrice;
   const onSale = item.compareAtPrice != null;
 
@@ -124,7 +124,12 @@ export function ProductDetail() {
 
         <S.Section>
           <S.Grid>
-            <ProductGallery coverImage={item.coverImage} hoverImage={item.hoverImage} alt={displayName} />
+            <ProductGallery
+              coverImage={item.coverImage}
+              hoverImage={item.hoverImage}
+              galleryImages={galleryImages}
+              alt={displayName}
+            />
             <ProductInfo
               sku={item.sku}
               collectionLabel={collectionLabel}
