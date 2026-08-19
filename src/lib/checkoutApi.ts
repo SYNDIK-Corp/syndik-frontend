@@ -1,5 +1,6 @@
 import { FunctionsHttpError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
+import { activeLocale, DEFAULT_LOCALE } from '@/lib/locale';
 
 export type CheckoutErrorCode =
   | 'unauthenticated'
@@ -41,7 +42,13 @@ export async function createOrder(
   couponCode?: string | null,
 ): Promise<CreateOrderResult | CheckoutError> {
   const { data, error } = await supabase.functions.invoke<CreateOrderResult>('checkout-create-order', {
-    body: { items, couponCode: couponCode ?? undefined },
+    body: {
+      items,
+      couponCode: couponCode ?? undefined,
+      // Fase 11.6: preserva o idioma no retorno do Stripe (return_url) —
+      // inglês é a raiz, sem prefixo, não precisa mandar nada.
+      locale: activeLocale === DEFAULT_LOCALE ? undefined : activeLocale,
+    },
   });
   if (error) return readCheckoutError(error);
   if (!data) return { code: 'unexpected' };

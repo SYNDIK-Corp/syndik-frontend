@@ -1,0 +1,650 @@
+{
+  "common": {
+    "appName": "Syndik",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "nav": {
+    "mainNavigation": "Navigation principale",
+    "home": "Accueil",
+    "products": "Produits",
+    "contact": "Contact",
+    "search": "Recherche",
+    "account": "Mon compte",
+    "bag": "Panier",
+    "menu": "Menu",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "hero": {
+    "title": "L'art numérique\npour la\nrue",
+    "cta": "Explorer les collections"
+  },
+  "bestSellers": {
+    "eyebrow": "Index des collections",
+    "title": "Meilleures ventes",
+    "viewAll": "Tout voir"
+  },
+  "product": {
+    "sale": "Promo",
+    "addToBag": "Ajouter au panier",
+    "sold": "Vendu"
+  },
+  "cart": {
+    "title": "Mon panier",
+    "closeAria": "Fermer",
+    "empty": "Votre panier est vide. Piochez quelque chose dans les archives.",
+    "remove": "Retirer {{name}} du panier",
+    "discounts": "Réductions",
+    "subtotal": "Sous-total",
+    "continueShopping": "Continuer mes achats",
+    "held": {
+      "label": "Presque à vous — réservé pour"
+    },
+    "unlock": {
+      "progress": "Ajoutez <0>{{amount}}</0> pour débloquer <1>{{percent}}% de réduction</1>",
+      "complete": "Palier maximum débloqué — <1>{{percent}}% de réduction</1> appliquée",
+      "tierLabel": "{{percent}}% de réduction"
+    },
+    "line": {
+      "youSave": "Vous économisez {{amount}}",
+      "save": "Économisez {{amount}}"
+    },
+    "terms": {
+      "text": "J'ai lu les <0>conditions de licence</0>, la <1>politique de confidentialité</1> et la <2>politique de remboursement</2> pour les fichiers numériques, et j'y consens."
+    },
+    "cta": {
+      "empty": "Votre panier est vide",
+      "acceptTerms": "Acceptez les conditions pour continuer",
+      "checkout": "Commander • {{total}}"
+    },
+    "payment": {
+      "applePay": "Apple Pay",
+      "payPal": "PayPal",
+      "brands": {
+        "visa": "Visa",
+        "mastercard": "Mastercard",
+        "amex": "Amex",
+        "elo": "Elo",
+        "applePay": "Apple Pay",
+        "paypal": "PayPal",
+        "gpay": "G Pay",
+        "stripe": "Stripe"
+      }
+    }
+  },
+  "checkout": {
+    "contact": {
+      "title": "Contact",
+      "signIn": "Se connecter",
+      "member": "Membre {{id}}",
+      "pinLabel": "Entrez votre code — pas de mot de passe",
+      "pinPlaceholder": "0000",
+      "pinEnter": "Valider",
+      "pinHint": "Premier achat ? Ces 4 chiffres créent votre compte immédiatement.",
+      "forgotPin": "Code oublié ?",
+      "backToPin": "Retour",
+      "resetLabel": "Nous avons envoyé un code d'accès à votre email.",
+      "emailPlaceholder": "Email",
+      "newsletter": "Prévenez-moi des nouveaux drops. Rien d'autre."
+    },
+    "payment": {
+      "title": "Paiement",
+      "subtitle": "Toutes les transactions sont sécurisées et chiffrées. Les fichiers se débloquent dès la validation.",
+      "notConfigured": "Le paiement n'est pas encore configuré dans cet environnement."
+    },
+    "terms": {
+      "text": "J'ai lu les <0>conditions de licence</0> et la <1>politique de remboursement</1> pour les fichiers numériques, et j'y consens."
+    },
+    "cta": {
+      "incomplete": "Complétez les champs ci-dessus",
+      "continueToPayment": "Continuer vers le paiement • {{total}}"
+    },
+    "errors": {
+      "unauthenticated": "Connectez-vous avec votre code avant de continuer.",
+      "empty_cart": "Votre panier est vide.",
+      "invalid_items": "Un article de votre panier n'est plus disponible. Actualisez la page et réessayez.",
+      "payment_setup_failed": "Impossible d'ouvrir le paiement pour le moment. Réessayez dans un instant.",
+      "unexpected": "Une erreur est survenue. Réessayez.",
+      "rate_limited": "Trop de tentatives en peu de temps. Attendez quelques minutes et réessayez."
+    },
+    "note": {
+      "secure": "Paiement sécurisé · fichiers débloqués instantanément"
+    },
+    "summary": {
+      "empty": "Votre panier est vide. Piochez quelque chose dans les archives.",
+      "remove": "Retirer",
+      "codePlaceholder": "Code de réduction",
+      "apply": "Appliquer",
+      "codeHint": "Un code de drop ? Entrez-le ici.",
+      "codeApplied": "{{code}} appliqué — {{percent}}% de réduction",
+      "codeInvalid": "Ce code n'est pas valide.",
+      "subtotal": "Sous-total",
+      "discount": "Réduction",
+      "delivery": "Livraison",
+      "deliveryValue": "Instantanée · gratuite",
+      "total": "Total",
+      "currency": "USD",
+      "addToDrop": "Ajouter au drop",
+      "add": "Ajouter",
+      "addonHint": "Téléchargement instantané · Tous les écrans",
+      "codeAppliedFixed": "{{code}} appliqué — {{amount}} de réduction",
+      "tierApplied": "Réduction par palier déjà appliquée automatiquement."
+    }
+  },
+  "account": {
+    "eyebrow": "SYNDIK / Votre compte",
+    "memberTag": "Membre {{id}}",
+    "gate": {
+      "title": "Quatre chiffres.\nPas de mot de passe.",
+      "description": "Votre code a été défini lors de votre première commande. Il déverrouille tous les fichiers que vous avez achetés — retéléchargez à tout moment, sur n'importe quel appareil.",
+      "emailPlaceholder": "vous@email.com",
+      "pinPlaceholder": "0000",
+      "enter": "Valider",
+      "pinHint": "Email et votre code à 4 chiffres.",
+      "errors": {
+        "invalid_input": "Renseignez votre email et le code à 4 chiffres.",
+        "account_not_found": "Nous n'avons pas trouvé ce compte. Vérifiez l'email utilisé pour l'achat.",
+        "wrong_pin": "Code incorrect — {{count}} tentatives restantes.",
+        "locked": "Trop de tentatives incorrectes. Réessayez dans {{minutes}} min.",
+        "rate_limited": "Trop de tentatives depuis cet appareil. Réessayez plus tard.",
+        "session_pending": "Votre compte a été créé ! La connexion automatique a échoué — essayez de vous connecter avec le code que vous venez de définir.",
+        "unexpected": "Une erreur est survenue. Réessayez."
+      },
+      "lostPin": "Code perdu ?",
+      "lostPinDescription": "Entrez l'email utilisé pour votre achat et nous vous enverrons un code d'accès.",
+      "sendCode": "Envoyer le code",
+      "codeSentDescription": "Nous avons envoyé un code à votre email — entrez-le et choisissez un nouveau code.",
+      "codePlaceholder": "Code reçu par email",
+      "newPinPlaceholder": "Nouveau code à 4 chiffres",
+      "confirmReset": "Confirmer"
+    },
+    "sidebar": {
+      "tabs": {
+        "downloads": "Téléchargements",
+        "orders": "Commandes",
+        "details": "Détails"
+      },
+      "signOut": "Se déconnecter",
+      "memberRate": {
+        "label": "Tarif membre",
+        "body": "Chaque drop est à -15% pour vous. Appliqué automatiquement au paiement.",
+        "cta": "Voir les archives"
+      }
+    },
+    "downloads": {
+      "title": "Vos téléchargements",
+      "neverExpire": "Les liens n'expirent jamais",
+      "download": "Télécharger",
+      "downloadAgain": "Encore",
+      "downloadAll": "Tout télécharger",
+      "kind": "Pack de fonds d'écran",
+      "breakdown": "{{mobile}} mobile + {{desktop}} bureau",
+      "filesCount": "{{count}} fichiers",
+      "empty": "Vous n'avez encore rien acheté."
+    },
+    "orders": {
+      "title": "Commandes",
+      "receipt": "Reçu",
+      "empty": "Aucune commande pour l'instant.",
+      "method": {
+        "card": "Carte",
+        "paypal": "PayPal",
+        "unknown": "—"
+      }
+    },
+    "details": {
+      "title": "Détails",
+      "email": "Email",
+      "changePin": "Changer le code",
+      "newPinPlaceholder": "Nouveaux 4 chiffres",
+      "save": "Enregistrer",
+      "saved": "Enregistré",
+      "pinError": "4 chiffres — réessayez.",
+      "newsletter": "Prévenez-moi des nouveaux drops.",
+      "dangerZone": "Zone sensible",
+      "dangerZoneBody": "Supprimer le compte retire définitivement vos liens de téléchargement. La licence des fichiers déjà obtenus reste valable.",
+      "deleteAccount": "Supprimer le compte"
+    }
+  },
+  "orderConfirmation": {
+    "orderBadge": "Commande {{number}}",
+    "yourAccount": "Votre compte",
+    "paymentCleared": "Paiement validé — {{datetime}}",
+    "title": "C'est à vous.\nAllez le chercher.",
+    "description": "Les fichiers sont disponibles sur cette page et dans votre compte. Un reçu avec les mêmes liens arrive à <0>{{email}}</0>.",
+    "downloadEverything": "Tout télécharger",
+    "downloadedLabel": "Téléchargé — le récupérer à nouveau",
+    "files": {
+      "title": "Vos fichiers",
+      "neverExpire": "Les liens n'expirent jamais",
+      "ready": "Prêt",
+      "downloaded": "Téléchargé"
+    },
+    "setPin": {
+      "label": "Définissez votre code",
+      "body": "Quatre chiffres et ces fichiers restent à portée de main — pas de mot de passe, pas d'email à chercher.",
+      "placeholder": "0000",
+      "save": "Définir le code",
+      "saved": "Enregistré"
+    },
+    "install": {
+      "title": "Comment installer",
+      "steps": [
+        {
+          "title": "Décompressez sur l'appareil",
+          "description": "Téléphone ou ordinateur — les deux fonctionnent."
+        },
+        {
+          "title": "Enregistrez dans les photos",
+          "description": "Puis définissez comme fond d'écran ou écran de verrouillage."
+        },
+        {
+          "title": "Les pochettes s'uploadent directement",
+          "description": "3000 × 3000 — aucun redimensionnement nécessaire, quel que soit le distributeur."
+        }
+      ]
+    },
+    "receipt": {
+      "title": "Reçu",
+      "print": "Imprimer",
+      "order": "Commande",
+      "date": "Date",
+      "method": "Méthode",
+      "email": "Email",
+      "subtotal": "Sous-total",
+      "discount": "Réduction",
+      "delivery": "Livraison",
+      "deliveryValue": "Instantanée · gratuite",
+      "paid": "Payé"
+    },
+    "licence": {
+      "label": "Licence de cette commande",
+      "body": "Fonds d'écran : usage personnel sur vos propres appareils. Pochettes : une sortie, créditée ou non, sur n'importe quelle plateforme. Pas de revente, pas de banque d'images, pas de mint.",
+      "cta": "Lire la licence complète"
+    },
+    "support": {
+      "label": "Un problème ?",
+      "body": "Lien cassé, mauvais fichier, ou besoin d'un autre format — écrivez-nous et c'est réglé le jour même.",
+      "cta": "Contacter le support"
+    },
+    "related": {
+      "title": "Pendant que vous êtes là",
+      "viewAll": "Toutes les archives"
+    },
+    "filesCount": "{{count}} fichiers",
+    "notFound": {
+      "title": "Commande introuvable",
+      "body": "Nous n'avons pas trouvé cette commande. Vérifiez le lien ou consultez votre historique dans le compte."
+    },
+    "confirming": {
+      "title": "Confirmation du paiement...",
+      "body": "Cela ne prend qu'un instant."
+    },
+    "pending": {
+      "title": "Traitement en cours",
+      "body": "Votre paiement est en cours de confirmation. Les fichiers apparaissent dans votre compte dès que c'est terminé."
+    }
+  },
+  "search": {
+    "close": "Fermer",
+    "placeholder": "RECHERCHER SUR SYNDIK",
+    "clear": "Effacer",
+    "filters": {
+      "all": "Tout",
+      "screen": "Pour votre écran",
+      "sound": "Pour votre son",
+      "mobile": "Mobile",
+      "desktop": "Bureau"
+    },
+    "plateSingular": "{{count}} pièce",
+    "platePlural": "{{count}} pièces",
+    "countIdle": "{{count}} pièces dans les archives",
+    "mostWanted": "Les plus demandés",
+    "suggestions": [
+      {
+        "label": "Fonds d'écran mobile",
+        "query": "mobile"
+      },
+      {
+        "label": "Pochettes trap",
+        "query": "trap"
+      },
+      {
+        "label": "Packs album",
+        "query": "album"
+      },
+      {
+        "label": "Nuit / sombre",
+        "query": "night"
+      },
+      {
+        "label": "Moins de 5 $",
+        "query": "3.99"
+      }
+    ],
+    "collections": "Collections",
+    "collectionRows": {
+      "sheetScreens": "Feuille 001 — pour votre écran",
+      "sheetSound": "Feuille 002 — pour votre son",
+      "newThisWeek": "Nouveau cette semaine",
+      "retired": "Retiré — un seul propriétaire"
+    },
+    "lastDrop": "Dernier drop",
+    "soldBadge": "Un seul propriétaire — épuisé",
+    "empty": {
+      "title": "Rien sous ce nom.",
+      "description": "Les archives sont volontairement restreintes. Essayez une ambiance plutôt qu'un titre — fumée, béton, nuit — ou demandez-nous de la créer.",
+      "commission": "Commander une création",
+      "browse": "Parcourir les archives"
+    }
+  },
+  "catalog": {
+    "tabs": {
+      "screen": "Pour votre écran",
+      "sound": "Pour votre son"
+    },
+    "richTitle": "VOL.{{volume}} - {{name}} ({{count}} ŒUVRES ORIGINALES — CRÉÉES POUR CHAQUE ÉCRAN)",
+    "variants": {
+      "comboPack": "7 mobile + 7 bureau",
+      "mobile7": "7 mobile",
+      "desktop7": "7 bureau",
+      "single": "single",
+      "albumPack": "pack album"
+    },
+    "screens": {
+      "eyebrow": "SYNDIK / Les archives — feuille 001",
+      "title": "Pour votre écran.",
+      "stats": [
+        "12 pièces",
+        "14 fichiers par pack (7 mobile + 7 bureau)",
+        "8K brut + version mobile",
+        "Mise à jour hebdomadaire",
+        "2 retirées"
+      ],
+      "retiredTag": "Retiré",
+      "endNote": "Fin de la feuille 001 — SYNDIK / Culture numérique / 2026",
+      "nextSheet": "Feuille suivante : pour votre son"
+    },
+    "sound": {
+      "eyebrow": "SYNDIK / Les archives — feuille 002",
+      "title": "Pour votre son.",
+      "stats": [
+        "10 pièces",
+        "3000 × 3000 RGB",
+        "Un seul propriétaire par pochette",
+        "Licence de sortie incluse",
+        "3 retirées"
+      ],
+      "retiredTag": "Un seul propriétaire — épuisé",
+      "endNote": "Fin de la feuille 002 — SYNDIK / Culture numérique / 2026",
+      "nextSheet": "Feuille suivante : pour votre écran",
+      "comingSoon": {
+        "badge": "Bientôt disponible",
+        "title": "Les archives de pochettes arrivent.",
+        "body": "Nous préparons les premiers drops de pochettes d'album — même qualité cinématographique que les fonds d'écran, bientôt en boutique.",
+        "cta": "Parcourir les fonds d'écran"
+      }
+    }
+  },
+  "productDetail": {
+    "sheetLabel": {
+      "screens": "Feuille 001 / Pour votre écran",
+      "sound": "Feuille 002 / Pour votre son"
+    },
+    "plateCounter": "Pièce {{current}} sur {{total}} — {{name}}",
+    "genericPlateName": "Pièce {{number}}",
+    "previousPlate": "Pièce précédente",
+    "nextPlate": "Pièce suivante",
+    "allPlatesIncluded": "Les {{count}} pièces incluses",
+    "singleFileIncluded": "Fichier inclus",
+    "useStripHint": "Utilisez la bande ou les flèches",
+    "hoverToZoom": "Survolez pour zoomer sur le grain",
+    "whatsIncluded": "Ce qui est inclus",
+    "addToCart": "Ajouter au panier",
+    "richSubtitle": "{{count}} Œuvres Originales — Créées Pour Chaque Écran",
+    "showDetails": "Afficher les détails du pack",
+    "hideDetails": "Masquer les détails",
+    "trustLabel": "Le standard SYNDIK",
+    "perks": {
+      "instant": "Téléchargement instantané",
+      "noWatermark": "Sans filigrane",
+      "neverResold": "Jamais revendu comme banque d'images"
+    },
+    "exclusivity": {
+      "label": "Un seul propriétaire",
+      "body": "Vous la voulez en exclusivité ? Achetez la pièce dans son intégralité et elle quitte la boutique.",
+      "cta": "Demander l'exclusivité"
+    },
+    "related": {
+      "eyebrow": "Même archive",
+      "title": "Se marie bien avec ceci",
+      "viewSheet": "Toute la feuille",
+      "sheetTag": {
+        "screens": "Écran",
+        "sound": "Son"
+      }
+    },
+    "genericCollectionLabel": "{{sku}} / {{variant}}",
+    "genericDescription": "{{name}} est une pièce originale des archives SYNDIK, prête à l'emploi immédiat.",
+    "genericFileInfo": "{{count}} fichiers",
+    "genericFileInfoSingular": "1 fichier",
+    "deviceLabel": {
+      "mobile": "Fonds d'écran mobile",
+      "desktop": "Fonds d'écran bureau",
+      "any": "Fichiers"
+    },
+    "included": {
+      "single": [
+        {
+          "label": "Pochette haute résolution",
+          "value": "3000 × 3000"
+        },
+        {
+          "label": "Licence de sortie",
+          "value": "Un projet"
+        },
+        {
+          "label": "Prêt pour les plateformes",
+          "value": "Spotify · Apple · Deezer"
+        },
+        {
+          "label": "Readme + licence",
+          "value": "PDF"
+        }
+      ],
+      "albumPack": [
+        {
+          "label": "3 pochettes haute résolution",
+          "value": "3000 × 3000"
+        },
+        {
+          "label": "Licence de sortie",
+          "value": "Un projet"
+        },
+        {
+          "label": "Prêt pour les plateformes",
+          "value": "Spotify · Apple · Deezer"
+        },
+        {
+          "label": "Readme + licence",
+          "value": "PDF"
+        }
+      ]
+    },
+    "faq": {
+      "sound": [
+        {
+          "question": "Compatible Spotify et Apple Music ?",
+          "answer": "Oui. Chaque pochette respecte exactement le format demandé par les distributeurs."
+        },
+        {
+          "question": "La licence couvre-t-elle la sortie ?",
+          "answer": "Oui, une licence de sortie pour un projet est incluse avec l'achat."
+        },
+        {
+          "question": "Puis-je la revendre ?",
+          "answer": "Non — chaque pochette est vendue une seule fois puis retirée des archives."
+        }
+      ]
+    }
+  },
+  "sound": {
+    "eyebrow": "SYNDIK / Sound — 001",
+    "title": "Soyez vu\nou soyez\nignoré.",
+    "description": "Votre morceau affronte un million de miniatures pour un seul clic. Présentez-vous armé.",
+    "comingSoon": "Bientôt disponible",
+    "perks": "3000 × 3000 · Licence de sortie · Pochette + artwork single",
+    "products": {
+      "single-cover": {
+        "collection": "Single"
+      },
+      "album-pack": {
+        "collection": "Pochette + single + morceau final"
+      }
+    },
+    "ticker": [
+      "Pas de pochette, pas de culte",
+      "— Bientôt disponible",
+      "— Compatible Spotify · Apple · Deezer",
+      "— Une œuvre, un propriétaire",
+      "— Commandes ouvertes"
+    ]
+  },
+  "archive": {
+    "eyebrow": "SYNDIK / Tout ce que nous créons",
+    "title": "Votre écran.\nVotre sortie.\nMêmes archives.",
+    "description": "Une seule archive, deux façons de la porter — l'écran que vous regardez toute la journée et la pochette de votre prochain drop. Créé ici, vendu une seule fois.",
+    "coverTag": "Son",
+    "nowPlaying": "En cours",
+    "captions": [
+      "01 — Fond d'écran / bureau + mobile",
+      "02 — Pochette / votre sortie"
+    ],
+    "priceFrom": "à partir de {{price}}",
+    "rows": {
+      "wallpapers": {
+        "name": "Packs de fonds d'écran"
+      },
+      "singleCover": {
+        "name": "Pochette single"
+      },
+      "albumPack": {
+        "name": "Pack album complet"
+      },
+      "custom": {
+        "name": "Commande personnalisée",
+        "price": "Sur devis"
+      }
+    },
+    "cta": "Tout voir",
+    "specTitle": "La fiche technique",
+    "specs": [
+      {
+        "title": "8K BRUT",
+        "description": "Fichiers maîtres 7680 × 4320"
+      },
+      {
+        "title": "Retouché à la main",
+        "description": "Étalonnage et grain, pièce par pièce"
+      },
+      {
+        "title": "Prêt pour les plateformes",
+        "description": "3000 × 3000 RGB — uploadez, ne redimensionnez pas"
+      },
+      {
+        "title": "Sans filigrane",
+        "description": "Ni banque d'images, ni upscale par IA"
+      },
+      {
+        "title": "Un seul propriétaire",
+        "description": "Vendu une fois, puis retiré"
+      },
+      {
+        "title": "Directement sur le téléphone",
+        "description": "Compressé et téléchargé en une minute"
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "SYNDIK / Support",
+    "title": "FAQ",
+    "description": "Tout ce qu'il faut savoir avant d'acheter — fichiers, tailles, licence et livraison.",
+    "note": "Vous ne trouvez pas ce que vous cherchez ? Envoyez-nous un message — nous répondons sous 2 à 3 jours ouvrés.",
+    "cta": "Contacter le support",
+    "items": [
+      {
+        "question": "Que reçoit-on après l'achat ?",
+        "answer": "Chaque pack inclut tous les fonds d'écran de la collection, déjà adaptés au mobile et au bureau — livrés en un seul téléchargement, prêts à l'emploi."
+      },
+      {
+        "question": "Quels appareils sont compatibles ?",
+        "answer": "Chaque design fonctionne sur iPhone, Android et ordinateur. Aucun recadrage ni redimensionnement nécessaire."
+      },
+      {
+        "question": "Quelle est la résolution des fonds d'écran ?",
+        "answer": "Chaque design est exporté en HD/4K, pour rester net sur n'importe quel écran — du téléphone au moniteur large."
+      },
+      {
+        "question": "Comment récupérer mes fonds d'écran ?",
+        "answer": "Dès que le paiement est confirmé, vos fichiers sont disponibles instantanément — directement sur l'écran de confirmation et dans votre compte. Vous recevrez aussi un email avec le lien d'accès, si vous préférez le garder pour plus tard."
+      },
+      {
+        "question": "Que faire si je perds l'email de téléchargement ?",
+        "answer": "Aucun problème — vous n'êtes pas dépendant de l'email. Connectez-vous à votre compte à tout moment : les téléchargements restent disponibles indéfiniment, sans limite du nombre de fois."
+      },
+      {
+        "question": "Puis-je l'utiliser pour des projets commerciaux ?",
+        "answer": "Ces fonds d'écran sont destinés à un usage personnel uniquement — la revente ou la redistribution n'est pas autorisée."
+      },
+      {
+        "question": "Proposez-vous des remboursements ?",
+        "answer": "Comme il s'agit de téléchargements numériques instantanés, nous ne pouvons pas proposer de remboursement une fois le fichier livré."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Une question sur une commande, une licence, ou tout autre sujet — écrivez-nous. Une vraie personne lit chaque message, généralement sous 2 à 3 jours ouvrés.",
+    "form": {
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "email": "Email",
+      "emailPlaceholder": "vous@email.com",
+      "phone": "Téléphone",
+      "phonePlaceholder": "Facultatif",
+      "social": "Réseau social",
+      "socialHandlePlaceholder": "@identifiant",
+      "socialOptions": {
+        "none": "Aucun",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "twitter": "X / Twitter",
+        "other": "Autre"
+      },
+      "subject": "Sujet",
+      "subjectPlaceholder": "De quoi s'agit-il ?",
+      "comment": "Message",
+      "commentPlaceholder": "Dites-nous en plus...",
+      "submit": "Envoyer le message",
+      "submitting": "Envoi en cours...",
+      "success": "Message envoyé — nous vous répondrons sous 2 à 3 jours ouvrés.",
+      "errors": {
+        "invalid_input": "Vérifiez les champs surlignés et réessayez.",
+        "rate_limited": "Trop de messages envoyés — réessayez dans un instant.",
+        "unexpected": "Une erreur est survenue. Réessayez dans un instant."
+      }
+    }
+  },
+  "footer": {
+    "rights": "© {{year}} Syndik — Tous droits réservés",
+    "terms": "Conditions d'utilisation et politique de confidentialité"
+  },
+  "security": {
+    "contentProtected": "Ce contenu est protégé."
+  }
+}

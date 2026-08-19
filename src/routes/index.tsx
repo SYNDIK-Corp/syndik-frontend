@@ -8,10 +8,11 @@ import { Account } from '@/pages/Account';
 import { OrderConfirmation } from '@/pages/OrderConfirmation';
 import { Search } from '@/pages/Search';
 import { Contact } from '@/pages/Contact';
+import { basename } from '@/lib/locale';
 
 export function AppRoutes() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />

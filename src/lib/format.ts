@@ -3,9 +3,10 @@ export function formatPrice(value: number, locale: string, currency = 'USD') {
 }
 
 /* preço compacto pra telas mais densas: "U$ 3,99" em vez do "US$ 3,99"
-   (formatação por extenso do Intl pra moeda estrangeira em pt-BR) — loja é
-   USD-only, então o símbolo não precisa carregar a formatação de moeda
-   completa do Intl, só o separador decimal correto por locale. */
+   (formatação por extenso do Intl pra moeda estrangeira) — loja é USD-only
+   pra todo idioma (Fase 11.6: só o texto muda por região, não a moeda),
+   então o símbolo não precisa carregar a formatação de moeda completa do
+   Intl, só o separador decimal correto por locale. */
 export function formatPriceCompact(value: number, locale: string) {
   const amount = new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
   return `U$ ${amount}`;
