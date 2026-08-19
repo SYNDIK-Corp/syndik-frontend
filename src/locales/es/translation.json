@@ -579,35 +579,31 @@
     "items": [
       {
         "question": "¿Qué recibo después de comprar?",
-        "answer": "Un enlace de descarga con los archivos en resolución completa y un readme corto con tamaños y licencia."
+        "answer": "Cada pack incluye todos los wallpapers de la colección, ya listos para móvil y escritorio — todo entregado en una sola descarga, lista para usar."
       },
       {
-        "question": "¿Móvil y escritorio?",
-        "answer": "Ambos, vendidos como colecciones separadas — cada una compuesta para esa pantalla, nunca recortada de la otra."
+        "question": "¿Qué dispositivos son compatibles?",
+        "answer": "Cada diseño funciona en iPhone, Android y computadoras. No hace falta recortar ni redimensionar nada."
       },
       {
-        "question": "¿Qué resolución?",
-        "answer": "Wallpapers en 7680 × 4320 y 1440 × 3120. Portadas en 3000 × 3000 RGB."
+        "question": "¿Qué resolución tienen los wallpapers?",
+        "answer": "Cada diseño se exporta en HD/4K, así que se ve nítido en cualquier pantalla — desde el móvil hasta un monitor widescreen."
       },
       {
-        "question": "¿Puedo usarlo comercialmente?",
-        "answer": "La portada incluye licencia de lanzamiento para un proyecto. Los wallpapers son solo para uso personal."
+        "question": "¿Cómo obtengo mis wallpapers?",
+        "answer": "En cuanto se confirma el pago, tus archivos están disponibles al instante — ahí mismo en la pantalla de confirmación y en tu cuenta. También te llega un email con el enlace de acceso, por si prefieres guardarlo para después."
       },
       {
-        "question": "¿Qué tan rápida es la entrega?",
-        "answer": "Inmediata — el enlace está en la pantalla de confirmación y en tu cuenta."
+        "question": "¿Qué pasa si pierdo el email de descarga?",
+        "answer": "Sin problema — no dependes del email. Entra a tu cuenta cuando quieras: las descargas quedan disponibles para siempre, sin límite de veces."
       },
       {
-        "question": "¿Puedo volver a descargar más tarde?",
-        "answer": "Sí — ilimitado, cuando quieras. Tus archivos quedan en tu cuenta y el enlace de descarga nunca caduca."
+        "question": "¿Puedo usarlo en proyectos comerciales?",
+        "answer": "Estos wallpapers son solo para uso personal — no está permitida la reventa ni la redistribución."
       },
       {
-        "question": "¿Cuál es la política de reembolso?",
-        "answer": "Todas las ventas son finales. Son archivos digitales de entrega instantánea, así que no ofrecemos reembolsos después de la compra."
-      },
-      {
-        "question": "¿Spotify y Apple Music?",
-        "answer": "Sí. Cada portada sale con la especificación exacta que piden los distribuidores."
+        "question": "¿Ofrecen reembolsos?",
+        "answer": "Como son descargas digitales instantáneas, no podemos ofrecer reembolsos después de la entrega del archivo."
       }
     ]
   },

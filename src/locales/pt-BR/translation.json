@@ -579,35 +579,31 @@
     "items": [
       {
         "question": "O que eu recebo após a compra?",
-        "answer": "Um link de download com os arquivos em resolução total e um readme curto com tamanhos e licença."
+        "answer": "Cada pacote contém todos os papéis de parede nos formatos para celular e computador, entregues em um único download — prontos para usar."
       },
       {
-        "question": "Mobile e desktop?",
-        "answer": "Os dois, vendidos como coleções separadas — cada uma composta para aquela tela, nunca cortada da outra."
+        "question": "Quais dispositivos são compatíveis?",
+        "answer": "Todos os designs funcionam em iPhone, Android e computadores. Não é necessário recortar nem redimensionar."
       },
       {
-        "question": "Qual resolução?",
-        "answer": "Wallpapers em 7680 × 4320 e 1440 × 3120. Capas em 3000 × 3000 RGB."
+        "question": "Qual é a resolução dos papéis de parede?",
+        "answer": "Todos os designs são exportados em HD e 4K, garantindo que tenham uma aparência nítida em qualquer tela."
       },
       {
-        "question": "Posso usar comercialmente?",
-        "answer": "A capa inclui licença de lançamento para um projeto. Wallpapers são apenas para uso pessoal."
+        "question": "Como faço para obter meus papéis de parede?",
+        "answer": "Assim que o pagamento é confirmado, seus arquivos ficam disponíveis na hora — direto na tela de confirmação e na sua conta. Você também recebe um e-mail com o link de acesso, caso prefira guardar pra depois."
       },
       {
-        "question": "Qual a velocidade da entrega?",
-        "answer": "Imediata — o link aparece na tela de confirmação e na sua conta."
+        "question": "O que acontece se eu perder o e-mail de download?",
+        "answer": "Sem problema — você não depende do e-mail. Basta entrar na sua conta a qualquer momento: os downloads ficam disponíveis pra sempre, sem limite de vezes."
       },
       {
-        "question": "Posso baixar de novo depois?",
-        "answer": "Sim — ilimitado, quando quiser. Seus arquivos ficam na sua conta e o link de download nunca expira."
+        "question": "Posso usar isso em projetos comerciais?",
+        "answer": "Esses papéis de parede são apenas para uso pessoal, não sendo permitida a revenda ou redistribuição."
       },
       {
-        "question": "Qual a política de reembolso?",
-        "answer": "Toda venda é final. São arquivos digitais entregues na hora, então não oferecemos reembolso após a compra."
-      },
-      {
-        "question": "Spotify e Apple Music?",
-        "answer": "Sim. Toda capa sai na especificação exata que os distribuidores pedem."
+        "question": "Vocês oferecem reembolso?",
+        "answer": "Como se tratam de downloads digitais instantâneos, não podemos oferecer reembolsos após a entrega do arquivo."
       }
     ]
   },

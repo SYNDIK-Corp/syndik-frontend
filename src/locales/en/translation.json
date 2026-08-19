@@ -579,35 +579,31 @@
     "items": [
       {
         "question": "What do I get after buying?",
-        "answer": "A download link with the full-resolution files and a short readme covering sizes and licence."
+        "answer": "Every pack includes the full wallpaper set, already sized for mobile and desktop — delivered as a single download, ready to use."
       },
       {
-        "question": "Mobile and desktop?",
-        "answer": "Both, sold as separate collections — each composed for that screen, never cropped from the other."
+        "question": "Which devices are supported?",
+        "answer": "Every design works on iPhone, Android, and desktop. No cropping or resizing needed."
       },
       {
-        "question": "What resolution?",
-        "answer": "Wallpapers at 7680 × 4320 and 1440 × 3120. Covers at 3000 × 3000 RGB."
+        "question": "What resolution are the wallpapers?",
+        "answer": "Every design is exported in HD/4K, so it stays sharp on any screen — from your phone to a widescreen monitor."
       },
       {
-        "question": "Can I use it commercially?",
-        "answer": "Cover artwork includes a release licence for one project. Wallpapers are personal use only."
+        "question": "How do I get my wallpapers?",
+        "answer": "The moment your payment is confirmed, your files are ready instantly — right there on the confirmation screen and in your account. You'll also get an email with the access link, in case you want to save it for later."
       },
       {
-        "question": "How fast is delivery?",
-        "answer": "Instant — the link is on the confirmation screen and in your account."
+        "question": "What if I lose the download email?",
+        "answer": "No problem — you're not dependent on the email. Log into your account anytime: downloads stay available for good, with no limit on how many times you grab them."
       },
       {
-        "question": "Can I re-download later?",
-        "answer": "Yes — unlimited, anytime. Your files stay in your account and the download link never expires."
+        "question": "Can I use this for commercial projects?",
+        "answer": "These wallpapers are for personal use only — resale or redistribution isn't allowed."
       },
       {
-        "question": "What's the refund policy?",
-        "answer": "All sales are final. These are digital files delivered instantly, so we don't offer refunds after purchase."
-      },
-      {
-        "question": "Spotify and Apple Music?",
-        "answer": "Yes. Every cover ships at the exact spec distributors ask for."
+        "question": "Do you offer refunds?",
+        "answer": "Since these are instant digital downloads, we can't offer refunds once the file has been delivered."
       }
     ]
   },
