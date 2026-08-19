@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/templates/MainLayout';
 import { Hero } from '@/components/organisms/Hero';
+import { SplashScreen } from '@/components/organisms/SplashScreen';
 import { BestSellers } from '@/components/organisms/BestSellers';
 import { SoundSection } from '@/components/organisms/SoundSection';
 import { FaqSection } from '@/components/organisms/FaqSection';
@@ -12,6 +13,9 @@ import type { CatalogItem } from '@/types/product';
 export function Home() {
   const [bestSellers, setBestSellers] = useState<CatalogItem[]>([]);
   const [heroBanners, setHeroBanners] = useState<HeroBanner[]>([]);
+  // splash (Fase 11.9) libera quando a Hero reporta pronta — ou na hora, se
+  // a consulta a hero_banners voltar vazia (nada pra esperar)
+  const [heroReady, setHeroReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -26,7 +30,9 @@ export function Home() {
   useEffect(() => {
     let cancelled = false;
     fetchHeroBanners().then((result) => {
-      if (!cancelled) setHeroBanners(result);
+      if (cancelled) return;
+      setHeroBanners(result);
+      if (result.length === 0) setHeroReady(true);
     });
     return () => {
       cancelled = true;
@@ -35,7 +41,8 @@ export function Home() {
 
   return (
     <MainLayout navbarVariant="overlay">
-      <Hero banners={heroBanners} />
+      <SplashScreen ready={heroReady} />
+      <Hero banners={heroBanners} onReady={() => setHeroReady(true)} />
       <BestSellers products={bestSellers} />
       <SoundSection products={soundProducts} />
       {/* ArchiveSection ("SYNDIK / Tudo o que fazemos") desativada a pedido do
