@@ -43,7 +43,6 @@ export const Scroll = styled.div`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -60,17 +59,11 @@ export const Plate = styled.div`
   flex: none;
 `;
 
+/* sem crop — altura natural, imagem inteira sempre visível */
 export const Image = styled.img`
   display: block;
   width: 100%;
-  height: 64vh;
-  object-fit: cover;
-  object-position: top center;
-
-  @media (max-width: 900px) {
-    height: auto;
-    object-fit: initial;
-  }
+  height: auto;
 `;
 
 export const ScrollHint = styled.button`
