@@ -75,6 +75,12 @@
         "gpay": "G Pay",
         "stripe": "Stripe"
       }
+    },
+    "duplicate": {
+      "title": "Schon in deinem Warenkorb",
+      "body": "<0>{{name}}</0> ist bereits in deinem Warenkorb. Nochmal hinzufügen?",
+      "confirm": "Nochmal hinzufügen",
+      "cancel": "Abbrechen"
     }
   },
   "checkout": {
@@ -225,7 +231,12 @@
       "body": "Vier Ziffern, und diese Dateien sind nur einen Klick entfernt — kein Passwort, keine E-Mail-Suche.",
       "placeholder": "0000",
       "save": "PIN festlegen",
-      "saved": "Gespeichert"
+      "saved": "Gespeichert",
+      "saving": "Wird gespeichert…",
+      "successTitle": "PIN gespeichert",
+      "successBody": "Du kannst dich damit jederzeit anmelden — ohne Code.",
+      "errorInvalid": "Gib genau 4 Ziffern ein.",
+      "errorGeneric": "PIN konnte nicht gespeichert werden. Versuche es gleich noch einmal."
     },
     "install": {
       "title": "So installierst du sie",

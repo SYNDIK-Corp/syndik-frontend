@@ -75,6 +75,12 @@
         "gpay": "G Pay",
         "stripe": "Stripe"
       }
+    },
+    "duplicate": {
+      "title": "Déjà dans votre panier",
+      "body": "<0>{{name}}</0> est déjà dans votre panier. Voulez-vous l'ajouter à nouveau ?",
+      "confirm": "Ajouter à nouveau",
+      "cancel": "Annuler"
     }
   },
   "checkout": {
@@ -225,7 +231,12 @@
       "body": "Quatre chiffres et ces fichiers restent à portée de main — pas de mot de passe, pas d'email à chercher.",
       "placeholder": "0000",
       "save": "Définir le code",
-      "saved": "Enregistré"
+      "saved": "Enregistré",
+      "saving": "Enregistrement…",
+      "successTitle": "Code PIN enregistré",
+      "successBody": "Vous pouvez l'utiliser pour vous connecter à tout moment — sans code.",
+      "errorInvalid": "Saisissez exactement 4 chiffres.",
+      "errorGeneric": "Impossible d'enregistrer votre code PIN. Réessayez dans un instant."
     },
     "install": {
       "title": "Comment installer",

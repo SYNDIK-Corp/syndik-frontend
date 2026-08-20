@@ -137,6 +137,13 @@ export const PinBody = styled.span`
   max-width: 46ch;
 `;
 
+export const PinFeedback = styled.span<{ $tone: 'success' | 'error' }>`
+  font-size: 12px;
+  line-height: 1.5;
+  max-width: 46ch;
+  color: ${({ theme, $tone }) => ($tone === 'success' ? theme.colors.success : '#FF8A80')};
+`;
+
 export const PinRow = styled.div`
   display: flex;
   gap: 8px;
@@ -171,6 +178,11 @@ export const PinSaveButton = styled.button`
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
 `;
 
 export const InstallSection = styled.div`

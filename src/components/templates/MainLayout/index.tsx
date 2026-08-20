@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Navbar, type NavbarVariant } from '@/components/organisms/Navbar';
 import { Footer } from '@/components/organisms/Footer';
 import { CartDrawer } from '@/components/organisms/CartDrawer';
+import { DuplicateItemModal } from '@/components/organisms/DuplicateItemModal';
 import * as S from './styles';
 
 export interface MainLayoutProps {
@@ -16,6 +17,7 @@ export function MainLayout({ children, navbarVariant = 'solid' }: MainLayoutProp
       <S.Main $offsetNavbar={navbarVariant === 'solid'}>{children}</S.Main>
       <Footer />
       <CartDrawer />
+      <DuplicateItemModal />
     </>
   );
 }

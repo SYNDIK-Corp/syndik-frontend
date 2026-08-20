@@ -75,6 +75,12 @@
         "gpay": "G Pay",
         "stripe": "Stripe"
       }
+    },
+    "duplicate": {
+      "title": "Ya está en tu bolsa",
+      "body": "<0>{{name}}</0> ya está en tu bolsa. ¿Quieres agregarlo de nuevo?",
+      "confirm": "Agregar de nuevo",
+      "cancel": "Cancelar"
     }
   },
   "checkout": {
@@ -225,7 +231,12 @@
       "body": "Cuatro dígitos y estos archivos quedan a un toque — sin contraseña, sin perseguir emails.",
       "placeholder": "0000",
       "save": "Crear pin",
-      "saved": "Guardado"
+      "saved": "Guardado",
+      "saving": "Guardando…",
+      "successTitle": "PIN guardado",
+      "successBody": "Podés usarlo para entrar cuando quieras — sin necesidad de código.",
+      "errorInvalid": "Ingresá exactamente 4 dígitos.",
+      "errorGeneric": "No se pudo guardar tu PIN. Intentá de nuevo en un momento."
     },
     "install": {
       "title": "Cómo instalar",

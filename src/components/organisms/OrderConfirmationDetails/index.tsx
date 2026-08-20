@@ -5,6 +5,7 @@ import { Icon } from '@/components/atoms/Icon';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
 import { SpecList } from '@/components/molecules/SpecList';
 import { requestDownload, triggerFileDownloads, isDownloadError, type GuestDownloadProof } from '@/lib/downloadApi';
+import { setPin as submitPin } from '@/lib/pinApi';
 import { formatDateTime } from '@/lib/format';
 import * as S from './styles';
 
@@ -32,7 +33,7 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
   const [downloaded, setDownloaded] = useState<Set<string>>(new Set());
   const [allDownloaded, setAllDownloaded] = useState(false);
   const [pin, setPin] = useState('');
-  const [pinSaved, setPinSaved] = useState(false);
+  const [pinStatus, setPinStatus] = useState<'idle' | 'saving' | 'saved' | 'invalid' | 'error'>('idle');
 
   const totalFiles = files.reduce((sum, file) => sum + file.fileCount, 0);
   const installSteps = t('orderConfirmation.install.steps', { returnObjects: true }) as {
@@ -52,8 +53,15 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
     setAllDownloaded(true);
   };
 
-  const handleSavePin = () => {
-    if (pin.replace(/\D/g, '').length === 4) setPinSaved(true);
+  const handleSavePin = async () => {
+    const digits = pin.replace(/\D/g, '');
+    if (digits.length !== 4) {
+      setPinStatus('invalid');
+      return;
+    }
+    setPinStatus('saving');
+    const error = await submitPin(digits, guestProof);
+    setPinStatus(error ? (error.code === 'invalid_input' ? 'invalid' : 'error') : 'saved');
   };
 
   return (
@@ -108,6 +116,17 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
         <S.PinText>
           <S.PinLabel>{t('orderConfirmation.setPin.label')}</S.PinLabel>
           <S.PinBody>{t('orderConfirmation.setPin.body')}</S.PinBody>
+          {pinStatus === 'saved' && (
+            <S.PinFeedback $tone="success">
+              {t('orderConfirmation.setPin.successTitle')} — {t('orderConfirmation.setPin.successBody')}
+            </S.PinFeedback>
+          )}
+          {pinStatus === 'invalid' && (
+            <S.PinFeedback $tone="error">{t('orderConfirmation.setPin.errorInvalid')}</S.PinFeedback>
+          )}
+          {pinStatus === 'error' && (
+            <S.PinFeedback $tone="error">{t('orderConfirmation.setPin.errorGeneric')}</S.PinFeedback>
+          )}
         </S.PinText>
         <S.PinRow>
           <S.PinInput
@@ -117,11 +136,15 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
             value={pin}
             onChange={(event) => {
               setPin(event.target.value);
-              setPinSaved(false);
+              setPinStatus('idle');
             }}
           />
-          <S.PinSaveButton type="button" onClick={handleSavePin}>
-            {pinSaved ? t('orderConfirmation.setPin.saved') : t('orderConfirmation.setPin.save')}
+          <S.PinSaveButton type="button" onClick={handleSavePin} disabled={pinStatus === 'saving'}>
+            {pinStatus === 'saving'
+              ? t('orderConfirmation.setPin.saving')
+              : pinStatus === 'saved'
+                ? t('orderConfirmation.setPin.saved')
+                : t('orderConfirmation.setPin.save')}
           </S.PinSaveButton>
         </S.PinRow>
       </S.PinBox>

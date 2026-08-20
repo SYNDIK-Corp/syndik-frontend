@@ -19,6 +19,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [holdSecondsRemaining, setHoldSecondsRemaining] = useState(HOLD_DURATION_SECONDS);
   const [discountTiers, setDiscountTiers] = useState<DiscountTier[]>([]);
   const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null);
+  const [pendingDuplicate, setPendingDuplicate] = useState<{ item: CartItem; openCart: boolean } | null>(null);
 
   useEffect(() => {
     fetchDiscountTiers().then(setDiscountTiers);
@@ -95,9 +96,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
       clearCoupon: () => setAppliedCoupon(null),
       bestDiscount,
       addItem: (item, options) => {
+        const openCart = options?.openCart ?? true;
+        const isDuplicate = items.some((existing) => existing.sku === item.sku);
+        if (isDuplicate) {
+          setPendingDuplicate({ item, openCart });
+          return;
+        }
         setItems((prev) => [...prev, item]);
-        if (options?.openCart ?? true) setIsOpen(true);
+        if (openCart) setIsOpen(true);
       },
+      pendingDuplicate: pendingDuplicate?.item ?? null,
+      confirmAddDuplicate: () => {
+        if (!pendingDuplicate) return;
+        setItems((prev) => [...prev, pendingDuplicate.item]);
+        if (pendingDuplicate.openCart) setIsOpen(true);
+        setPendingDuplicate(null);
+      },
+      cancelAddDuplicate: () => setPendingDuplicate(null),
       removeItem: (index) => setItems((prev) => prev.filter((_, i) => i !== index)),
       clearCart: () => {
         setItems([]);
@@ -106,7 +121,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       openCart: () => setIsOpen(true),
       closeCart: () => setIsOpen(false),
     };
-  }, [items, isOpen, holdSecondsRemaining, discountTiers, appliedCoupon]);
+  }, [items, isOpen, holdSecondsRemaining, discountTiers, appliedCoupon, pendingDuplicate]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

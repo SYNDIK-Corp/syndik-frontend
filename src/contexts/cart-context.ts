@@ -32,6 +32,13 @@ export interface CartContextValue {
   /* segundos restantes da reserva do carrinho (contagem regressiva de urgência) */
   holdSecondsRemaining: number;
   addItem: (item: CartItem, options?: { openCart?: boolean }) => void;
+  /* item que o usuário tentou adicionar de novo (SKU já presente no
+     carrinho) — null quando não há confirmação pendente. addItem não
+     adiciona direto nesse caso, só guarda aqui até confirmAddDuplicate ou
+     cancelAddDuplicate resolver. */
+  pendingDuplicate: CartItem | null;
+  confirmAddDuplicate: () => void;
+  cancelAddDuplicate: () => void;
   removeItem: (index: number) => void;
   /* esvazia o carrinho — usado depois de um pedido pago de verdade */
   clearCart: () => void;
