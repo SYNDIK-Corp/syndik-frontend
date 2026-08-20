@@ -655,7 +655,12 @@
     "confirmCta": "Entrar",
     "verifying": "Verificando...",
     "changeEmail": "Usar otro email",
-    "terms": "Al continuar, aceptas nuestros <0>Términos de servicio</0> y <1>Política de privacidad</1>."
+    "terms": "Al continuar, aceptas nuestros <0>Términos de servicio</0> y <1>Política de privacidad</1>.",
+    "tabSignIn": "Entrar",
+    "tabRegister": "Crear cuenta",
+    "registerTitle": "Un email.\nSin contraseña.",
+    "registerDescription": "Te mandamos un código para confirmar que sos vos — y tu cuenta ya está lista.",
+    "registerCta": "Crear cuenta"
   },
   "footer": {
     "rights": "© {{year}} Syndik — Todos los derechos reservados",

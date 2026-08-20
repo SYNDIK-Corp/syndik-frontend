@@ -11,17 +11,30 @@ import * as S from './styles';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 // mesma arte já otimizada da Hero (Fase 11.1) — escolha de marca fixa, não
-// precisa de fetch novo nem de gestão via banco pra uma tela só
-const ART_URL = `${SUPABASE_URL}/storage/v1/object/public/product-images/legends-never-die/hero/02.webp`;
+// precisa de fetch novo nem de gestão via banco pra uma tela só. Duas fotos
+// diferentes do mesmo Drop — "arte diferente pra cada lado" sem precisar
+// produzir asset novo nenhum.
+type Mode = 'signin' | 'register';
+
+const ART_BY_MODE: Record<Mode, string> = {
+  signin: `${SUPABASE_URL}/storage/v1/object/public/product-images/legends-never-die/hero/02.webp`,
+  register: `${SUPABASE_URL}/storage/v1/object/public/product-images/legends-never-die/hero/04.webp`,
+};
 
 type Step = 'email' | 'code';
 
+/* Login e registro são a MESMA tela e o MESMO mecanismo por baixo —
+ * requestAccessCode/confirmAccessCode (email + token) já cria a conta na
+ * hora se o email for novo, sem nenhum fluxo separado de "cadastro". As
+ * abas só trocam o enquadramento (título, descrição, texto do botão e a
+ * arte) — não existe lógica de auth diferente entre os dois lados. */
 export function Login() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { requestAccessCode, confirmAccessCode } = useAuth();
 
+  const [mode, setMode] = useState<Mode>('signin');
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
@@ -61,7 +74,7 @@ export function Login() {
   return (
     <S.Container>
       <S.ArtPane>
-        <S.ArtImage src={ART_URL} alt="" />
+        <S.ArtImage key={mode} src={ART_BY_MODE[mode]} alt="" />
       </S.ArtPane>
 
       <S.FormPane>
@@ -70,10 +83,35 @@ export function Login() {
             <Logo width="132px" />
           </S.LogoWrapper>
 
+          {step === 'email' && (
+            <S.Tabs role="tablist">
+              <S.Tab
+                type="button"
+                role="tab"
+                aria-selected={mode === 'signin'}
+                $active={mode === 'signin'}
+                onClick={() => setMode('signin')}
+              >
+                {t('login.tabSignIn')}
+              </S.Tab>
+              <S.Tab
+                type="button"
+                role="tab"
+                aria-selected={mode === 'register'}
+                $active={mode === 'register'}
+                onClick={() => setMode('register')}
+              >
+                {t('login.tabRegister')}
+              </S.Tab>
+            </S.Tabs>
+          )}
+
           {step === 'email' ? (
             <form onSubmit={handleRequestCode}>
-              <S.Title>{t('login.title')}</S.Title>
-              <S.Description>{t('login.description')}</S.Description>
+              <S.Title>{mode === 'signin' ? t('login.title') : t('login.registerTitle')}</S.Title>
+              <S.Description>
+                {mode === 'signin' ? t('login.description') : t('login.registerDescription')}
+              </S.Description>
 
               <S.Field>
                 <TextField
@@ -83,7 +121,11 @@ export function Login() {
                   onChange={(event) => setEmail(event.target.value)}
                 />
                 <S.SubmitButton type="submit" disabled={!emailValid || submitting}>
-                  {submitting ? t('login.sending') : t('login.continueCta')}
+                  {submitting
+                    ? t('login.sending')
+                    : mode === 'signin'
+                      ? t('login.continueCta')
+                      : t('login.registerCta')}
                 </S.SubmitButton>
               </S.Field>
 

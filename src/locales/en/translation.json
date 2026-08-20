@@ -655,7 +655,12 @@
     "confirmCta": "Enter",
     "verifying": "Verifying...",
     "changeEmail": "Use a different email",
-    "terms": "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
+    "terms": "By continuing, you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>.",
+    "tabSignIn": "Sign in",
+    "tabRegister": "Create account",
+    "registerTitle": "One email.\nNo password.",
+    "registerDescription": "We'll send a code to confirm it's you — then your account's ready.",
+    "registerCta": "Create account"
   },
   "footer": {
     "rights": "© {{year}} Syndik — All rights reserved",

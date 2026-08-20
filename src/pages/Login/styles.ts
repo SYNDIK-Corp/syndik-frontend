@@ -1,5 +1,10 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { TextField } from '@/components/atoms/TextField';
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -27,6 +32,11 @@ export const ArtImage = styled.img`
   height: 100%;
   object-fit: cover;
   display: block;
+  animation: ${fadeIn} 0.5s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `;
 
 export const FormPane = styled.div`
@@ -50,6 +60,32 @@ export const FormColumn = styled.div`
 
 export const LogoWrapper = styled.div`
   align-self: center;
+`;
+
+export const Tabs = styled.div`
+  margin-top: 32px;
+  display: flex;
+  border: 1px solid ${({ theme }) => theme.colors.black};
+`;
+
+export const Tab = styled.button<{ $active: boolean }>`
+  flex: 1;
+  height: 42px;
+  border: 0;
+  cursor: pointer;
+  background: ${({ theme, $active }) => ($active ? theme.colors.black : 'transparent')};
+  color: ${({ theme, $active }) => ($active ? theme.colors.white : theme.colors.textMuted)};
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+
+  &:hover {
+    color: ${({ theme, $active }) => ($active ? theme.colors.white : theme.colors.text)};
+  }
 `;
 
 export const Title = styled.h1`

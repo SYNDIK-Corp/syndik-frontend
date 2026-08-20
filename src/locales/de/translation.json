@@ -655,7 +655,12 @@
     "confirmCta": "Bestätigen",
     "verifying": "Wird überprüft...",
     "changeEmail": "Andere E-Mail verwenden",
-    "terms": "Mit dem Fortfahren stimmst du unseren <0>Nutzungsbedingungen</0> und der <1>Datenschutzrichtlinie</1> zu."
+    "terms": "Mit dem Fortfahren stimmst du unseren <0>Nutzungsbedingungen</0> und der <1>Datenschutzrichtlinie</1> zu.",
+    "tabSignIn": "Anmelden",
+    "tabRegister": "Konto erstellen",
+    "registerTitle": "Eine E-Mail.\nKein Passwort.",
+    "registerDescription": "Wir schicken dir einen Code zur Bestätigung — dann ist dein Konto bereit.",
+    "registerCta": "Konto erstellen"
   },
   "footer": {
     "rights": "© {{year}} Syndik — Alle Rechte vorbehalten",
