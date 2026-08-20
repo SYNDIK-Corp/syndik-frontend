@@ -4,7 +4,7 @@ import { Eyebrow } from '@/components/atoms/Eyebrow';
 import { Icon } from '@/components/atoms/Icon';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
 import { SpecList } from '@/components/molecules/SpecList';
-import { requestDownload, triggerFileDownloads, isDownloadError, type GuestDownloadProof } from '@/lib/downloadApi';
+import { downloadOrShare, type GuestDownloadProof } from '@/lib/downloadApi';
 import { setPin as submitPin } from '@/lib/pinApi';
 import { formatDateTime } from '@/lib/format';
 import * as S from './styles';
@@ -42,15 +42,19 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
   }[];
 
   const downloadFile = async (file: OrderFile) => {
-    const result = await requestDownload(file.productId, guestProof);
-    if (isDownloadError(result)) return;
-    triggerFileDownloads(result.files);
-    setDownloaded((prev) => new Set(prev).add(file.sku));
+    const ok = await downloadOrShare([file.productId], guestProof);
+    if (ok) setDownloaded((prev) => new Set(prev).add(file.sku));
   };
 
   const downloadAll = async () => {
-    await Promise.all(files.map((file) => downloadFile(file)));
-    setAllDownloaded(true);
+    const ok = await downloadOrShare(
+      files.map((file) => file.productId),
+      guestProof,
+    );
+    if (ok) {
+      setDownloaded(new Set(files.map((file) => file.sku)));
+      setAllDownloaded(true);
+    }
   };
 
   const handleSavePin = async () => {

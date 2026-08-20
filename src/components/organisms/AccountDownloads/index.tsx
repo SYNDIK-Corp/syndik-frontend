@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
 import { fetchMyEntitlements, type Entitlement } from '@/lib/entitlementsApi';
 import { fetchFileBreakdown } from '@/lib/catalogApi';
-import { requestDownload, triggerFileDownloads, isDownloadError } from '@/lib/downloadApi';
+import { downloadOrShare } from '@/lib/downloadApi';
 import { formatDate } from '@/lib/format';
 import * as S from './styles';
 
@@ -43,14 +43,13 @@ export function AccountDownloads() {
   const totalFiles = entries.reduce((sum, entry) => sum + entry.mobileCount + entry.desktopCount, 0);
 
   const download = async (entry: DownloadEntry) => {
-    const result = await requestDownload(entry.product_id);
-    if (isDownloadError(result)) return;
-    triggerFileDownloads(result.files);
-    setDownloaded((prev) => new Set(prev).add(entry.entitlement_id));
+    const ok = await downloadOrShare([entry.product_id]);
+    if (ok) setDownloaded((prev) => new Set(prev).add(entry.entitlement_id));
   };
 
-  const downloadAll = () => {
-    entries.forEach((entry) => download(entry));
+  const downloadAll = async () => {
+    const ok = await downloadOrShare(entries.map((entry) => entry.product_id));
+    if (ok) setDownloaded(new Set(entries.map((entry) => entry.entitlement_id)));
   };
 
   return (
