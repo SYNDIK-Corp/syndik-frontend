@@ -4,7 +4,7 @@ import { Eyebrow } from '@/components/atoms/Eyebrow';
 import { Icon } from '@/components/atoms/Icon';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
 import { SpecList } from '@/components/molecules/SpecList';
-import { requestDownload, triggerFileDownloads, isDownloadError } from '@/lib/downloadApi';
+import { requestDownload, triggerFileDownloads, isDownloadError, type GuestDownloadProof } from '@/lib/downloadApi';
 import { formatDateTime } from '@/lib/format';
 import * as S from './styles';
 
@@ -21,9 +21,12 @@ export interface OrderConfirmationDetailsProps {
   paidAt: string;
   memberEmail: string;
   files: OrderFile[];
+  /* presente só no fluxo guest (sem sessão) — repassado pro
+     request-download como prova de posse do pedido. */
+  guestProof?: GuestDownloadProof;
 }
 
-export function OrderConfirmationDetails({ paidAt, memberEmail, files }: OrderConfirmationDetailsProps) {
+export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProof }: OrderConfirmationDetailsProps) {
   const { t, i18n } = useTranslation();
   const [downloaded, setDownloaded] = useState<Set<string>>(new Set());
   const [allDownloaded, setAllDownloaded] = useState(false);
@@ -37,7 +40,7 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files }: OrderCo
   }[];
 
   const downloadFile = async (file: OrderFile) => {
-    const result = await requestDownload(file.productId);
+    const result = await requestDownload(file.productId, guestProof);
     if (isDownloadError(result)) return;
     triggerFileDownloads(result.files);
     setDownloaded((prev) => new Set(prev).add(file.sku));

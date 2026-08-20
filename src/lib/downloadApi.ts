@@ -38,12 +38,26 @@ async function readDownloadError(error: unknown): Promise<DownloadError> {
   return { code: 'unexpected' };
 }
 
+export interface GuestDownloadProof {
+  orderId: number;
+  token: string;
+}
+
 /** pede signed URLs (TTL curto) pra todos os arquivos de um produto já
  * comprado — a Edge Function confere entitlement ativa antes de assinar
- * qualquer coisa, nunca confia no product_id vindo do client sozinho. */
-export async function requestDownload(productId: number): Promise<RequestDownloadResult | DownloadError> {
+ * qualquer coisa, nunca confia no product_id vindo do client sozinho. Sem
+ * sessão (checkout guest), `guestProof` prova posse via o public_token do
+ * pedido — escopado só aos arquivos daquele pedido específico. */
+export async function requestDownload(
+  productId: number,
+  guestProof?: GuestDownloadProof,
+): Promise<RequestDownloadResult | DownloadError> {
   const { data, error } = await supabase.functions.invoke<RequestDownloadResult>('request-download', {
-    body: { product_id: productId },
+    body: {
+      product_id: productId,
+      order_id: guestProof?.orderId,
+      token: guestProof?.token,
+    },
   });
   if (error) return readDownloadError(error);
   if (!data) return { code: 'unexpected' };

@@ -7,7 +7,7 @@ import { OrderConfirmationLayout } from '@/components/templates/OrderConfirmatio
 import { OrderConfirmationDetails, type OrderFile } from '@/components/organisms/OrderConfirmationDetails';
 import { OrderReceipt } from '@/components/organisms/OrderReceipt';
 import { RelatedProducts, type RelatedProduct } from '@/components/organisms/RelatedProducts';
-import { fetchOrderById, fetchOrderPaymentMethod, type MyOrder } from '@/lib/ordersApi';
+import { fetchOrderById, fetchOrderByPublicToken, fetchOrderPaymentMethod, type MyOrder } from '@/lib/ordersApi';
 import { fetchMyEntitlements } from '@/lib/entitlementsApi';
 import { fetchFileBreakdown } from '@/lib/catalogApi';
 import { buildRelatedProducts } from '@/lib/relatedProducts';
@@ -29,6 +29,13 @@ export function OrderConfirmation() {
   const { clearCart } = useCart();
 
   const orderId = Number(searchParams.get('order_id')) || null;
+  /* presente quando veio do redirect do Stripe ou do link do recibo por
+     email — checkout guest não tem sessão no browser, então orders (RLS:
+     user_id = auth.uid()) não é legível direto; o token prova posse do
+     pedido sem precisar de sessão (order-lookup-public, validado
+     server-side). Sem token, cai no caminho de sempre (RLS autenticada) —
+     usado quando quem está logado abre um recibo antigo pela Conta. */
+  const token = searchParams.get('token');
 
   const [status, setStatus] = useState<PageStatus>('loading');
   const [order, setOrder] = useState<MyOrder | null>(null);
@@ -58,7 +65,25 @@ export function OrderConfirmation() {
     let attempts = 0;
 
     const poll = async () => {
-      const found = await fetchOrderById(orderId);
+      let found: MyOrder | null = null;
+      let method: string | null = null;
+
+      try {
+        if (token) {
+          const result = await fetchOrderByPublicToken(orderId, token);
+          found = result?.order ?? null;
+          method = result?.paymentMethod ?? null;
+        } else {
+          found = await fetchOrderById(orderId);
+        }
+      } catch (error) {
+        // nunca deixa a página travada no loading pra sempre por causa de
+        // um erro de rede/RLS — sem posse confirmada, trata como não achado
+        console.error('OrderConfirmation: falha ao buscar o pedido', error);
+        if (!cancelled) setStatus('not_found');
+        return;
+      }
+
       if (cancelled) return;
 
       if (!found) {
@@ -67,6 +92,7 @@ export function OrderConfirmation() {
       }
 
       setOrder(found);
+      if (token) setPaymentMethod(method);
 
       if (found.status === 'paid') {
         setStatus('ready');
@@ -88,39 +114,64 @@ export function OrderConfirmation() {
     return () => {
       cancelled = true;
     };
-  }, [orderId]);
+  }, [orderId, token]);
 
+  /* fetchMyEntitlements()/fetchOrderPaymentMethod() dependem de sessão
+     (RPC filtra por auth.uid()) — guest nunca tem uma. Com token, monta a
+     lista de arquivos direto do order.items (já veio com product_id do
+     order-lookup-public) e usa o paymentMethod que a mesma chamada já
+     trouxe (setado no polling acima), sem chamada extra nenhuma. */
   useEffect(() => {
     if (status !== 'ready' || !order) return;
     let cancelled = false;
 
-    Promise.all([fetchMyEntitlements(), fetchOrderPaymentMethod(order.id)]).then(async ([entitlements, method]) => {
-      if (cancelled) return;
-      setPaymentMethod(method);
-
-      const orderEntitlements = entitlements.filter((entitlement) => entitlement.order_id === order.id);
-      const nextFiles = await Promise.all(
-        orderEntitlements.map(async (entitlement): Promise<OrderFile> => {
-          const breakdown = await fetchFileBreakdown(entitlement.product_id);
+    const buildFiles = async (
+      entries: { sku: string; productId: number; name: string }[],
+    ): Promise<OrderFile[]> =>
+      Promise.all(
+        entries.map(async (entry): Promise<OrderFile> => {
+          const breakdown = await fetchFileBreakdown(entry.productId);
           const mobileCount = breakdown.find((row) => row.device_variant === 'mobile')?.file_count ?? 0;
           const desktopCount = breakdown.find((row) => row.device_variant === 'desktop')?.file_count ?? 0;
           return {
-            sku: entitlement.sku,
-            productId: entitlement.product_id,
-            name: entitlement.name,
+            sku: entry.sku,
+            productId: entry.productId,
+            name: entry.name,
             kind: t('account.downloads.kind'),
             spec: t('account.downloads.breakdown', { mobile: mobileCount, desktop: desktopCount }),
             fileCount: mobileCount + desktopCount,
           };
         }),
       );
-      if (!cancelled) setFiles(nextFiles);
-    });
+
+    if (token) {
+      const entries = order.items
+        .filter((item): item is typeof item & { product_id: number } => item.product_id != null)
+        .map((item) => ({ sku: item.sku_snapshot, productId: item.product_id, name: item.name_snapshot }));
+      buildFiles(entries).then((nextFiles) => {
+        if (!cancelled) setFiles(nextFiles);
+      });
+    } else {
+      Promise.all([fetchMyEntitlements(), fetchOrderPaymentMethod(order.id)]).then(async ([entitlements, method]) => {
+        if (cancelled) return;
+        setPaymentMethod(method);
+
+        const orderEntitlements = entitlements.filter((entitlement) => entitlement.order_id === order.id);
+        const nextFiles = await buildFiles(
+          orderEntitlements.map((entitlement) => ({
+            sku: entitlement.sku,
+            productId: entitlement.product_id,
+            name: entitlement.name,
+          })),
+        );
+        if (!cancelled) setFiles(nextFiles);
+      });
+    }
 
     return () => {
       cancelled = true;
     };
-  }, [status, order, t]);
+  }, [status, order, token, t]);
 
   useEffect(() => {
     let cancelled = false;
@@ -171,7 +222,12 @@ export function OrderConfirmation() {
   return (
     <OrderConfirmationLayout orderNumber={order.orderNumber}>
       <S.Grid>
-        <OrderConfirmationDetails paidAt={order.paidAt ?? order.createdAt} memberEmail={order.email} files={files} />
+        <OrderConfirmationDetails
+          paidAt={order.paidAt ?? order.createdAt}
+          memberEmail={order.email}
+          files={files}
+          guestProof={token ? { orderId: order.id, token } : undefined}
+        />
         <OrderReceipt
           orderNumber={order.orderNumber}
           date={formatDate(order.createdAt, i18n.language)}

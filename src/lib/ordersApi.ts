@@ -2,6 +2,10 @@ import { supabase } from '@/lib/supabase';
 
 interface OrderItemRow {
   id: number;
+  /* só a busca por token público (fetchOrderByPublicToken) seleciona isso —
+     usada pra montar a lista de arquivos sem depender de entitlements
+     (RLS, exige sessão que o guest não tem). */
+  product_id?: number;
   sku_snapshot: string;
   name_snapshot: string;
   unit_price_snapshot: number;
@@ -84,4 +88,24 @@ export async function fetchOrderPaymentMethod(orderId: number): Promise<string |
   if (error) throw error;
   const rows = (data ?? []) as PaymentRow[];
   return rows.find((payment) => payment.status === 'succeeded')?.method ?? rows[0]?.method ?? null;
+}
+
+export interface PublicOrderLookup {
+  order: MyOrder;
+  paymentMethod: string | null;
+}
+
+/** confirmação de pedido pra quem comprou como guest (sem sessão no
+ * browser) — RLS de `orders` sempre exigiu auth.uid(), o que guest não tem.
+ * A "prova de posse" aqui é o token do link (return_url do Stripe e o
+ * recibo por email), validado server-side contra orders.public_token —
+ * nunca uma leitura direta da tabela. null = token/id não bate (não
+ * distingue "não existe" de "token errado", de propósito). */
+export async function fetchOrderByPublicToken(orderId: number, token: string): Promise<PublicOrderLookup | null> {
+  const { data, error } = await supabase.functions.invoke<{ order: OrderRow; paymentMethod: string | null }>(
+    'order-lookup-public',
+    { body: { orderId, token } },
+  );
+  if (error || !data) return null;
+  return { order: toMyOrder(data.order), paymentMethod: data.paymentMethod };
 }
