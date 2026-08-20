@@ -101,10 +101,35 @@ export const Category = styled.span`
   color: var(--card-muted);
 `;
 
-export const Name = styled.span<{ $layout: 'stack' | 'row' }>`
+/* $short: undefined = sem par curto/completo, sempre visível (a maioria
+ * dos usos — nome já é curto). true/false só quando o card tem as DUAS
+ * versões (product.cartName distinto de product.name — ex.: catálogo,
+ * relacionados) — em telas estreitas o título "rico" completo (com o
+ * parêntese de marketing, ex.: "VOL.1 — GOLDEN ERA (7 ORIGINAL
+ * ARTWORKS...)") quebra em várias linhas e domina o card, então troca pro
+ * título curto (mesmo do carrinho/checkout) só no mobile; o completo
+ * continua no desktop, onde há largura de sobra. */
+export const Name = styled.span<{ $layout: 'stack' | 'row'; $short?: boolean }>`
   font-size: ${({ $layout }) => ($layout === 'row' ? '17px' : '16px')};
   font-weight: 400;
   letter-spacing: 0.01em;
+
+  ${({ $short }) => {
+    if ($short === undefined) return '';
+    return $short
+      ? css`
+          display: none;
+
+          @media (max-width: 720px) {
+            display: inline;
+          }
+        `
+      : css`
+          @media (max-width: 720px) {
+            display: none;
+          }
+        `;
+  }}
 `;
 
 export const Prices = styled.div`
@@ -231,6 +256,12 @@ export const Container = styled(Link)<{ $tone: CardTone; $compact: boolean; $den
 
       ${Price}, ${SoldLabel} {
         font-size: 12px;
+      }
+
+      @media (max-width: 720px) {
+        ${Name} {
+          font-size: 11px;
+        }
       }
     `}
 `;

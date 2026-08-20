@@ -34,6 +34,7 @@ export function ProductCard({
   const { addItem } = useCart();
   const tag = product.tag ?? (product.onSale ? t('product.sale') : undefined);
   const sold = product.sold ?? false;
+  const hasShortAlt = Boolean(product.cartName && product.cartName !== product.name);
 
   const handleAddToBag = (event: MouseEvent) => {
     event.preventDefault();
@@ -84,7 +85,14 @@ export function ProductCard({
       <S.Meta $layout={metaLayout}>
         <S.TitleGroup>
           {product.category && <S.Category>{product.category}</S.Category>}
-          <S.Name $layout={metaLayout}>{product.name}</S.Name>
+          <S.Name $layout={metaLayout} $short={hasShortAlt ? false : undefined}>
+            {product.name}
+          </S.Name>
+          {hasShortAlt && (
+            <S.Name $layout={metaLayout} $short>
+              {product.cartName}
+            </S.Name>
+          )}
         </S.TitleGroup>
         {prices}
       </S.Meta>

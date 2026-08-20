@@ -65,6 +65,11 @@ export const GridSection = styled.section`
   max-width: 1700px;
   margin: 0 auto;
   padding: clamp(22px, 4vh, 40px) clamp(16px, 3vw, 40px) 0;
+
+  @media (max-width: 720px) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 `;
 
 export const Grid = styled.div`
@@ -78,7 +83,7 @@ export const Grid = styled.div`
      genérico) + cards bem mais altos pra visualização melhor */
   @media (max-width: 720px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px 12px;
+    gap: 20px 8px;
 
     ${ProductCardFrame} {
       aspect-ratio: 2 / 3;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
@@ -53,6 +53,13 @@ export function CheckoutForm() {
     ? t('checkout.cta.continueToPayment', { total: formatPrice(total, i18n.language) })
     : t('checkout.cta.incomplete');
 
+  /* o carrinho tica a cada segundo (hold timer) e re-renderiza este
+   * componente — sem isso, `options={{ clientSecret }}` inline vira um
+   * objeto novo a cada tick, e o EmbeddedCheckoutProvider remonta o iframe
+   * do Stripe no meio da digitação (sintoma: campo de cartão "reseta"
+   * depois de poucos caracteres). Só recria quando clientSecret muda. */
+  const embeddedOptions = useMemo(() => (clientSecret ? { clientSecret } : null), [clientSecret]);
+
   return (
     <S.Container>
       <S.Pane>
@@ -106,10 +113,10 @@ export function CheckoutForm() {
           <S.SectionSubtitle>{t('checkout.payment.subtitle')}</S.SectionSubtitle>
         </S.Section>
 
-        {clientSecret ? (
+        {embeddedOptions ? (
           stripePromise ? (
             <S.EmbeddedCheckoutWrap>
-              <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
+              <EmbeddedCheckoutProvider stripe={stripePromise} options={embeddedOptions}>
                 <EmbeddedCheckout />
               </EmbeddedCheckoutProvider>
             </S.EmbeddedCheckoutWrap>
