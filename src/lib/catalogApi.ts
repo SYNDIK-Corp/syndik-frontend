@@ -220,6 +220,19 @@ export async function fetchGalleryImages(productId: number): Promise<string[]> {
   return (data ?? []).map((row) => publicImageUrl(row.storage_bucket, row.storage_path));
 }
 
+/** capa de cada produto num lote só (ex.: itens de um pedido na tela de
+ * confirmação) — bucket público, sem relação com entitlement/compra. */
+export async function fetchProductCoverImages(productIds: number[]): Promise<Map<number, string>> {
+  if (productIds.length === 0) return new Map();
+  const { data, error } = await supabase
+    .from('product_images')
+    .select('product_id, storage_bucket, storage_path')
+    .in('product_id', productIds)
+    .eq('role', 'cover');
+  if (error) throw error;
+  return new Map((data ?? []).map((row) => [row.product_id, publicImageUrl(row.storage_bucket, row.storage_path)]));
+}
+
 /** ids na ordem de exibição (sort_order) — curadoria manual em
  * product_related_overrides; sem override, fica pro caller aplicar o
  * fallback (mesmo catálogo, excluindo vendidos). */

@@ -15,6 +15,7 @@ export interface OrderFile {
   kind: string;
   spec: string;
   fileCount: number;
+  coverImage?: string;
 }
 
 export interface OrderConfirmationDetailsProps {
@@ -97,6 +98,7 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
               }
               downloaded={downloaded.has(file.sku)}
               onDownload={() => downloadFile(file)}
+              coverImage={file.coverImage}
             />
           ))}
         </div>

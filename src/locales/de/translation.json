@@ -282,6 +282,10 @@
     "pending": {
       "title": "Wird noch verarbeitet",
       "body": "Deine Zahlung wird gerade bestätigt. Die Dateien erscheinen in deinem Konto, sobald das erledigt ist."
+    },
+    "success": {
+      "eyebrow": "Zahlung bestätigt",
+      "headline": "Du bist drin."
     }
   },
   "search": {

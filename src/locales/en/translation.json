@@ -282,6 +282,10 @@
     "pending": {
       "title": "Still processing",
       "body": "Your payment is being confirmed. The files show up in your account as soon as it's done."
+    },
+    "success": {
+      "eyebrow": "Payment approved",
+      "headline": "You're in."
     }
   },
   "search": {

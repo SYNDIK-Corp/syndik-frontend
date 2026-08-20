@@ -282,6 +282,10 @@
     "pending": {
       "title": "Traitement en cours",
       "body": "Votre paiement est en cours de confirmation. Les fichiers apparaissent dans votre compte dès que c'est terminé."
+    },
+    "success": {
+      "eyebrow": "Paiement approuvé",
+      "headline": "C'est fait."
     }
   },
   "search": {

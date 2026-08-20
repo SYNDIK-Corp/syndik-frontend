@@ -10,14 +10,16 @@ export interface DownloadRowProps {
   meta: string;
   downloaded: boolean;
   onDownload: () => void;
+  /* sem imagem, cai no fallback de sempre (caixa preta com o SKU) */
+  coverImage?: string;
 }
 
-export function DownloadRow({ sku, name, kind, spec, meta, downloaded, onDownload }: DownloadRowProps) {
+export function DownloadRow({ sku, name, kind, spec, meta, downloaded, onDownload, coverImage }: DownloadRowProps) {
   const { t } = useTranslation();
 
   return (
     <S.Container>
-      <S.Thumb>{sku}</S.Thumb>
+      <S.Thumb>{coverImage ? <S.ThumbImage src={coverImage} alt="" /> : sku}</S.Thumb>
 
       <S.Info>
         <S.Kind>

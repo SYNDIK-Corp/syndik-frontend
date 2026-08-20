@@ -5,11 +5,12 @@ import { MainLayout } from '@/components/templates/MainLayout';
 import { PageLoader } from '@/components/molecules/PageLoader';
 import { OrderConfirmationLayout } from '@/components/templates/OrderConfirmationLayout';
 import { OrderConfirmationDetails, type OrderFile } from '@/components/organisms/OrderConfirmationDetails';
+import { OrderSuccessMoment } from '@/components/organisms/OrderSuccessMoment';
 import { OrderReceipt } from '@/components/organisms/OrderReceipt';
 import { RelatedProducts, type RelatedProduct } from '@/components/organisms/RelatedProducts';
 import { fetchOrderById, fetchOrderByPublicToken, fetchOrderPaymentMethod, type MyOrder } from '@/lib/ordersApi';
 import { fetchMyEntitlements } from '@/lib/entitlementsApi';
-import { fetchFileBreakdown } from '@/lib/catalogApi';
+import { fetchFileBreakdown, fetchProductCoverImages } from '@/lib/catalogApi';
 import { buildRelatedProducts } from '@/lib/relatedProducts';
 import { formatDate } from '@/lib/format';
 import { useCart } from '@/hooks/useCart';
@@ -20,6 +21,11 @@ const RELATED_IDS = ['static', 'snd-003', 'smoke', 'grid-44'];
 
 const POLL_INTERVAL_MS = 2000;
 const POLL_MAX_ATTEMPTS = 10;
+/* selo de "venda aprovada" fica visível por SUCCESS_HOLD_MS, depois inicia
+   a transição de saída (opacity/scale, ver styles) que dura mais
+   SUCCESS_EXIT_MS antes de revelar a tela de pedido de verdade. */
+const SUCCESS_HOLD_MS = 1600;
+const SUCCESS_EXIT_MS = 350;
 
 type PageStatus = 'loading' | 'missing_order' | 'not_found' | 'confirming' | 'timeout' | 'ready';
 
@@ -42,6 +48,8 @@ export function OrderConfirmation() {
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
   const [files, setFiles] = useState<OrderFile[]>([]);
   const [related, setRelated] = useState<RelatedProduct[]>([]);
+  const [showSuccess, setShowSuccess] = useState(true);
+  const [successExiting, setSuccessExiting] = useState(false);
 
   /* chegou de volta do Stripe Embedded Checkout (return_url leva
      ?session_id=...) — a confirmação de verdade é o webhook, não esta
@@ -127,8 +135,9 @@ export function OrderConfirmation() {
 
     const buildFiles = async (
       entries: { sku: string; productId: number; name: string }[],
-    ): Promise<OrderFile[]> =>
-      Promise.all(
+    ): Promise<OrderFile[]> => {
+      const covers = await fetchProductCoverImages(entries.map((entry) => entry.productId));
+      return Promise.all(
         entries.map(async (entry): Promise<OrderFile> => {
           const breakdown = await fetchFileBreakdown(entry.productId);
           const mobileCount = breakdown.find((row) => row.device_variant === 'mobile')?.file_count ?? 0;
@@ -140,9 +149,11 @@ export function OrderConfirmation() {
             kind: t('account.downloads.kind'),
             spec: t('account.downloads.breakdown', { mobile: mobileCount, desktop: desktopCount }),
             fileCount: mobileCount + desktopCount,
+            coverImage: covers.get(entry.productId),
           };
         }),
       );
+    };
 
     if (token) {
       const entries = order.items
@@ -172,6 +183,21 @@ export function OrderConfirmation() {
       cancelled = true;
     };
   }, [status, order, token, t]);
+
+  // selo de sucesso é um beat único — só dispara quando o pedido vira
+  // 'ready' pela primeira vez, nunca de novo (ex.: reabrir a mesma tela)
+  useEffect(() => {
+    if (status !== 'ready') return;
+
+    const exitTimer = setTimeout(() => setSuccessExiting(true), SUCCESS_HOLD_MS);
+    const hideTimer = setTimeout(() => setShowSuccess(false), SUCCESS_HOLD_MS + SUCCESS_EXIT_MS);
+
+    return () => {
+      clearTimeout(exitTimer);
+      clearTimeout(hideTimer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status === 'ready']);
 
   useEffect(() => {
     let cancelled = false;
@@ -218,6 +244,14 @@ export function OrderConfirmation() {
   }
 
   if (!order) return null;
+
+  if (showSuccess) {
+    return (
+      <OrderConfirmationLayout orderNumber={order.orderNumber}>
+        <OrderSuccessMoment orderNumber={order.orderNumber} exiting={successExiting} />
+      </OrderConfirmationLayout>
+    );
+  }
 
   return (
     <OrderConfirmationLayout orderNumber={order.orderNumber}>

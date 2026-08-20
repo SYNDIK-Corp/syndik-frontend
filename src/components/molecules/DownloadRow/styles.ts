@@ -28,6 +28,7 @@ export const Thumb = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   text-align: center;
   padding: 6px;
   font-size: 9px;
@@ -40,6 +41,12 @@ export const Thumb = styled.div`
     font-size: 7px;
     padding: 4px;
   }
+`;
+
+export const ThumbImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const Info = styled.div`

@@ -282,6 +282,10 @@
     "pending": {
       "title": "Todavía procesando",
       "body": "Tu pago está siendo confirmado. Los archivos aparecen en tu cuenta apenas termine."
+    },
+    "success": {
+      "eyebrow": "Pago aprobado",
+      "headline": "Ya estás dentro."
     }
   },
   "search": {
