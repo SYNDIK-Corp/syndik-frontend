@@ -27,6 +27,9 @@ export const RecommendationsRail = styled.div<{ $open: boolean }>`
   width: 208px;
   align-self: stretch;
   overflow-y: auto;
+  /* sem isso, chegar ao fim do scroll interno encadeia o gesto pro próximo
+     ancestral rolável — inclusive a página por trás do drawer */
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -199,6 +202,7 @@ export const TierLabel = styled.span<{ $hit: boolean }>`
 export const Lines = styled.div`
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 18px 22px 0;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;

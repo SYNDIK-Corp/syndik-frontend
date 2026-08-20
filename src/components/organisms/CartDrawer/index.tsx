@@ -28,12 +28,24 @@ export function CartDrawer() {
     position: lastTierRow ? (tier.min_subtotal / lastTierRow.min_subtotal) * 100 : 0,
   }));
 
+  /* position:fixed com o scrollY salvo, não só overflow:hidden — no Safari
+     iOS, overflow:hidden no body não impede scroll por toque (bug
+     documentado da engine), o body precisa sair do fluxo de verdade. */
   useEffect(() => {
     if (!isOpen) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const scrollY = window.scrollY;
+    const { style } = document.body;
+    const previous = { position: style.position, top: style.top, width: style.width };
+
+    style.position = 'fixed';
+    style.top = `-${scrollY}px`;
+    style.width = '100%';
+
     return () => {
-      document.body.style.overflow = previous;
+      style.position = previous.position;
+      style.top = previous.top;
+      style.width = previous.width;
+      window.scrollTo(0, scrollY);
     };
   }, [isOpen]);
 

@@ -95,7 +95,8 @@
     },
     "cta": {
       "incomplete": "Complete the fields above",
-      "continueToPayment": "Continue to payment • {{total}}"
+      "continueToPayment": "Continue to payment • {{total}}",
+      "processing": "Processing…"
     },
     "errors": {
       "empty_cart": "Your bag is empty.",

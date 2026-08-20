@@ -49,9 +49,11 @@ export function CheckoutForm() {
     setClientSecret(result.clientSecret);
   };
 
-  const ctaLabel = canContinue
-    ? t('checkout.cta.continueToPayment', { total: formatPrice(total, i18n.language) })
-    : t('checkout.cta.incomplete');
+  const ctaLabel = creatingOrder
+    ? t('checkout.cta.processing')
+    : canContinue
+      ? t('checkout.cta.continueToPayment', { total: formatPrice(total, i18n.language) })
+      : t('checkout.cta.incomplete');
 
   /* o carrinho tica a cada segundo (hold timer) e re-renderiza este
    * componente — sem isso, `options={{ clientSecret }}` inline vira um
@@ -126,6 +128,7 @@ export function CheckoutForm() {
         ) : (
           <>
             <S.PayButton type="button" $enabled={canContinue} disabled={!canContinue || creatingOrder} onClick={handleContinueToPayment}>
+              {creatingOrder && <S.Spinner aria-hidden="true" />}
               {ctaLabel}
             </S.PayButton>
             {orderError && <S.PaymentError>{checkoutErrorMessage(t, orderError)}</S.PaymentError>}

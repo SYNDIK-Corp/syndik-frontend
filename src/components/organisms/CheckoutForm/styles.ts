@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -153,6 +153,10 @@ export const TermLink = styled.a`
 export const PayButton = styled.button<{ $enabled: boolean }>`
   margin-top: 18px;
   height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   background: ${({ $enabled, theme }) => ($enabled ? theme.colors.black : '#BFBFBF')};
   color: ${({ theme }) => theme.colors.white};
   border: 0;
@@ -175,6 +179,23 @@ export const PayButton = styled.button<{ $enabled: boolean }>`
         box-shadow: inset 0 0 0 1px ${theme.colors.black};
       }
     `}
+`;
+
+const spin = keyframes`
+  to { transform: rotate(360deg); }
+`;
+
+export const Spinner = styled.span`
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: currentColor;
+  animation: ${spin} 0.7s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 1.4s;
+  }
 `;
 
 export const PayNote = styled.span`

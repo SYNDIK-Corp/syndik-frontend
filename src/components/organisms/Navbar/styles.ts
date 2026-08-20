@@ -11,7 +11,11 @@ export const Container = styled.header<{ $mode: NavbarMode }>`
   z-index: ${({ theme }) => theme.zIndices.navbar};
   height: ${({ theme }) => theme.sizes.navbarHeight};
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  /* minmax(0, 1fr), não só "1fr" — sem o mínimo 0 explícito, cada coluna
+     usa o próprio conteúdo como piso, e como os grupos esquerda/direita
+     quase nunca têm a mesma largura (muda por breakpoint conforme itens
+     somem/aparecem), o logo do meio saía do centro matemático real. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   padding: 0 ${({ theme }) => theme.spacing.xl};
   transition:

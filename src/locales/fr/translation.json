@@ -95,7 +95,8 @@
     },
     "cta": {
       "incomplete": "Complétez les champs ci-dessus",
-      "continueToPayment": "Continuer vers le paiement • {{total}}"
+      "continueToPayment": "Continuer vers le paiement • {{total}}",
+      "processing": "Traitement…"
     },
     "errors": {
       "empty_cart": "Votre panier est vide.",
