@@ -98,8 +98,8 @@
       "continueToPayment": "Continuer vers le paiement • {{total}}"
     },
     "errors": {
-      "unauthenticated": "Connectez-vous avec votre code avant de continuer.",
       "empty_cart": "Votre panier est vide.",
+      "invalid_email": "Saisissez un email valide pour continuer.",
       "invalid_items": "Un article de votre panier n'est plus disponible. Actualisez la page et réessayez.",
       "payment_setup_failed": "Impossible d'ouvrir le paiement pour le moment. Réessayez dans un instant.",
       "unexpected": "Une erreur est survenue. Réessayez.",

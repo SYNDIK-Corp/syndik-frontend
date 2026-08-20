@@ -98,8 +98,8 @@
       "continueToPayment": "Weiter zur Zahlung • {{total}}"
     },
     "errors": {
-      "unauthenticated": "Melde dich mit deiner PIN an, um fortzufahren.",
       "empty_cart": "Dein Warenkorb ist leer.",
+      "invalid_email": "Gib eine gültige E-Mail-Adresse ein, um fortzufahren.",
       "invalid_items": "Ein Artikel in deinem Warenkorb ist nicht mehr verfügbar. Aktualisiere die Seite und versuche es erneut.",
       "payment_setup_failed": "Zahlung konnte gerade nicht geöffnet werden. Versuche es gleich noch einmal.",
       "unexpected": "Etwas ist schiefgelaufen. Versuche es erneut.",

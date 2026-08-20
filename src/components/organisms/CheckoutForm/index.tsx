@@ -30,7 +30,7 @@ export function CheckoutForm() {
 
   const displayEmail = session ? (profile?.email ?? '') : email;
   const emailValid = EMAIL_RE.test(displayEmail);
-  const canContinue = session != null && emailValid && termsAccepted && items.length > 0;
+  const canContinue = emailValid && termsAccepted && items.length > 0;
 
   const handleContinueToPayment = async () => {
     if (!canContinue) return;
@@ -39,6 +39,7 @@ export function CheckoutForm() {
     const result = await createOrder(
       items.map((item) => ({ sku: item.sku, quantity: 1 })),
       appliedCoupon?.code,
+      session ? undefined : displayEmail,
     );
     setCreatingOrder(false);
     if (isCheckoutError(result)) {

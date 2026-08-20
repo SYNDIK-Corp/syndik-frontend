@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { activeLocale, DEFAULT_LOCALE } from '@/lib/locale';
 
 export type CheckoutErrorCode =
-  | 'unauthenticated'
+  | 'invalid_email'
   | 'empty_cart'
   | 'invalid_items'
   | 'payment_setup_failed'
@@ -40,11 +40,15 @@ async function readCheckoutError(error: unknown): Promise<CheckoutError> {
 export async function createOrder(
   items: { sku: string; quantity: number }[],
   couponCode?: string | null,
+  guestEmail?: string,
 ): Promise<CreateOrderResult | CheckoutError> {
   const { data, error } = await supabase.functions.invoke<CreateOrderResult>('checkout-create-order', {
     body: {
       items,
       couponCode: couponCode ?? undefined,
+      // só usado sem sessão — com sessão a function ignora e usa a conta do
+      // JWT. Checkout sem login obrigatório: email válido já é suficiente.
+      email: guestEmail || undefined,
       // Fase 11.6: preserva o idioma no retorno do Stripe (return_url) —
       // inglês é a raiz, sem prefixo, não precisa mandar nada.
       locale: activeLocale === DEFAULT_LOCALE ? undefined : activeLocale,

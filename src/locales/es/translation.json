@@ -98,8 +98,8 @@
       "continueToPayment": "Continuar al pago • {{total}}"
     },
     "errors": {
-      "unauthenticated": "Inicia sesión con tu PIN antes de continuar.",
       "empty_cart": "Tu bolsa está vacía.",
+      "invalid_email": "Escribe un email válido para continuar.",
       "invalid_items": "Algo en tu bolsa ya no está disponible. Actualiza la página e intenta de nuevo.",
       "payment_setup_failed": "No se pudo abrir el pago ahora. Intenta de nuevo en un momento.",
       "unexpected": "Algo salió mal. Intenta de nuevo.",
