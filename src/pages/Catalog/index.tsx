@@ -96,6 +96,7 @@ export function Catalog({ sheet }: CatalogProps) {
                   key={product.id}
                   product={product}
                   dense
+                  shortNameOnMobile
                   metaLayout="row"
                   ratio={ratio}
                   to={`/products/${sheet}/${product.id}`}

@@ -16,6 +16,11 @@ export interface ProductCardProps {
   compact?: boolean;
   /* tipografia e controles reduzidos (grade do catálogo) */
   dense?: boolean;
+  /* troca pro título curto (product.cartName) só em telas ≤720px — opt-in
+     porque o título rico completo quebra em várias linhas em grids
+     estreitos (catálogo mobile 2 colunas); em qualquer outro lugar (rail
+     de relacionados, best sellers) o nome completo é o esperado. */
+  shortNameOnMobile?: boolean;
   to?: string;
   onAddToBag?: (product: Product) => void;
 }
@@ -27,6 +32,7 @@ export function ProductCard({
   metaLayout = 'stack',
   compact = false,
   dense = false,
+  shortNameOnMobile = false,
   to = '/products',
   onAddToBag,
 }: ProductCardProps) {
@@ -34,7 +40,7 @@ export function ProductCard({
   const { addItem } = useCart();
   const tag = product.tag ?? (product.onSale ? t('product.sale') : undefined);
   const sold = product.sold ?? false;
-  const hasShortAlt = Boolean(product.cartName && product.cartName !== product.name);
+  const hasShortAlt = shortNameOnMobile && Boolean(product.cartName && product.cartName !== product.name);
 
   const handleAddToBag = (event: MouseEvent) => {
     event.preventDefault();

@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next';
 import { soundCatalog } from '@/data/catalog';
-import { fetchScreensEntriesBySlugs } from '@/lib/catalogApi';
+import { fetchScreensCatalog, fetchScreensEntriesBySlugs } from '@/lib/catalogApi';
 import { toRichProduct } from '@/lib/richProductDisplay';
 import type { CatalogItem, CatalogSheet } from '@/types/product';
 import type { RelatedProduct } from '@/components/organisms/RelatedProducts';
@@ -40,4 +40,28 @@ export async function buildRelatedProducts(ids: string[], t: TFunction): Promise
       };
     })
     .filter((product): product is RelatedProduct => product !== null);
+}
+
+/** recomendação sem curadoria prévia (ex.: pós-compra) — catálogo real de
+ * 'screens' publicado, excluindo o que já está no pedido, não sold out.
+ * Sem depender de ids fixos: um id "curado à mão" que deixa de existir no
+ * catálogo silenciosamente vira "nada pra mostrar" (já aconteceu — ids de
+ * um mock antigo, de antes do catálogo virar Supabase). */
+export async function buildRealRelatedProducts(
+  excludeSkus: string[],
+  t: TFunction,
+  limit = 4,
+): Promise<RelatedProduct[]> {
+  const catalog = await fetchScreensCatalog();
+  const excluded = new Set(excludeSkus);
+
+  return catalog
+    .filter((item) => !item.sold && !excluded.has(item.sku))
+    .slice(0, limit)
+    .map((item) => ({
+      ...toRichProduct(item, t),
+      tag: t('productDetail.related.sheetTag.screens'),
+      sheet: 'screens' as const,
+      to: `/products/screens/${item.id}`,
+    }));
 }

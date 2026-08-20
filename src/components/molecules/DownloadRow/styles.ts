@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 16px 0;
+  padding: 12px 0;
   display: grid;
-  grid-template-columns: 72px 1fr auto;
-  gap: 16px;
+  grid-template-columns: 56px 1fr auto;
+  gap: 14px;
   align-items: center;
   transition: background 0.3s ease;
 
@@ -14,15 +14,15 @@ export const Container = styled.div`
   }
 
   @media (max-width: 760px) {
-    padding: 11px 0;
-    grid-template-columns: 48px 1fr auto;
+    padding: 9px 0;
+    grid-template-columns: 44px 1fr auto;
     gap: 10px;
   }
 `;
 
 export const Thumb = styled.div`
-  width: 72px;
-  height: 72px;
+  width: 56px;
+  height: 56px;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   display: flex;
@@ -36,8 +36,8 @@ export const Thumb = styled.div`
   letter-spacing: 0.12em;
 
   @media (max-width: 760px) {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     font-size: 7px;
     padding: 4px;
   }

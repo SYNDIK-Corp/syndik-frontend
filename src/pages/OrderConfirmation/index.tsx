@@ -11,13 +11,10 @@ import { RelatedProducts, type RelatedProduct } from '@/components/organisms/Rel
 import { fetchOrderById, fetchOrderByPublicToken, fetchOrderPaymentMethod, type MyOrder } from '@/lib/ordersApi';
 import { fetchMyEntitlements } from '@/lib/entitlementsApi';
 import { fetchFileBreakdown, fetchProductCoverImages } from '@/lib/catalogApi';
-import { buildRelatedProducts } from '@/lib/relatedProducts';
+import { buildRealRelatedProducts } from '@/lib/relatedProducts';
 import { formatDate } from '@/lib/format';
 import { useCart } from '@/hooks/useCart';
 import * as S from './styles';
-
-/* mesma seleção "combina com isso" da tela de produto, curada à mão */
-const RELATED_IDS = ['static', 'snd-003', 'smoke', 'grid-44'];
 
 const POLL_INTERVAL_MS = 2000;
 const POLL_MAX_ATTEMPTS = 10;
@@ -200,14 +197,16 @@ export function OrderConfirmation() {
   }, [status === 'ready']);
 
   useEffect(() => {
+    if (!order) return;
     let cancelled = false;
-    buildRelatedProducts(RELATED_IDS, t).then((result) => {
+    const purchasedSkus = order.items.map((item) => item.sku_snapshot);
+    buildRealRelatedProducts(purchasedSkus, t).then((result) => {
       if (!cancelled) setRelated(result);
     });
     return () => {
       cancelled = true;
     };
-  }, [t]);
+  }, [order, t]);
 
   if (status === 'loading') {
     return (
@@ -279,7 +278,7 @@ export function OrderConfirmation() {
         title={t('orderConfirmation.related.title')}
         viewAllLabel={t('orderConfirmation.related.viewAll')}
         showArrows={false}
-        cardsPerView={3.5}
+        cardsPerView={5}
       />
     </OrderConfirmationLayout>
   );

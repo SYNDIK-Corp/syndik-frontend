@@ -25,10 +25,10 @@ export const StatusBody = styled.p`
 export const Grid = styled.section`
   max-width: 1500px;
   margin: 0 auto;
-  padding: clamp(40px, 8vh, 64px) clamp(20px, 4vw, 40px) 0;
+  padding: clamp(24px, 5vh, 40px) clamp(20px, 4vw, 40px) 0;
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
-  gap: clamp(32px, 6vw, 72px);
+  gap: clamp(24px, 4vw, 48px);
   align-items: start;
 
   @media (max-width: 900px) {
