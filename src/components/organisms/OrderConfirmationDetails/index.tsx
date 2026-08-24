@@ -37,7 +37,7 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
   const [downloadingSku, setDownloadingSku] = useState<string | null>(null);
   const [downloadingAll, setDownloadingAll] = useState(false);
   const [pin, setPin] = useState('');
-  const [pinStatus, setPinStatus] = useState<'idle' | 'saving' | 'saved' | 'invalid' | 'error'>('idle');
+  const [pinStatus, setPinStatus] = useState<'idle' | 'saving' | 'saved' | 'invalid' | 'already_set' | 'error'>('idle');
 
   const totalFiles = files.reduce((sum, file) => sum + file.fileCount, 0);
   const installSteps = t('orderConfirmation.install.steps', { returnObjects: true }) as {
@@ -74,7 +74,11 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
     }
     setPinStatus('saving');
     const error = await submitPin(digits, guestProof);
-    setPinStatus(error ? (error.code === 'invalid_input' ? 'invalid' : 'error') : 'saved');
+    if (!error) {
+      setPinStatus('saved');
+      return;
+    }
+    setPinStatus(error.code === 'invalid_input' ? 'invalid' : error.code === 'already_set' ? 'already_set' : 'error');
   };
 
   return (
@@ -145,6 +149,14 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
           {pinStatus === 'error' && (
             <S.PinFeedback $tone="error">{t('orderConfirmation.setPin.errorGeneric')}</S.PinFeedback>
           )}
+          {pinStatus === 'already_set' && (
+            <S.PinFeedback $tone="error">
+              <Trans
+                i18nKey="orderConfirmation.setPin.errorAlreadySet"
+                components={[<S.PinLoginLink key="0" href="/login" />]}
+              />
+            </S.PinFeedback>
+          )}
         </S.PinText>
         <S.PinRow>
           <S.PinInput
@@ -152,12 +164,17 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
             inputMode="numeric"
             placeholder={t('orderConfirmation.setPin.placeholder')}
             value={pin}
+            disabled={pinStatus === 'saved' || pinStatus === 'already_set'}
             onChange={(event) => {
               setPin(event.target.value);
               setPinStatus('idle');
             }}
           />
-          <S.PinSaveButton type="button" onClick={handleSavePin} disabled={pinStatus === 'saving'}>
+          <S.PinSaveButton
+            type="button"
+            onClick={handleSavePin}
+            disabled={pinStatus === 'saving' || pinStatus === 'saved' || pinStatus === 'already_set'}
+          >
             {pinStatus === 'saving'
               ? t('orderConfirmation.setPin.saving')
               : pinStatus === 'saved'

@@ -241,7 +241,8 @@
       "successTitle": "PIN gespeichert",
       "successBody": "Du kannst dich damit jederzeit anmelden — ohne Code.",
       "errorInvalid": "Gib genau 4 Ziffern ein.",
-      "errorGeneric": "PIN konnte nicht gespeichert werden. Versuche es gleich noch einmal."
+      "errorGeneric": "PIN konnte nicht gespeichert werden. Versuche es gleich noch einmal.",
+      "errorAlreadySet": "Für dieses Konto ist bereits eine PIN festgelegt. <0>Melde dich an</0>, um sie zu ändern."
     },
     "install": {
       "title": "So installierst du sie",

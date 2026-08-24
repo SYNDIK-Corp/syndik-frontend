@@ -241,7 +241,8 @@
       "successTitle": "Code PIN enregistré",
       "successBody": "Vous pouvez l'utiliser pour vous connecter à tout moment — sans code.",
       "errorInvalid": "Saisissez exactement 4 chiffres.",
-      "errorGeneric": "Impossible d'enregistrer votre code PIN. Réessayez dans un instant."
+      "errorGeneric": "Impossible d'enregistrer votre code PIN. Réessayez dans un instant.",
+      "errorAlreadySet": "Un code PIN est déjà défini pour ce compte. <0>Connectez-vous</0> pour le modifier."
     },
     "install": {
       "title": "Comment installer",

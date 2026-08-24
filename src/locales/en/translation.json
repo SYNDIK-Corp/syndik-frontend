@@ -241,7 +241,8 @@
       "successTitle": "PIN set",
       "successBody": "You can use it to sign in anytime — no code needed.",
       "errorInvalid": "Enter exactly 4 digits.",
-      "errorGeneric": "Could not set your PIN. Try again in a moment."
+      "errorGeneric": "Could not set your PIN. Try again in a moment.",
+      "errorAlreadySet": "A PIN is already set for this account. <0>Sign in</0> to change it."
     },
     "install": {
       "title": "How to install",

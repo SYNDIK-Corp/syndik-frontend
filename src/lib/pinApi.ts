@@ -1,7 +1,7 @@
 import { FunctionsHttpError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 
-export type SetPinErrorCode = 'invalid_input' | 'unauthenticated' | 'update_failed' | 'unexpected';
+export type SetPinErrorCode = 'invalid_input' | 'unauthenticated' | 'already_set' | 'rate_limited' | 'update_failed' | 'unexpected';
 
 export interface SetPinError {
   code: SetPinErrorCode;

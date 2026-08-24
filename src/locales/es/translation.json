@@ -241,7 +241,8 @@
       "successTitle": "PIN guardado",
       "successBody": "Podés usarlo para entrar cuando quieras — sin necesidad de código.",
       "errorInvalid": "Ingresá exactamente 4 dígitos.",
-      "errorGeneric": "No se pudo guardar tu PIN. Intentá de nuevo en un momento."
+      "errorGeneric": "No se pudo guardar tu PIN. Intentá de nuevo en un momento.",
+      "errorAlreadySet": "Ya hay un PIN definido para esta cuenta. <0>Inicia sesión</0> para cambiarlo."
     },
     "install": {
       "title": "Cómo instalar",

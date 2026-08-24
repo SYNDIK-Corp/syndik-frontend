@@ -150,6 +150,12 @@ export const PinFeedback = styled.span<{ $tone: 'success' | 'error' }>`
   color: ${({ theme, $tone }) => ($tone === 'success' ? theme.colors.success : '#FF8A80')};
 `;
 
+export const PinLoginLink = styled.a`
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+`;
+
 export const PinRow = styled.div`
   display: flex;
   gap: 8px;
@@ -170,6 +176,11 @@ export const PinInput = styled.input`
 
   &::placeholder {
     color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
   }
 `;
 
