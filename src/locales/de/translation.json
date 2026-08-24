@@ -173,10 +173,16 @@
         "orders": "Bestellungen",
         "details": "Details"
       },
+      "stats": {
+        "totalSpent": "Insgesamt ausgegeben",
+        "customerSince": "Kunde seit"
+      },
       "signOut": "Abmelden",
       "memberRate": {
         "label": "Mitgliedspreis",
-        "body": "Jeder Drop ist für dich 15% günstiger. Wird an der Kasse automatisch angewendet.",
+        "progress": "Deine beste Bestellung hat {{percent}}% Rabatt freigeschaltet — gib {{amount}} mehr in einer Bestellung aus, um {{nextPercent}}% freizuschalten.",
+        "topTier": "Du hast unsere höchste Stufe freigeschaltet — {{percent}}% Rabatt, automatisch angewendet.",
+        "none": "Gib {{amount}} in einer Bestellung aus, um automatisch {{percent}}% Rabatt freizuschalten.",
         "cta": "Archiv ansehen"
       }
     },

@@ -8,6 +8,7 @@ import { AccountOrders } from '@/components/organisms/AccountOrders';
 import { AccountDetails } from '@/components/organisms/AccountDetails';
 import { fetchMyEntitlements } from '@/lib/entitlementsApi';
 import { fetchMyOrders } from '@/lib/ordersApi';
+import { fetchDiscountTiers, type DiscountTier } from '@/lib/couponsApi';
 import { useAuth } from '@/hooks/useAuth';
 import * as S from './styles';
 
@@ -16,11 +17,25 @@ export function Account() {
   const [activeTab, setActiveTab] = useState<AccountTab>('downloads');
   const [downloadsCount, setDownloadsCount] = useState(0);
   const [ordersCount, setOrdersCount] = useState(0);
+  const [totalSpent, setTotalSpent] = useState(0);
+  const [customerSince, setCustomerSince] = useState<string | null>(null);
+  const [bestOrderSubtotal, setBestOrderSubtotal] = useState(0);
+  const [discountTiers, setDiscountTiers] = useState<DiscountTier[]>([]);
 
   useEffect(() => {
     if (!session) return;
     fetchMyEntitlements().then((entitlements) => setDownloadsCount(entitlements.length));
-    fetchMyOrders().then((orders) => setOrdersCount(orders.length));
+    fetchDiscountTiers().then(setDiscountTiers);
+    fetchMyOrders().then((orders) => {
+      setOrdersCount(orders.length);
+      const paidOrders = orders.filter((order) => order.status === 'paid');
+      setTotalSpent(paidOrders.reduce((sum, order) => sum + order.total, 0));
+      setBestOrderSubtotal(paidOrders.reduce((max, order) => Math.max(max, order.subtotal), 0));
+      const earliest = paidOrders
+        .map((order) => order.paidAt ?? order.createdAt)
+        .sort()[0];
+      setCustomerSince(earliest ?? null);
+    });
   }, [session]);
 
   const handleSignOut = () => {
@@ -53,6 +68,10 @@ export function Account() {
           onSignOut={handleSignOut}
           downloadsCount={downloadsCount}
           ordersCount={ordersCount}
+          totalSpent={totalSpent}
+          customerSince={customerSince}
+          bestOrderSubtotal={bestOrderSubtotal}
+          discountTiers={discountTiers}
         />
 
         {activeTab === 'downloads' && <AccountDownloads />}

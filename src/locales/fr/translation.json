@@ -173,10 +173,16 @@
         "orders": "Commandes",
         "details": "Détails"
       },
+      "stats": {
+        "totalSpent": "Total dépensé",
+        "customerSince": "Client depuis"
+      },
       "signOut": "Se déconnecter",
       "memberRate": {
         "label": "Tarif membre",
-        "body": "Chaque drop est à -15% pour vous. Appliqué automatiquement au paiement.",
+        "progress": "Votre meilleure commande a débloqué {{percent}} % de réduction — dépensez {{amount}} de plus en une commande pour débloquer {{nextPercent}} %.",
+        "topTier": "Vous avez débloqué notre palier maximum — {{percent}} % de réduction, appliqué automatiquement.",
+        "none": "Dépensez {{amount}} en une commande pour débloquer {{percent}} % de réduction automatiquement.",
         "cta": "Voir les archives"
       }
     },

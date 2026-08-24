@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/atoms/Spinner';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
 import { fetchMyEntitlements, type Entitlement } from '@/lib/entitlementsApi';
-import { fetchFileBreakdown } from '@/lib/catalogApi';
+import { fetchFileBreakdown, fetchProductCoverImages } from '@/lib/catalogApi';
 import { downloadOrShare } from '@/lib/downloadApi';
 import { formatDate } from '@/lib/format';
 import * as S from './styles';
@@ -11,6 +11,7 @@ import * as S from './styles';
 interface DownloadEntry extends Entitlement {
   mobileCount: number;
   desktopCount: number;
+  coverImage?: string;
 }
 
 export function AccountDownloads() {
@@ -25,12 +26,13 @@ export function AccountDownloads() {
     let cancelled = false;
     fetchMyEntitlements()
       .then(async (entitlements) => {
+        const covers = await fetchProductCoverImages(entitlements.map((entitlement) => entitlement.product_id));
         const withBreakdown = await Promise.all(
           entitlements.map(async (entitlement): Promise<DownloadEntry> => {
             const breakdown = await fetchFileBreakdown(entitlement.product_id);
             const mobileCount = breakdown.find((row) => row.device_variant === 'mobile')?.file_count ?? 0;
             const desktopCount = breakdown.find((row) => row.device_variant === 'desktop')?.file_count ?? 0;
-            return { ...entitlement, mobileCount, desktopCount };
+            return { ...entitlement, mobileCount, desktopCount, coverImage: covers.get(entitlement.product_id) };
           }),
         );
         if (!cancelled) setEntries(withBreakdown);
@@ -82,6 +84,7 @@ export function AccountDownloads() {
                 downloaded={downloaded.has(entry.entitlement_id)}
                 downloading={downloadingId === entry.entitlement_id}
                 onDownload={() => download(entry)}
+                coverImage={entry.coverImage}
               />
             ))}
           </S.List>

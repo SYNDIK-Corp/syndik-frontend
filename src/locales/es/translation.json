@@ -173,10 +173,16 @@
         "orders": "Pedidos",
         "details": "Datos"
       },
+      "stats": {
+        "totalSpent": "Total gastado",
+        "customerSince": "Cliente desde"
+      },
       "signOut": "Cerrar sesión",
       "memberRate": {
         "label": "Tarifa de miembro",
-        "body": "Cada lanzamiento tiene 15% off para ti. Se aplica automáticamente en el pago.",
+        "progress": "Tu mejor pedido desbloqueó {{percent}}% de descuento — gasta {{amount}} más en un pedido para desbloquear {{nextPercent}}%.",
+        "topTier": "Desbloqueaste nuestro nivel máximo — {{percent}}% de descuento, aplicado automáticamente.",
+        "none": "Gasta {{amount}} en un pedido para desbloquear {{percent}}% de descuento automáticamente.",
         "cta": "Ver el archivo"
       }
     },

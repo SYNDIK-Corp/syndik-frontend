@@ -15,25 +15,50 @@ export const MemberTag = styled.div`
 `;
 
 export const Email = styled.div`
-  margin-top: 10px;
-  font-size: 17px;
+  margin-top: 8px;
+  font-size: 16px;
   font-weight: 500;
   word-break: break-word;
 `;
 
+export const StatsRow = styled.div`
+  margin-top: 18px;
+  display: flex;
+  gap: 20px;
+`;
+
+export const Stat = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+`;
+
+export const StatValue = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+export const StatLabel = styled.span`
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.textMuted};
+`;
+
 export const Nav = styled.div`
-  margin-top: 26px;
+  margin-top: 18px;
   border-top: 1px solid ${({ theme }) => theme.colors.black};
 
   @media (max-width: 760px) {
-    margin-top: 16px;
+    margin-top: 14px;
   }
 `;
 
 export const NavLink = styled.button<{ $active: boolean }>`
   width: 100%;
   cursor: pointer;
-  padding: 12px 0;
+  padding: 10px 0;
 
   @media (max-width: 760px) {
     padding: 9px 0;
@@ -66,10 +91,10 @@ export const NavLinkCount = styled.span`
 `;
 
 export const SignOutButton = styled.button`
-  margin-top: 22px;
+  margin-top: 16px;
 
   @media (max-width: 760px) {
-    margin-top: 14px;
+    margin-top: 12px;
   }
   background: none;
   border: 0;
@@ -88,15 +113,44 @@ export const SignOutButton = styled.button`
 `;
 
 export const MemberRateBox = styled.div`
-  margin-top: 34px;
+  margin-top: 22px;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
-  padding: 18px;
+  padding: 16px;
 
   @media (max-width: 760px) {
-    margin-top: 20px;
+    margin-top: 16px;
     padding: 14px;
   }
+`;
+
+export const MemberRateTrack = styled.div`
+  margin-top: 14px;
+  position: relative;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+`;
+
+export const MemberRateFill = styled.div<{ $percent: number }>`
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: ${({ $percent }) => $percent}%;
+  background: ${({ theme }) => theme.colors.success};
+  transition: width 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+`;
+
+export const MemberRateTick = styled.span<{ $position: number; $hit: boolean }>`
+  position: absolute;
+  left: ${({ $position }) => $position}%;
+  top: -3px;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: ${({ theme, $hit }) => ($hit ? theme.colors.success : 'rgba(255, 255, 255, 0.5)')};
+  transition: background 0.4s ease;
 `;
 
 export const MemberRateLabel = styled.span`

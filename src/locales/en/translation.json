@@ -173,10 +173,16 @@
         "orders": "Orders",
         "details": "Details"
       },
+      "stats": {
+        "totalSpent": "Total spent",
+        "customerSince": "Customer since"
+      },
       "signOut": "Sign out",
       "memberRate": {
         "label": "Member rate",
-        "body": "Every drop is 15% off for you. Applied automatically at checkout.",
+        "progress": "Your best order unlocked {{percent}}% off — spend {{amount}} more on one order to unlock {{nextPercent}}%.",
+        "topTier": "You've unlocked our top tier — {{percent}}% off, applied automatically.",
+        "none": "Spend {{amount}} on one order to unlock {{percent}}% off automatically.",
         "cta": "See the vault"
       }
     },
