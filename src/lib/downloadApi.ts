@@ -127,7 +127,8 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
 
   const results = await Promise.all(productIds.map((productId) => requestDownload(productId, guestProof)));
   if (results.some(isDownloadError)) {
-    debugAlert('requestDownload falhou (signed URLs)');
+    const codes = results.map((r) => (isDownloadError(r) ? r.code : 'ok')).join(', ');
+    debugAlert(`requestDownload falhou (signed URLs) — códigos: ${codes}`);
     return false;
   }
   const downloadFiles = (results as RequestDownloadResult[]).flatMap((result) => result.files);
