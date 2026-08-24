@@ -680,5 +680,21 @@
   },
   "security": {
     "contentProtected": "This content is protected."
+  },
+  "downloadMenu": {
+    "trigger": "Download",
+    "preparing": "Preparing…",
+    "all": "Download all (Mobile + Desktop)",
+    "mobileOnly": "Download all (Mobile only)",
+    "desktopOnly": "Download all (Desktop only)",
+    "pickImage": "Choose one image…"
+  },
+  "imagePicker": {
+    "title": "Choose an image — {{name}}",
+    "close": "Close",
+    "loading": "Loading…",
+    "empty": "No images available.",
+    "mobile": "Mobile",
+    "desktop": "Desktop"
   }
 }

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Eyebrow } from '@/components/atoms/Eyebrow';
-import { Icon } from '@/components/atoms/Icon';
-import { Spinner } from '@/components/atoms/Spinner';
+import { DownloadMenu } from '@/components/molecules/DownloadMenu';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
+import { ImagePickerModal } from '@/components/organisms/ImagePickerModal';
 import { SpecList } from '@/components/molecules/SpecList';
-import { downloadOrShare, type GuestDownloadProof } from '@/lib/downloadApi';
+import { downloadOrShare, type DeviceVariant, type GuestDownloadProof } from '@/lib/downloadApi';
 import { setPin as submitPin } from '@/lib/pinApi';
 import { formatDateTime } from '@/lib/format';
 import * as S from './styles';
@@ -33,9 +33,9 @@ export interface OrderConfirmationDetailsProps {
 export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, guestProof }: OrderConfirmationDetailsProps) {
   const { t, i18n } = useTranslation();
   const [downloaded, setDownloaded] = useState<Set<string>>(new Set());
-  const [allDownloaded, setAllDownloaded] = useState(false);
   const [downloadingSku, setDownloadingSku] = useState<string | null>(null);
   const [downloadingAll, setDownloadingAll] = useState(false);
+  const [pickerProduct, setPickerProduct] = useState<OrderFile | null>(null);
   const [pin, setPin] = useState('');
   const [pinStatus, setPinStatus] = useState<'idle' | 'saving' | 'saved' | 'invalid' | 'already_set' | 'error'>('idle');
 
@@ -45,25 +45,21 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
     description: string;
   }[];
 
-  const downloadFile = async (file: OrderFile) => {
+  const downloadFile = async (file: OrderFile, deviceVariant?: DeviceVariant) => {
     setDownloadingSku(file.sku);
-    const ok = await downloadOrShare([file.productId], guestProof, orderId);
+    const ok = await downloadOrShare([file.productId], { guestProof, orderId, deviceVariant });
     setDownloadingSku(null);
     if (ok) setDownloaded((prev) => new Set(prev).add(file.sku));
   };
 
-  const downloadAll = async () => {
+  const downloadAll = async (deviceVariant?: DeviceVariant) => {
     setDownloadingAll(true);
     const ok = await downloadOrShare(
       files.map((file) => file.productId),
-      guestProof,
-      orderId,
+      { guestProof, orderId, deviceVariant },
     );
     setDownloadingAll(false);
-    if (ok) {
-      setDownloaded(new Set(files.map((file) => file.sku)));
-      setAllDownloaded(true);
-    }
+    if (ok) setDownloaded(new Set(files.map((file) => file.sku)));
   };
 
   const handleSavePin = async () => {
@@ -94,16 +90,7 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
       </S.Description>
 
       <S.DownloadActions>
-        <S.DownloadAllButton type="button" onClick={downloadAll} disabled={downloadingAll}>
-          {downloadingAll ? <Spinner /> : <Icon name="download" size={16} />}
-          <span>
-            {downloadingAll
-              ? t('orderConfirmation.preparingDownload')
-              : allDownloaded
-                ? t('orderConfirmation.downloadedLabel')
-                : t('orderConfirmation.downloadEverything')}
-          </span>
-        </S.DownloadAllButton>
+        <DownloadMenu primary downloading={downloadingAll} onDownloadAll={downloadAll} />
         <S.ZipNote>{t('orderConfirmation.filesCount', { count: totalFiles })}</S.ZipNote>
       </S.DownloadActions>
 
@@ -125,9 +112,9 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
                   ? t('orderConfirmation.files.downloaded')
                   : t('orderConfirmation.files.ready')
               }
-              downloaded={downloaded.has(file.sku)}
               downloading={downloadingSku === file.sku}
-              onDownload={() => downloadFile(file)}
+              onDownloadAll={(deviceVariant) => downloadFile(file, deviceVariant)}
+              onPickImage={() => setPickerProduct(file)}
               coverImage={file.coverImage}
             />
           ))}
@@ -188,6 +175,15 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
         <S.InstallLabel>{t('orderConfirmation.install.title')}</S.InstallLabel>
         <SpecList items={installSteps} />
       </S.InstallSection>
+
+      {pickerProduct && (
+        <ImagePickerModal
+          productId={pickerProduct.productId}
+          productName={pickerProduct.name}
+          guestProof={guestProof}
+          onClose={() => setPickerProduct(null)}
+        />
+      )}
     </S.Container>
   );
 }

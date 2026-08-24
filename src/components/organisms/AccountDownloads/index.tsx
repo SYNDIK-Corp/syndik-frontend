@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Spinner } from '@/components/atoms/Spinner';
+import { DownloadMenu } from '@/components/molecules/DownloadMenu';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
+import { ImagePickerModal } from '@/components/organisms/ImagePickerModal';
 import { fetchMyEntitlements, type Entitlement } from '@/lib/entitlementsApi';
 import { fetchFileBreakdown, fetchProductCoverImages } from '@/lib/catalogApi';
-import { downloadOrShare } from '@/lib/downloadApi';
+import { downloadOrShare, type DeviceVariant } from '@/lib/downloadApi';
 import { formatDate } from '@/lib/format';
 import * as S from './styles';
 
@@ -18,9 +19,9 @@ export function AccountDownloads() {
   const { t, i18n } = useTranslation();
   const [entries, setEntries] = useState<DownloadEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [downloaded, setDownloaded] = useState<Set<number>>(new Set());
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
   const [downloadingAll, setDownloadingAll] = useState(false);
+  const [pickerEntry, setPickerEntry] = useState<DownloadEntry | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -47,18 +48,19 @@ export function AccountDownloads() {
 
   const totalFiles = entries.reduce((sum, entry) => sum + entry.mobileCount + entry.desktopCount, 0);
 
-  const download = async (entry: DownloadEntry) => {
+  const download = async (entry: DownloadEntry, deviceVariant?: DeviceVariant) => {
     setDownloadingId(entry.entitlement_id);
-    const ok = await downloadOrShare([entry.product_id]);
+    await downloadOrShare([entry.product_id], { deviceVariant });
     setDownloadingId(null);
-    if (ok) setDownloaded((prev) => new Set(prev).add(entry.entitlement_id));
   };
 
-  const downloadAll = async () => {
+  const downloadAll = async (deviceVariant?: DeviceVariant) => {
     setDownloadingAll(true);
-    const ok = await downloadOrShare(entries.map((entry) => entry.product_id));
+    await downloadOrShare(
+      entries.map((entry) => entry.product_id),
+      { deviceVariant },
+    );
     setDownloadingAll(false);
-    if (ok) setDownloaded(new Set(entries.map((entry) => entry.entitlement_id)));
   };
 
   return (
@@ -81,22 +83,27 @@ export function AccountDownloads() {
                 kind={t('account.downloads.kind')}
                 spec={t('account.downloads.breakdown', { mobile: entry.mobileCount, desktop: entry.desktopCount })}
                 meta={formatDate(entry.granted_at, i18n.language)}
-                downloaded={downloaded.has(entry.entitlement_id)}
                 downloading={downloadingId === entry.entitlement_id}
-                onDownload={() => download(entry)}
+                onDownloadAll={(deviceVariant) => download(entry, deviceVariant)}
+                onPickImage={() => setPickerEntry(entry)}
                 coverImage={entry.coverImage}
               />
             ))}
           </S.List>
 
           <S.Footer>
-            <S.DownloadAllButton type="button" onClick={downloadAll} disabled={downloadingAll}>
-              {downloadingAll && <Spinner size={11} />}
-              {downloadingAll ? t('account.downloads.preparing') : t('account.downloads.downloadAll')}
-            </S.DownloadAllButton>
+            <DownloadMenu primary downloading={downloadingAll} onDownloadAll={downloadAll} />
             <S.ZipInfo>{t('account.downloads.filesCount', { count: totalFiles })}</S.ZipInfo>
           </S.Footer>
         </>
+      )}
+
+      {pickerEntry && (
+        <ImagePickerModal
+          productId={pickerEntry.product_id}
+          productName={pickerEntry.name}
+          onClose={() => setPickerEntry(null)}
+        />
       )}
     </div>
   );

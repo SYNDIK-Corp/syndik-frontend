@@ -93,32 +93,3 @@ export const Meta = styled.span`
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
-export const DownloadButton = styled.button`
-  height: 38px;
-  padding: 0 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.black};
-  cursor: pointer;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.white};
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: default;
-    pointer-events: none;
-  }
-`;

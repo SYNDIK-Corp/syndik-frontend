@@ -43,37 +43,6 @@ export const DownloadActions = styled.div`
   flex-wrap: wrap;
 `;
 
-export const DownloadAllButton = styled.button`
-  height: 46px;
-  padding: 0 22px;
-  background: ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.white};
-  border: 0;
-  cursor: pointer;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    box-shadow 0.3s ease;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.black};
-    box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.black};
-  }
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: default;
-    pointer-events: none;
-  }
-`;
 
 export const ZipNote = styled.span`
   font-size: 10px;

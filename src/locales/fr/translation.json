@@ -680,5 +680,21 @@
   },
   "security": {
     "contentProtected": "Ce contenu est protégé."
+  },
+  "downloadMenu": {
+    "trigger": "Télécharger",
+    "preparing": "Préparation…",
+    "all": "Tout télécharger (Mobile + Bureau)",
+    "mobileOnly": "Tout télécharger (Mobile seul)",
+    "desktopOnly": "Tout télécharger (Bureau seul)",
+    "pickImage": "Choisir une image…"
+  },
+  "imagePicker": {
+    "title": "Choisissez une image — {{name}}",
+    "close": "Fermer",
+    "loading": "Chargement…",
+    "empty": "Aucune image disponible.",
+    "mobile": "Mobile",
+    "desktop": "Bureau"
   }
 }
