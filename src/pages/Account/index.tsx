@@ -43,7 +43,15 @@ export function Account() {
     setActiveTab('downloads');
   };
 
-  if (loading) {
+  // loading = só a sessão inicial (localStorage) ainda restaurando. Depois
+  // de um login novo, session já vem rápido via onAuthStateChange, mas
+  // profile é buscado à parte (efeito separado no AuthContext) — nesse
+  // intervalo session existe e profile ainda é null. Tratar isso como "não
+  // logado" (e redirecionar) cria um ping-pong com o guard de sessão do
+  // /login (que redireciona de volta pra cá) — tela branca no meio do
+  // login. session ausente = não logado de verdade, manda pro /login;
+  // session presente sem profile ainda = só esperar mais um instante.
+  if (loading || (session && !profile)) {
     return (
       <MainLayout>
         <PageLoader />

@@ -4,6 +4,16 @@ import { Link } from 'react-router-dom';
 export const Container = styled.aside`
   position: sticky;
   top: calc(${({ theme }) => theme.sizes.navbarHeight} + 24px);
+
+  /* < 760px o Dashboard vira 1 coluna só (sidebar empilhada ACIMA do
+     conteúdo, não mais ao lado) — sticky nesse layout faz a sidebar
+     flutuar por cima da lista rolando por baixo em vez de rolar junto.
+     Sticky só faz sentido quando sidebar e conteúdo são colunas
+     lado a lado. */
+  @media (max-width: 760px) {
+    position: static;
+    top: auto;
+  }
 `;
 
 export const MemberTag = styled.div`
