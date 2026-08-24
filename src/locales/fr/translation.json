@@ -184,6 +184,7 @@
       "title": "Vos téléchargements",
       "neverExpire": "Les liens n'expirent jamais",
       "download": "Télécharger",
+      "preparing": "Préparation…",
       "downloadAgain": "Encore",
       "downloadAll": "Tout télécharger",
       "kind": "Pack de fonds d'écran",
@@ -222,6 +223,7 @@
     "title": "C'est à vous.\nAllez le chercher.",
     "description": "Les fichiers sont disponibles sur cette page et dans votre compte. Un reçu avec les mêmes liens arrive à <0>{{email}}</0>.",
     "downloadEverything": "Tout télécharger",
+    "preparingDownload": "Préparation du téléchargement…",
     "downloadedLabel": "Téléchargé — le récupérer à nouveau",
     "files": {
       "title": "Vos fichiers",

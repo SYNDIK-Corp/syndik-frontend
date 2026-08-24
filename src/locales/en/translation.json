@@ -184,6 +184,7 @@
       "title": "Your downloads",
       "neverExpire": "Links never expire",
       "download": "Download",
+      "preparing": "Preparing…",
       "downloadAgain": "Again",
       "downloadAll": "Download everything",
       "kind": "Wallpaper pack",
@@ -222,6 +223,7 @@
     "title": "It's yours.\nGo get it.",
     "description": "Files are live on this page and in your account. A receipt with the same links is on its way to <0>{{email}}</0>.",
     "downloadEverything": "Download everything",
+    "preparingDownload": "Preparing your download…",
     "downloadedLabel": "Downloaded — get it again",
     "files": {
       "title": "Your files",

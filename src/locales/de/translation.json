@@ -184,6 +184,7 @@
       "title": "Deine Downloads",
       "neverExpire": "Links laufen nie ab",
       "download": "Herunterladen",
+      "preparing": "Wird vorbereitet…",
       "downloadAgain": "Erneut",
       "downloadAll": "Alles herunterladen",
       "kind": "Wallpaper-Paket",
@@ -222,6 +223,7 @@
     "title": "Es gehört dir.\nHol es dir.",
     "description": "Die Dateien sind auf dieser Seite und in deinem Konto verfügbar. Ein Beleg mit denselben Links ist unterwegs zu <0>{{email}}</0>.",
     "downloadEverything": "Alles herunterladen",
+    "preparingDownload": "Dein Download wird vorbereitet…",
     "downloadedLabel": "Heruntergeladen — erneut abrufen",
     "files": {
       "title": "Deine Dateien",

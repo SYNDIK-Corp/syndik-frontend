@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Spinner } from '@/components/atoms/Spinner';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
 import { fetchMyEntitlements, type Entitlement } from '@/lib/entitlementsApi';
 import { fetchFileBreakdown } from '@/lib/catalogApi';
@@ -17,6 +18,8 @@ export function AccountDownloads() {
   const [entries, setEntries] = useState<DownloadEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [downloaded, setDownloaded] = useState<Set<number>>(new Set());
+  const [downloadingId, setDownloadingId] = useState<number | null>(null);
+  const [downloadingAll, setDownloadingAll] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,12 +46,16 @@ export function AccountDownloads() {
   const totalFiles = entries.reduce((sum, entry) => sum + entry.mobileCount + entry.desktopCount, 0);
 
   const download = async (entry: DownloadEntry) => {
+    setDownloadingId(entry.entitlement_id);
     const ok = await downloadOrShare([entry.product_id]);
+    setDownloadingId(null);
     if (ok) setDownloaded((prev) => new Set(prev).add(entry.entitlement_id));
   };
 
   const downloadAll = async () => {
+    setDownloadingAll(true);
     const ok = await downloadOrShare(entries.map((entry) => entry.product_id));
+    setDownloadingAll(false);
     if (ok) setDownloaded(new Set(entries.map((entry) => entry.entitlement_id)));
   };
 
@@ -73,14 +80,16 @@ export function AccountDownloads() {
                 spec={t('account.downloads.breakdown', { mobile: entry.mobileCount, desktop: entry.desktopCount })}
                 meta={formatDate(entry.granted_at, i18n.language)}
                 downloaded={downloaded.has(entry.entitlement_id)}
+                downloading={downloadingId === entry.entitlement_id}
                 onDownload={() => download(entry)}
               />
             ))}
           </S.List>
 
           <S.Footer>
-            <S.DownloadAllButton type="button" onClick={downloadAll}>
-              {t('account.downloads.downloadAll')}
+            <S.DownloadAllButton type="button" onClick={downloadAll} disabled={downloadingAll}>
+              {downloadingAll && <Spinner size={11} />}
+              {downloadingAll ? t('account.downloads.preparing') : t('account.downloads.downloadAll')}
             </S.DownloadAllButton>
             <S.ZipInfo>{t('account.downloads.filesCount', { count: totalFiles })}</S.ZipInfo>
           </S.Footer>

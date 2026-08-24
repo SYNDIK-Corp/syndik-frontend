@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
+import { Spinner } from '@/components/atoms/Spinner';
 import { TextField } from '@/components/atoms/TextField';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
@@ -129,7 +130,7 @@ export function CheckoutForm() {
         ) : (
           <>
             <S.PayButton type="button" $enabled={canContinue} disabled={!canContinue || creatingOrder} onClick={handleContinueToPayment}>
-              {creatingOrder && <S.Spinner aria-hidden="true" />}
+              {creatingOrder && <Spinner />}
               {ctaLabel}
             </S.PayButton>
             {orderError && <S.PaymentError>{checkoutErrorMessage(t, orderError)}</S.PaymentError>}

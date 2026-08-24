@@ -256,6 +256,7 @@ export function OrderConfirmation() {
     <OrderConfirmationLayout orderNumber={order.orderNumber}>
       <S.Grid>
         <OrderConfirmationDetails
+          orderId={order.id}
           paidAt={order.paidAt ?? order.createdAt}
           memberEmail={order.email}
           files={files}

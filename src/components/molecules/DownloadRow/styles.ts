@@ -96,6 +96,9 @@ export const Meta = styled.span`
 export const DownloadButton = styled.button`
   height: 38px;
   padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.black};
@@ -111,5 +114,11 @@ export const DownloadButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.white};
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
   }
 `;

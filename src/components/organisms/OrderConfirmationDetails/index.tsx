@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Eyebrow } from '@/components/atoms/Eyebrow';
 import { Icon } from '@/components/atoms/Icon';
+import { Spinner } from '@/components/atoms/Spinner';
 import { DownloadRow } from '@/components/molecules/DownloadRow';
 import { SpecList } from '@/components/molecules/SpecList';
 import { downloadOrShare, type GuestDownloadProof } from '@/lib/downloadApi';
@@ -20,6 +21,7 @@ export interface OrderFile {
 }
 
 export interface OrderConfirmationDetailsProps {
+  orderId: number;
   paidAt: string;
   memberEmail: string;
   files: OrderFile[];
@@ -28,10 +30,12 @@ export interface OrderConfirmationDetailsProps {
   guestProof?: GuestDownloadProof;
 }
 
-export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProof }: OrderConfirmationDetailsProps) {
+export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, guestProof }: OrderConfirmationDetailsProps) {
   const { t, i18n } = useTranslation();
   const [downloaded, setDownloaded] = useState<Set<string>>(new Set());
   const [allDownloaded, setAllDownloaded] = useState(false);
+  const [downloadingSku, setDownloadingSku] = useState<string | null>(null);
+  const [downloadingAll, setDownloadingAll] = useState(false);
   const [pin, setPin] = useState('');
   const [pinStatus, setPinStatus] = useState<'idle' | 'saving' | 'saved' | 'invalid' | 'error'>('idle');
 
@@ -42,15 +46,20 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
   }[];
 
   const downloadFile = async (file: OrderFile) => {
-    const ok = await downloadOrShare([file.productId], guestProof);
+    setDownloadingSku(file.sku);
+    const ok = await downloadOrShare([file.productId], guestProof, orderId);
+    setDownloadingSku(null);
     if (ok) setDownloaded((prev) => new Set(prev).add(file.sku));
   };
 
   const downloadAll = async () => {
+    setDownloadingAll(true);
     const ok = await downloadOrShare(
       files.map((file) => file.productId),
       guestProof,
+      orderId,
     );
+    setDownloadingAll(false);
     if (ok) {
       setDownloaded(new Set(files.map((file) => file.sku)));
       setAllDownloaded(true);
@@ -81,10 +90,14 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
       </S.Description>
 
       <S.DownloadActions>
-        <S.DownloadAllButton type="button" onClick={downloadAll}>
-          <Icon name="download" size={16} />
+        <S.DownloadAllButton type="button" onClick={downloadAll} disabled={downloadingAll}>
+          {downloadingAll ? <Spinner /> : <Icon name="download" size={16} />}
           <span>
-            {allDownloaded ? t('orderConfirmation.downloadedLabel') : t('orderConfirmation.downloadEverything')}
+            {downloadingAll
+              ? t('orderConfirmation.preparingDownload')
+              : allDownloaded
+                ? t('orderConfirmation.downloadedLabel')
+                : t('orderConfirmation.downloadEverything')}
           </span>
         </S.DownloadAllButton>
         <S.ZipNote>{t('orderConfirmation.filesCount', { count: totalFiles })}</S.ZipNote>
@@ -109,6 +122,7 @@ export function OrderConfirmationDetails({ paidAt, memberEmail, files, guestProo
                   : t('orderConfirmation.files.ready')
               }
               downloaded={downloaded.has(file.sku)}
+              downloading={downloadingSku === file.sku}
               onDownload={() => downloadFile(file)}
               coverImage={file.coverImage}
             />

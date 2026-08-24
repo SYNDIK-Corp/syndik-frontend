@@ -184,6 +184,7 @@
       "title": "Tus descargas",
       "neverExpire": "Los enlaces nunca expiran",
       "download": "Descargar",
+      "preparing": "Preparando…",
       "downloadAgain": "De nuevo",
       "downloadAll": "Descargar todo",
       "kind": "Pack de wallpapers",
@@ -222,6 +223,7 @@
     "title": "Es tuyo.\nVe a buscarlo.",
     "description": "Los archivos ya están en esta página y en tu cuenta. Un recibo con los mismos enlaces va en camino a <0>{{email}}</0>.",
     "downloadEverything": "Descargar todo",
+    "preparingDownload": "Preparando tu descarga…",
     "downloadedLabel": "Descargado — obtenerlo de nuevo",
     "files": {
       "title": "Tus archivos",

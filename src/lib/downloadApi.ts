@@ -88,6 +88,25 @@ async function fetchWithTimeout(url: string): Promise<Response> {
   }
 }
 
+/* checagem barata de "esse navegador consegue compartilhar arquivo de
+ * imagem?" — 1 byte fake, sem rede nenhuma. Sem isso, a única forma de
+ * saber se `canShare({files})` retorna true é já ter arquivos de verdade em
+ * mãos: em navegador desktop (Chrome/Firefox), `navigator.share` costuma
+ * existir pra texto/link mas `canShare({files})` dá falso — só que isso só
+ * se descobre *depois* de baixar tudo, e aí o fallback de zip baixa tudo de
+ * novo. Resultado real medido: usuário desktop pagava o download inteiro
+ * duas vezes. Esse dummy resolve isso sem custo. */
+const CAN_SHARE_FILES_PROBE = new File([new Uint8Array(1)], 'probe.jpg', { type: 'image/jpeg' });
+
+function canShareFiles(): boolean {
+  return (
+    typeof navigator !== 'undefined' &&
+    typeof navigator.share === 'function' &&
+    typeof navigator.canShare === 'function' &&
+    navigator.canShare({ files: [CAN_SHARE_FILES_PROBE] })
+  );
+}
+
 /** navigator.share com arquivos de imagem abre a folha nativa de
  * compartilhar do celular — "Salvar imagens"/"Guardar fotos" grava direto
  * na galeria, sem precisar descompactar zip nem salvar uma por uma depois.
@@ -97,9 +116,7 @@ async function fetchWithTimeout(url: string): Promise<Response> {
  * cancelar é escolha dele, não cai pro zip depois disso). false = sem
  * suporte, ou falha real — quem chamou tenta o zip em seguida. */
 async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof): Promise<boolean> {
-  if (typeof navigator === 'undefined' || typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function') {
-    return false;
-  }
+  if (!canShareFiles()) return false;
 
   const results = await Promise.all(productIds.map((productId) => requestDownload(productId, guestProof)));
   if (results.some(isDownloadError)) return false;
@@ -142,8 +159,14 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
  * `supabase.functions.invoke` não serve aqui — ele decodifica a resposta
  * como texto/JSON, o que corrompe bytes binários (zip virava ~2x o
  * tamanho, cheio de U+FFFD onde a decodificação UTF-8 falhava). `fetch`
- * direto + `.blob()` preserva os bytes exatamente como vieram. */
-async function downloadZip(productIds: number[], guestProof?: GuestDownloadProof): Promise<boolean> {
+ * direto + `.blob()` preserva os bytes exatamente como vieram.
+ *
+ * `orderId` (quando existe, ex.: tela de confirmação de um pedido) é só
+ * pra nomear o zip do lado do servidor (SYNDIK-Wallpaper-XXXX ou o nome do
+ * drop) — não amplia acesso, a posse continua sendo checada por
+ * entitlement. "Baixar tudo" da Conta cruza vários pedidos, não manda
+ * orderId, cai no nome genérico. */
+async function downloadZip(productIds: number[], guestProof?: GuestDownloadProof, orderId?: number): Promise<boolean> {
   const { data: sessionData } = await supabase.auth.getSession();
   const accessToken = sessionData.session?.access_token ?? SUPABASE_ANON_KEY;
 
@@ -156,17 +179,25 @@ async function downloadZip(productIds: number[], guestProof?: GuestDownloadProof
     },
     body: JSON.stringify({
       product_ids: productIds,
-      order_id: guestProof?.orderId,
+      order_id: guestProof?.orderId ?? orderId,
       token: guestProof?.token,
     }),
   });
   if (!response.ok) return false;
 
+  // nome vem do Content-Disposition do servidor — setar link.download com
+  // um valor fixo aqui sobrescreveria o nome que a function calculou
+  // (SYNDIK-Wallpaper-XXXX etc.), já que blob: URL não carrega os headers
+  // da resposta original.
+  const disposition = response.headers.get('Content-Disposition') ?? '';
+  const match = disposition.match(/filename="([^"]+)"/);
+  const fileName = match?.[1] ?? 'syndik-wallpapers.zip';
+
   const blob = await response.blob();
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = productIds.length === 1 ? 'wallpapers.zip' : 'syndik-order.zip';
+  link.download = fileName;
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -179,8 +210,8 @@ async function downloadZip(productIds: number[], guestProof?: GuestDownloadProof
  * galeria) e zip (desktop, ou fallback sem suporte). Sempre chamado direto
  * do handler de clique — nunca atrás de um setTimeout, senão o gesto do
  * usuário some antes do navigator.share poder usar ele. */
-export async function downloadOrShare(productIds: number[], guestProof?: GuestDownloadProof): Promise<boolean> {
+export async function downloadOrShare(productIds: number[], guestProof?: GuestDownloadProof, orderId?: number): Promise<boolean> {
   const shared = await tryWebShare(productIds, guestProof);
   if (shared) return true;
-  return downloadZip(productIds, guestProof);
+  return downloadZip(productIds, guestProof, orderId);
 }

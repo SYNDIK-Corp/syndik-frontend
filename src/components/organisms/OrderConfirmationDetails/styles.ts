@@ -67,6 +67,12 @@ export const DownloadAllButton = styled.button`
     color: ${({ theme }) => theme.colors.black};
     box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.black};
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+    pointer-events: none;
+  }
 `;
 
 export const ZipNote = styled.span`
