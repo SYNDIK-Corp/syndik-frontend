@@ -153,6 +153,66 @@ export const SubmitButton = styled.button`
   }
 `;
 
+export const Divider = styled.div`
+  margin-top: 22px;
+  position: relative;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.textMuted};
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 20px);
+    height: 1px;
+    background: ${({ theme }) => theme.colors.border};
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+`;
+
+export const SecondaryButton = styled.button`
+  margin-top: 16px;
+  height: 46px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.black};
+  border: 1px solid ${({ theme }) => theme.colors.black};
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.white};
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+`;
+
 export const Hint = styled.span<{ $error?: boolean }>`
   margin-top: 10px;
   font-size: 11px;

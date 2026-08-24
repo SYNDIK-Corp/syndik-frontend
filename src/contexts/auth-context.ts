@@ -34,9 +34,15 @@ export interface AuthContextValue {
      sessão válida no localStorage. */
   loading: boolean;
   changePin: (newPin: string) => Promise<AuthActionError | null>;
-  /* entrada do checkout/conta: email + token, sem PIN nenhum.
-     shouldCreateUser:true — funciona pra cliente novo também, não só pra
-     quem já tem conta. */
+  /* entrada por PIN — tenta login; se a conta não existir ainda, cria na
+     hora com esse mesmo PIN (mesmo email+PIN vira a credencial de quem tá
+     comprando pela primeira vez). Duas formas de entrar coexistem sem uma
+     ser "padrão" — a pessoa escolhe PIN ou código por email, nenhuma logo
+     depois da outra automaticamente. */
+  loginOrSignUp: (email: string, pin: string) => Promise<AuthActionError | null>;
+  /* entrada por código de email — shouldCreateUser:true, funciona pra
+     cliente novo também. Só dispara o email quando a pessoa escolhe esse
+     caminho de propósito (não é o padrão automático). */
   requestAccessCode: (email: string) => Promise<AuthActionError | null>;
   confirmAccessCode: (email: string, code: string) => Promise<AuthActionError | null>;
   setNewsletterOptIn: (value: boolean) => Promise<void>;

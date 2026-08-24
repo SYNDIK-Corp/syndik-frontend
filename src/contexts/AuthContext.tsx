@@ -3,6 +3,12 @@ import { FunctionsHttpError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { AuthContext, type AuthActionError, type AuthContextValue, type AuthErrorCode, type AuthProfile } from './auth-context';
 
+interface AuthSessionPayload {
+  session: { access_token: string; refresh_token: string } | null;
+  user: { id: string; email: string };
+  warning?: string;
+}
+
 async function readFunctionError(error: unknown): Promise<AuthActionError> {
   if (error instanceof FunctionsHttpError) {
     try {
@@ -65,6 +71,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [session?.user.id]);
 
+  const applySession = async (session: { access_token: string; refresh_token: string }) => {
+    await supabase.auth.setSession(session);
+  };
+
+  const login = async (email: string, pin: string): Promise<AuthActionError | null> => {
+    const { data, error } = await supabase.functions.invoke<AuthSessionPayload>('auth-login', { body: { email, pin } });
+    if (error) return readFunctionError(error);
+    if (data?.session) await applySession(data.session);
+    return null;
+  };
+
+  const signUp = async (email: string, pin: string): Promise<AuthActionError | null> => {
+    const { data, error } = await supabase.functions.invoke<AuthSessionPayload>('auth-signup', { body: { email, pin } });
+    if (error) return readFunctionError(error);
+    if (!data?.session) return { code: 'session_pending' };
+    await applySession(data.session);
+    return null;
+  };
+
+  // duas formas de entrar coexistem, nenhuma "padrão" — email+PIN tenta
+  // login; só se a conta não existir ainda (email novo) cria na hora com
+  // esse mesmo PIN. A outra forma (código por email) só dispara quando a
+  // pessoa escolhe esse caminho de propósito, não como fallback automático
+  // daqui.
+  const loginOrSignUp: AuthContextValue['loginOrSignUp'] = async (email, pin) => {
+    const loginError = await login(email, pin);
+    if (!loginError) return null;
+    if (loginError.code !== 'account_not_found') return loginError;
+    return signUp(email, pin);
+  };
+
   const changePin: AuthContextValue['changePin'] = async (newPin) => {
     const { error } = await supabase.functions.invoke('auth-change-pin', { body: { newPin } });
     if (error) return readFunctionError(error);
@@ -114,6 +151,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       profile,
       loading,
       changePin,
+      loginOrSignUp,
       requestAccessCode,
       confirmAccessCode,
       setNewsletterOptIn,

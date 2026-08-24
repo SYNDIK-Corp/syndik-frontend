@@ -22,35 +22,64 @@ const ART_BY_MODE: Record<Mode, string> = {
   register: `${SUPABASE_URL}/storage/v1/object/public/product-images/legends-never-die/hero/04.webp`,
 };
 
-type Step = 'email' | 'code';
+type Step = 'email' | 'pin' | 'code';
 
-/* Login e registro são a MESMA tela e o MESMO mecanismo por baixo —
- * requestAccessCode/confirmAccessCode (email + token) já cria a conta na
- * hora se o email for novo, sem nenhum fluxo separado de "cadastro". As
- * abas só trocam o enquadramento (título, descrição, texto do botão e a
- * arte) — não existe lógica de auth diferente entre os dois lados. */
+/* Login e registro são a MESMA tela e o MESMO mecanismo por baixo — duas
+ * formas de entrar coexistem depois do email, nenhuma "padrão" escolhida
+ * pra pessoa: PIN (rápido, sem depender de email chegar) ou código por
+ * email (dispara só quando a pessoa escolhe esse caminho de propósito,
+ * não como próximo passo automático). loginOrSignUp já cria a conta na
+ * hora se o email for novo, com esse mesmo PIN — sem fluxo separado de
+ * "cadastro". As abas só trocam o enquadramento (título, descrição, texto
+ * do botão e a arte) — não existe lógica de auth diferente entre os dois
+ * lados. */
 export function Login() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { session, loading: authLoading, requestAccessCode, confirmAccessCode } = useAuth();
+  const { session, loading: authLoading, loginOrSignUp, requestAccessCode, confirmAccessCode } = useAuth();
 
   const [mode, setMode] = useState<Mode>('signin');
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
+  const [pin, setPin] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState<AuthActionError | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [sendingCode, setSendingCode] = useState(false);
 
   const emailValid = EMAIL_RE.test(email);
 
-  const handleRequestCode = async (event: FormEvent) => {
+  // só valida o email localmente e avança — nenhuma chamada de rede aqui,
+  // a pessoa é quem decide (no próximo passo) se quer PIN ou código por
+  // email, e só a escolha do código de fato dispara algo
+  const handleContinueWithEmail = (event: FormEvent) => {
     event.preventDefault();
-    if (!emailValid || submitting) return;
+    if (!emailValid) return;
+    setError(null);
+    setStep('pin');
+  };
+
+  const handleSignInWithPin = async (event: FormEvent) => {
+    event.preventDefault();
+    if (pin.trim().length !== 4 || submitting) return;
     setSubmitting(true);
     setError(null);
-    const result = await requestAccessCode(email);
+    const result = await loginOrSignUp(email, pin.trim());
     setSubmitting(false);
+    if (result) {
+      setError(result);
+      return;
+    }
+    navigate(searchParams.get('redirect') || '/account');
+  };
+
+  const handleRequestCode = async () => {
+    if (sendingCode) return;
+    setSendingCode(true);
+    setError(null);
+    const result = await requestAccessCode(email);
+    setSendingCode(false);
     if (result) {
       setError(result);
       return;
@@ -113,8 +142,8 @@ export function Login() {
             </S.Tabs>
           )}
 
-          {step === 'email' ? (
-            <form onSubmit={handleRequestCode}>
+          {step === 'email' && (
+            <form onSubmit={handleContinueWithEmail}>
               <S.Title>{mode === 'signin' ? t('login.title') : t('login.registerTitle')}</S.Title>
               <S.Description>
                 {mode === 'signin' ? t('login.description') : t('login.registerDescription')}
@@ -127,17 +156,10 @@ export function Login() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                 />
-                <S.SubmitButton type="submit" disabled={!emailValid || submitting}>
-                  {submitting && <Spinner />}
-                  {submitting
-                    ? t('login.sending')
-                    : mode === 'signin'
-                      ? t('login.continueCta')
-                      : t('login.registerCta')}
+                <S.SubmitButton type="submit" disabled={!emailValid}>
+                  {mode === 'signin' ? t('login.continueCta') : t('login.registerCta')}
                 </S.SubmitButton>
               </S.Field>
-
-              {error && <S.Hint $error>{authErrorMessage(t, error)}</S.Hint>}
 
               <S.Terms>
                 <Trans
@@ -149,7 +171,51 @@ export function Login() {
                 />
               </S.Terms>
             </form>
-          ) : (
+          )}
+
+          {step === 'pin' && (
+            <form onSubmit={handleSignInWithPin}>
+              <S.Title>{t('login.pinTitle')}</S.Title>
+              <S.Description>{t('login.pinDescription', { email })}</S.Description>
+
+              <S.Field>
+                <S.CodeInput
+                  inputMode="numeric"
+                  maxLength={4}
+                  placeholder={t('account.gate.pinPlaceholder')}
+                  value={pin}
+                  onChange={(event) => setPin(event.target.value)}
+                  autoFocus
+                />
+                <S.SubmitButton type="submit" disabled={pin.trim().length !== 4 || submitting}>
+                  {submitting && <Spinner />}
+                  {submitting ? t('login.verifying') : t('login.pinCta')}
+                </S.SubmitButton>
+              </S.Field>
+
+              {error && <S.Hint $error>{authErrorMessage(t, error)}</S.Hint>}
+
+              <S.Divider>{t('login.or')}</S.Divider>
+
+              <S.SecondaryButton type="button" onClick={handleRequestCode} disabled={sendingCode}>
+                {sendingCode && <Spinner />}
+                {sendingCode ? t('login.sending') : t('login.useCodeInstead')}
+              </S.SecondaryButton>
+
+              <S.ChangeEmailLink
+                type="button"
+                onClick={() => {
+                  setStep('email');
+                  setPin('');
+                  setError(null);
+                }}
+              >
+                {t('login.changeEmail')}
+              </S.ChangeEmailLink>
+            </form>
+          )}
+
+          {step === 'code' && (
             <form onSubmit={handleConfirmCode}>
               <S.Title>{t('login.codeTitle')}</S.Title>
               <S.Description>{t('login.codeSentDescription', { email })}</S.Description>
@@ -173,12 +239,12 @@ export function Login() {
               <S.ChangeEmailLink
                 type="button"
                 onClick={() => {
-                  setStep('email');
+                  setStep('pin');
                   setCode('');
                   setError(null);
                 }}
               >
-                {t('login.changeEmail')}
+                {t('login.backToPin')}
               </S.ChangeEmailLink>
             </form>
           )}
