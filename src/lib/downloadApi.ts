@@ -88,25 +88,6 @@ async function fetchWithTimeout(url: string): Promise<Response> {
   }
 }
 
-/* checagem barata de "esse navegador consegue compartilhar arquivo de
- * imagem?" — 1 byte fake, sem rede nenhuma. Sem isso, a única forma de
- * saber se `canShare({files})` retorna true é já ter arquivos de verdade em
- * mãos: em navegador desktop (Chrome/Firefox), `navigator.share` costuma
- * existir pra texto/link mas `canShare({files})` dá falso — só que isso só
- * se descobre *depois* de baixar tudo, e aí o fallback de zip baixa tudo de
- * novo. Resultado real medido: usuário desktop pagava o download inteiro
- * duas vezes. Esse dummy resolve isso sem custo. */
-const CAN_SHARE_FILES_PROBE = new File([new Uint8Array(1)], 'probe.jpg', { type: 'image/jpeg' });
-
-function canShareFiles(): boolean {
-  return (
-    typeof navigator !== 'undefined' &&
-    typeof navigator.share === 'function' &&
-    typeof navigator.canShare === 'function' &&
-    navigator.canShare({ files: [CAN_SHARE_FILES_PROBE] })
-  );
-}
-
 /** navigator.share com arquivos de imagem abre a folha nativa de
  * compartilhar do celular — "Salvar imagens"/"Guardar fotos" grava direto
  * na galeria, sem precisar descompactar zip nem salvar uma por uma depois.
@@ -114,9 +95,21 @@ function canShareFiles(): boolean {
  * sniffing de user agent — mais robusto e já cobre desktops que também
  * suportam). true = a folha nativa abriu (mesmo que o usuário cancele —
  * cancelar é escolha dele, não cai pro zip depois disso). false = sem
- * suporte, ou falha real — quem chamou tenta o zip em seguida. */
+ * suporte, ou falha real — quem chamou tenta o zip em seguida.
+ *
+ * Revertido: uma "otimização" que testava canShare com um arquivo falso de 1
+ * byte antes de buscar os arquivos de verdade (pra evitar o desktop baixar
+ * tudo em dobro) — testado no iPhone/Safari real e a folha nativa de
+ * compartilhar nunca abria, caía direto pro zip. Sem confirmação de que
+ * esse fluxo (a versão de baixo, com arquivos reais) já tinha funcionado
+ * antes dessa mudança, o mais seguro é voltar exatamente pro que já existia
+ * quando essa função foi desenhada — a checagem com arquivo fake é
+ * suspeita, mas não confirmada; não vale o risco de manter algo não
+ * verificável no caminho principal do fluxo de mobile. */
 async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof): Promise<boolean> {
-  if (!canShareFiles()) return false;
+  if (typeof navigator === 'undefined' || typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function') {
+    return false;
+  }
 
   const results = await Promise.all(productIds.map((productId) => requestDownload(productId, guestProof)));
   if (results.some(isDownloadError)) return false;
