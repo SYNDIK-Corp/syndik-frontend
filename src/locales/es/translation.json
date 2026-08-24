@@ -692,8 +692,11 @@
     "trigger": "Descargar",
     "preparing": "Preparando…",
     "all": "Descargar todo (Móvil + Escritorio)",
+    "allHint": "Puede descargarse como .zip según tu navegador",
     "mobileOnly": "Descargar todo (Solo móvil)",
+    "mobileOnlyHint": "Se guarda directo en tus fotos",
     "desktopOnly": "Descargar todo (Solo escritorio)",
+    "desktopOnlyHint": "Se descarga como archivo .zip",
     "pickImage": "Elegir una imagen…"
   },
   "imagePicker": {

@@ -692,8 +692,11 @@
     "trigger": "Download",
     "preparing": "Preparing…",
     "all": "Download all (Mobile + Desktop)",
+    "allHint": "May save as a .zip depending on your browser",
     "mobileOnly": "Download all (Mobile only)",
+    "mobileOnlyHint": "Saves straight to your photos",
     "desktopOnly": "Download all (Desktop only)",
+    "desktopOnlyHint": "Downloads as a .zip file",
     "pickImage": "Choose one image…"
   },
   "imagePicker": {

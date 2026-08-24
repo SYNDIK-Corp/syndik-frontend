@@ -49,11 +49,14 @@ export const Panel = styled.div`
   padding: 6px;
 `;
 
-export const Option = styled.button`
-  height: 40px;
-  padding: 0 12px;
+export const Option = styled.button<{ $hasHint?: boolean }>`
+  min-height: 40px;
+  padding: 8px 12px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
   text-align: left;
   background: none;
   border: 0;
@@ -65,6 +68,20 @@ export const Option = styled.button`
 
   &:hover {
     background: ${({ theme }) => theme.colors.surface};
+  }
+`;
+
+/* explica o que vai acontecer antes do clique (ex.: "salva na galeria" vs
+   "baixa como .zip") — só faz diferença em celular de verdade, é onde a
+   escolha muda o resultado (desktop sempre vira zip de qualquer forma) */
+export const OptionHint = styled.span`
+  display: none;
+
+  @media (max-width: 860px) {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.textMuted};
   }
 `;
 

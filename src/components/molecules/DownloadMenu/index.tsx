@@ -51,12 +51,15 @@ export function DownloadMenu({ primary, downloading, onDownloadAll, onPickImage 
         <S.Panel>
           <S.Option type="button" onClick={() => choose(() => onDownloadAll())}>
             {t('downloadMenu.all')}
+            <S.OptionHint>{t('downloadMenu.allHint')}</S.OptionHint>
           </S.Option>
           <S.Option type="button" onClick={() => choose(() => onDownloadAll('mobile'))}>
             {t('downloadMenu.mobileOnly')}
+            <S.OptionHint>{t('downloadMenu.mobileOnlyHint')}</S.OptionHint>
           </S.Option>
           <S.Option type="button" onClick={() => choose(() => onDownloadAll('desktop'))}>
             {t('downloadMenu.desktopOnly')}
+            <S.OptionHint>{t('downloadMenu.desktopOnlyHint')}</S.OptionHint>
           </S.Option>
           {onPickImage && (
             <>

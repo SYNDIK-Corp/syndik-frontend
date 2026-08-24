@@ -86,15 +86,17 @@ export function isDownloadError(result: RequestDownloadResult | DownloadError): 
  * desktop (testado: Safari no Mac) também pode implementar
  * navigator.share/canShare hoje em dia, então só checar a existência da
  * API não basta mais (achado real: em desktop abria a folha nativa de
- * compartilhar em vez de simplesmente baixar o arquivo, para "Download
- * all" e também pra imagem mobile do picker — nos dois casos o usuário só
- * queria o arquivo salvo, não uma folha de compartilhar).
+ * compartilhar em vez de simplesmente baixar o arquivo).
  *
- * `pointer: coarse` é a forma padrão (não é sniffing de user agent) de
- * perguntar "o dispositivo primário de apontar aqui é toque, não
- * mouse/trackpad?" — mapeia bem pra "isso é celular/tablet de verdade",
- * diferente de checar largura de tela (um Mac com janela pequena não vira
- * celular) ou o user agent (frágil, muda a cada versão de navegador). */
+ * Primeira tentativa de gate era só `pointer: coarse` — não bastou sozinho
+ * (achado real: continuou abrindo a folha em desktop mesmo depois). Causa
+ * provável: `pointer` reflete o dispositivo de apontar "primário", e em
+ * notebook com tela touch + mouse/trackpad conectado, navegadores podem
+ * resolver isso de formas inconsistentes — o notebook ainda registra
+ * como coarse mesmo sendo usado com mouse. Combinando com a largura da
+ * tela (mesmo corte de breakpoint já usado no resto do app pra mobile) —
+ * um notebook touch tem tela de tamanho desktop, então isso filtra o caso
+ * que `pointer: coarse` sozinho não cobria. */
 function hasWebShareSupport(): boolean {
   return (
     typeof navigator !== 'undefined' &&
@@ -102,7 +104,8 @@ function hasWebShareSupport(): boolean {
     typeof navigator.canShare === 'function' &&
     typeof window !== 'undefined' &&
     typeof window.matchMedia === 'function' &&
-    window.matchMedia('(pointer: coarse)').matches
+    window.matchMedia('(pointer: coarse)').matches &&
+    window.matchMedia('(max-width: 860px)').matches
   );
 }
 

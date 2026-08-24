@@ -5,14 +5,20 @@ const bounce = keyframes`
   50% { transform: translateY(4px); }
 `;
 
+/* só anima opacidade/Y — a centralização horizontal (translateX(-50%))
+ * fica fixa no elemento, fora do keyframe. Antes dependia só da animação
+ * pra centralizar (translate(-50%, ...) só existia dentro do @keyframes);
+ * se a animação não disparasse do jeito esperado no aparelho real, o
+ * elemento ficava sem esse transform, saindo do lugar (metade fora da
+ * tela) — bem provável causa real de "não apareceu" no celular. */
 const fadeInUp = keyframes`
   from { opacity: 0; transform: translate(-50%, 8px); }
   to { opacity: 1; transform: translate(-50%, 0); }
 `;
 
 const fadeOut = keyframes`
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to { opacity: 0; transform: translate(-50%, 0); }
 `;
 
 export const Nudge = styled.div<{ $leaving: boolean }>`
@@ -24,7 +30,11 @@ export const Nudge = styled.div<{ $leaving: boolean }>`
     gap: 8px;
     position: fixed;
     left: 50%;
-    bottom: 20px;
+    transform: translateX(-50%);
+    /* env(safe-area-inset-bottom) — Safari mobile tem sua própria barra
+       embaixo, sem isso o selo pode ficar escondido atrás dela em vez de
+       visível acima */
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     z-index: ${({ theme }) => theme.zIndices.navbar - 1};
     padding: 10px 16px;
     background: ${({ theme }) => theme.colors.black};
@@ -39,7 +49,8 @@ export const Nudge = styled.div<{ $leaving: boolean }>`
     pointer-events: none;
 
     @media (prefers-reduced-motion: reduce) {
-      animation: ${fadeInUp} 0.01s linear forwards;
+      animation: none;
+      opacity: ${({ $leaving }) => ($leaving ? 0 : 1)};
     }
   }
 `;
