@@ -8,9 +8,13 @@ export const Container = styled.aside`
   padding: 56px 64px 80px;
 
   @media (max-width: 760px) {
-    padding: 40px 20px 56px;
+    padding: 20px 20px 24px;
     border-left: none;
-    border-top: 1px solid ${({ theme }) => theme.colors.border};
+    /* empilhado, o resumo vem primeiro (reorder no Checkout/styles.ts) —
+       a borda que separava as duas colunas vira borda embaixo, não em
+       cima, senão fica sem separação nenhuma das duas seções */
+    border-top: none;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   }
 `;
 
@@ -73,6 +77,10 @@ export const Totals = styled.div`
   display: flex;
   flex-direction: column;
   gap: 11px;
+
+  @media (max-width: 760px) {
+    margin-top: 16px;
+  }
 `;
 
 export const TotalRow = styled.div`
@@ -93,6 +101,11 @@ export const GrandTotal = styled.div`
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+
+  @media (max-width: 760px) {
+    margin-top: 14px;
+    padding-top: 12px;
+  }
 `;
 
 export const GrandTotalLabel = styled.span`
@@ -123,6 +136,11 @@ export const AddonsSection = styled.div`
   margin-top: 30px;
   border-top: 1px solid ${({ theme }) => theme.colors.border};
   padding-top: 16px;
+
+  @media (max-width: 760px) {
+    margin-top: 18px;
+    padding-top: 12px;
+  }
 `;
 
 export const AddonsLabel = styled.span`
@@ -141,4 +159,8 @@ export const AddonsList = styled.div`
 
 export const BrandsRow = styled.div`
   margin-top: 26px;
+
+  @media (max-width: 760px) {
+    margin-top: 16px;
+  }
 `;

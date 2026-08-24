@@ -6,7 +6,7 @@ export const Container = styled.div`
   padding: 56px 64px 80px;
 
   @media (max-width: 760px) {
-    padding: 40px 20px 56px;
+    padding: 24px 20px 32px;
   }
 `;
 
@@ -26,6 +26,10 @@ export const SectionHeader = styled.div`
 
 export const Section = styled.div`
   margin-top: 34px;
+
+  @media (max-width: 760px) {
+    margin-top: 22px;
+  }
 `;
 
 export const SectionTitle = styled.h2`
@@ -122,6 +126,10 @@ export const TermsLabel = styled.label`
   align-items: flex-start;
   gap: 11px;
   cursor: pointer;
+
+  @media (max-width: 760px) {
+    margin-top: 14px;
+  }
 `;
 
 export const TermsText = styled.span`
@@ -169,6 +177,11 @@ export const PayButton = styled.button<{ $enabled: boolean }>`
     background 0.3s ease,
     color 0.3s ease,
     box-shadow 0.3s ease;
+
+  @media (max-width: 760px) {
+    margin-top: 12px;
+    height: 50px;
+  }
 
   ${({ $enabled, theme }) =>
     $enabled &&

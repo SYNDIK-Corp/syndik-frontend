@@ -8,14 +8,15 @@ import * as S from './styles';
 export interface MainLayoutProps {
   children: ReactNode;
   navbarVariant?: NavbarVariant;
+  hideFooter?: boolean;
 }
 
-export function MainLayout({ children, navbarVariant = 'solid' }: MainLayoutProps) {
+export function MainLayout({ children, navbarVariant = 'solid', hideFooter = false }: MainLayoutProps) {
   return (
     <>
       <Navbar variant={navbarVariant} />
       <S.Main $offsetNavbar={navbarVariant === 'solid'}>{children}</S.Main>
-      <Footer />
+      {!hideFooter && <Footer />}
       <CartDrawer />
       <DuplicateItemModal />
     </>

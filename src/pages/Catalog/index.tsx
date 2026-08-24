@@ -67,14 +67,14 @@ export function Catalog({ sheet }: CatalogProps) {
 
   if (products === null) {
     return (
-      <MainLayout>
+      <MainLayout hideFooter={sheet === 'screens'}>
         <PageLoader />
       </MainLayout>
     );
   }
 
   return (
-    <MainLayout>
+    <MainLayout hideFooter={sheet === 'screens'}>
       <S.Container>
         <S.Header>
           <S.HeaderTop>

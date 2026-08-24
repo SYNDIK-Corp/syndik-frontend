@@ -8,5 +8,15 @@ export const Grid = styled.div`
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
+
+    /* empilhado, mostra primeiro o que a pessoa está levando (itens,
+       desconto, valores) e só depois contato/pagamento — troca só a ordem
+       visual (CSS), a ordem no DOM continua a mesma. */
+    & > *:first-child {
+      order: 2;
+    }
+    & > *:last-child {
+      order: 1;
+    }
   }
 `;
