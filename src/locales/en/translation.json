@@ -41,6 +41,9 @@
     "remove": "Remove {{name}} from the bag",
     "discounts": "Discounts",
     "subtotal": "Subtotal",
+    "tierDiscount": "{{percent}}% discount applied",
+    "couponDiscount": "{{code}} applied",
+    "total": "Total",
     "continueShopping": "Continue shopping",
     "held": {
       "label": "Almost yours — held for"

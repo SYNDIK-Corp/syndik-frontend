@@ -14,7 +14,8 @@ const BRANDS: BrandKey[] = ['visa', 'mastercard', 'amex', 'elo', 'gpay', 'stripe
 
 export function CartDrawer() {
   const { t, i18n } = useTranslation();
-  const { items, total, isOpen, holdSecondsRemaining, removeItem, closeCart, addItem, discountTiers } = useCart();
+  const { items, total, isOpen, holdSecondsRemaining, removeItem, closeCart, addItem, discountTiers, bestDiscount } =
+    useCart();
   const [termsAccepted, setTermsAccepted] = useState(false);
   const navigate = useNavigate();
 
@@ -76,12 +77,13 @@ export function CartDrawer() {
   }, [excludeSkus, cartCategories]);
 
   const canCheckout = termsAccepted && items.length > 0;
+  const finalTotal = Math.max(0, total - (bestDiscount?.amount ?? 0));
 
   const ctaLabel = !items.length
     ? t('cart.cta.empty')
     : !termsAccepted
       ? t('cart.cta.acceptTerms')
-      : t('cart.cta.checkout', { total: formatPrice(total, i18n.language) });
+      : t('cart.cta.checkout', { total: formatPrice(finalTotal, i18n.language) });
 
   return (
     <>
@@ -177,10 +179,26 @@ export function CartDrawer() {
               <span>{t('cart.discounts')}</span>
               <span>{discountTotal > 0 ? `− ${formatPrice(discountTotal, i18n.language)}` : '—'}</span>
             </S.SummaryRow>
+            {bestDiscount && (
+              <S.DiscountRow>
+                <span>
+                  {bestDiscount.percent
+                    ? t('cart.tierDiscount', { percent: bestDiscount.percent })
+                    : t('cart.couponDiscount', { code: bestDiscount.couponCode })}
+                </span>
+                <span>− {formatPrice(bestDiscount.amount, i18n.language)}</span>
+              </S.DiscountRow>
+            )}
             <S.SubtotalRow>
               <S.SubtotalLabel>{t('cart.subtotal')}</S.SubtotalLabel>
               <S.SubtotalValue>{formatPrice(total, i18n.language)}</S.SubtotalValue>
             </S.SubtotalRow>
+            {bestDiscount && (
+              <S.TotalRow>
+                <S.TotalLabel>{t('cart.total')}</S.TotalLabel>
+                <S.TotalValue>{formatPrice(finalTotal, i18n.language)}</S.TotalValue>
+              </S.TotalRow>
+            )}
 
             <S.TermsLabel>
               <S.TermsCheckbox

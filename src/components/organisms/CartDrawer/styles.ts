@@ -229,6 +229,15 @@ export const SummaryRow = styled.div`
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
+export const DiscountRow = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.success};
+`;
+
 export const SubtotalRow = styled.div`
   display: flex;
   align-items: baseline;
@@ -243,6 +252,24 @@ export const SubtotalLabel = styled.span`
 export const SubtotalValue = styled.span`
   font-size: 17px;
   font-weight: 500;
+`;
+
+export const TotalRow = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
+export const TotalLabel = styled.span`
+  font-size: 15px;
+  font-weight: 600;
+`;
+
+export const TotalValue = styled.span`
+  font-size: 19px;
+  font-weight: 600;
 `;
 
 export const TermsLabel = styled.label`

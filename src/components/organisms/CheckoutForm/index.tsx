@@ -18,7 +18,8 @@ function checkoutErrorMessage(t: ReturnType<typeof useTranslation>['t'], error: 
 
 export function CheckoutForm() {
   const { t, i18n } = useTranslation();
-  const { items, total, appliedCoupon } = useCart();
+  const { items, total, appliedCoupon, bestDiscount } = useCart();
+  const finalTotal = Math.max(0, total - (bestDiscount?.amount ?? 0));
   const { session, profile } = useAuth();
 
   const [email, setEmail] = useState('');
@@ -52,7 +53,7 @@ export function CheckoutForm() {
   const ctaLabel = creatingOrder
     ? t('checkout.cta.processing')
     : canContinue
-      ? t('checkout.cta.continueToPayment', { total: formatPrice(total, i18n.language) })
+      ? t('checkout.cta.continueToPayment', { total: formatPrice(finalTotal, i18n.language) })
       : t('checkout.cta.incomplete');
 
   /* o carrinho tica a cada segundo (hold timer) e re-renderiza este

@@ -11,6 +11,9 @@ export interface BestDiscount {
   amount: number;
   source: 'coupon' | 'tier';
   couponCode?: string;
+  /* taxa em % arredondada — só preenchida pra desconto percentual (tier
+     sempre é percentual; cupom só quando discountType === 'percent') */
+  percent?: number;
 }
 
 export interface CartItem {

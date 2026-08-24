@@ -41,6 +41,9 @@
     "remove": "{{name}} aus dem Warenkorb entfernen",
     "discounts": "Rabatte",
     "subtotal": "Zwischensumme",
+    "tierDiscount": "{{percent}}% Rabatt angewendet",
+    "couponDiscount": "{{code}} angewendet",
+    "total": "Gesamt",
     "continueShopping": "Weiter einkaufen",
     "held": {
       "label": "Fast deins — reserviert für"

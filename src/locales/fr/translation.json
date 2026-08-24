@@ -41,6 +41,9 @@
     "remove": "Retirer {{name}} du panier",
     "discounts": "Réductions",
     "subtotal": "Sous-total",
+    "tierDiscount": "Réduction de {{percent}} % appliquée",
+    "couponDiscount": "{{code}} appliqué",
+    "total": "Total",
     "continueShopping": "Continuer mes achats",
     "held": {
       "label": "Presque à vous — réservé pour"

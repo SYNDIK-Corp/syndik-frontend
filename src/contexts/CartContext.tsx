@@ -80,9 +80,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     let bestDiscount: BestDiscount | null = null;
     if (couponAmount > 0 && couponAmount >= tierAmount) {
-      bestDiscount = { amount: couponAmount, source: 'coupon', couponCode: appliedCoupon!.code };
+      bestDiscount = {
+        amount: couponAmount,
+        source: 'coupon',
+        couponCode: appliedCoupon!.code,
+        percent: appliedCoupon!.discountType === 'percent' ? Math.round(appliedCoupon!.discountValue * 100) : undefined,
+      };
     } else if (tierAmount > 0) {
-      bestDiscount = { amount: tierAmount, source: 'tier' };
+      bestDiscount = { amount: tierAmount, source: 'tier', percent: Math.round(bestTier.discount_rate * 100) };
     }
 
     return {

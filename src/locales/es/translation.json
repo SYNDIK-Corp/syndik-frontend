@@ -41,6 +41,9 @@
     "remove": "Quitar {{name}} de la bolsa",
     "discounts": "Descuentos",
     "subtotal": "Subtotal",
+    "tierDiscount": "Descuento del {{percent}}% aplicado",
+    "couponDiscount": "{{code}} aplicado",
+    "total": "Total",
     "continueShopping": "Seguir comprando",
     "held": {
       "label": "Casi tuya — reservada por"
