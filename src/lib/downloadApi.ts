@@ -106,13 +106,30 @@ async function fetchWithTimeout(url: string): Promise<Response> {
  * quando essa função foi desenhada — a checagem com arquivo fake é
  * suspeita, mas não confirmada; não vale o risco de manter algo não
  * verificável no caminho principal do fluxo de mobile. */
+/* DIAGNÓSTICO TEMPORÁRIO — investigando por que a folha de compartilhar não
+ * abre no iPhone/Safari real (sempre cai pro zip). Sem remote debugging
+ * disponível no aparelho, alert() é o jeito mais rápido de ver em qual dos 5
+ * pontos de falha isso está parando. Remover assim que a causa real for
+ * confirmada, não é pra ficar em produção. */
+function debugAlert(message: string) {
+  if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+    window.alert(`[debug download] ${message}`);
+  }
+}
+
 async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof): Promise<boolean> {
+  const startedAt = Date.now();
+
   if (typeof navigator === 'undefined' || typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function') {
+    debugAlert('navigator.share/canShare não existem nesse navegador');
     return false;
   }
 
   const results = await Promise.all(productIds.map((productId) => requestDownload(productId, guestProof)));
-  if (results.some(isDownloadError)) return false;
+  if (results.some(isDownloadError)) {
+    debugAlert('requestDownload falhou (signed URLs)');
+    return false;
+  }
   const downloadFiles = (results as RequestDownloadResult[]).flatMap((result) => result.files);
 
   // busca todos em paralelo (não um por vez) — mais rápido e evita que um
@@ -127,11 +144,21 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
         return new File([blob], file.file_name, { type: blob.type || 'image/jpeg' });
       }),
     );
-  } catch {
+  } catch (error) {
+    debugAlert(`fetch dos arquivos falhou depois de ${Date.now() - startedAt}ms: ${(error as Error).message}`);
     return false;
   }
 
-  if (files.length === 0 || !navigator.canShare({ files })) return false;
+  const elapsedBeforeShare = Date.now() - startedAt;
+
+  if (files.length === 0) {
+    debugAlert(`nenhum arquivo baixado (${elapsedBeforeShare}ms)`);
+    return false;
+  }
+  if (!navigator.canShare({ files })) {
+    debugAlert(`canShare(arquivos reais) retornou false depois de ${elapsedBeforeShare}ms — ${files.length} arquivo(s), ${files.map((f) => f.type).join(',')}`);
+    return false;
+  }
 
   try {
     await navigator.share({ files });
@@ -140,6 +167,9 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
     // usuário fechou a folha nativa sem escolher nada — decisão dele, não
     // é uma falha que devesse cair pro fallback de zip
     if (error instanceof Error && error.name === 'AbortError') return true;
+    debugAlert(
+      `share() lançou erro depois de ${elapsedBeforeShare}ms de espera: ${(error as Error).name} — ${(error as Error).message}`,
+    );
     return false;
   }
 }
