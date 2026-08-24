@@ -1,6 +1,7 @@
 import { CheckoutLayout } from '@/components/templates/CheckoutLayout';
 import { CheckoutForm } from '@/components/organisms/CheckoutForm';
 import { OrderSummary } from '@/components/organisms/OrderSummary';
+import { ScrollNudge } from '@/components/molecules/ScrollNudge';
 import * as S from './styles';
 
 export function Checkout() {
@@ -10,6 +11,7 @@ export function Checkout() {
         <CheckoutForm />
         <OrderSummary />
       </S.Grid>
+      <ScrollNudge />
     </CheckoutLayout>
   );
 }

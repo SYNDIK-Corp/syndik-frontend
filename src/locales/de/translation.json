@@ -102,6 +102,7 @@
     "terms": {
       "text": "Ich habe die <0>Lizenzbedingungen</0> und die <1>Rückerstattungsrichtlinie</1> für digitale Dateien gelesen und stimme ihnen zu."
     },
+    "scrollNudge": "Scrolle runter zur Kasse ↓",
     "cta": {
       "incomplete": "Fülle die obigen Felder aus",
       "continueToPayment": "Weiter zur Zahlung • {{total}}",

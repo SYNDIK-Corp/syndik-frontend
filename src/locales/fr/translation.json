@@ -102,6 +102,7 @@
     "terms": {
       "text": "J'ai lu les <0>conditions de licence</0> et la <1>politique de remboursement</1> pour les fichiers numériques, et j'y consens."
     },
+    "scrollNudge": "Faites défiler pour payer ↓",
     "cta": {
       "incomplete": "Complétez les champs ci-dessus",
       "continueToPayment": "Continuer vers le paiement • {{total}}",

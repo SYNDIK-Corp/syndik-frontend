@@ -102,6 +102,7 @@
     "terms": {
       "text": "Leí los <0>términos de licencia</0> y la <1>política de reembolso</1> para archivos digitales, y estoy de acuerdo."
     },
+    "scrollNudge": "Desliza para pagar ↓",
     "cta": {
       "incomplete": "Completa los campos de arriba",
       "continueToPayment": "Continuar al pago • {{total}}",

@@ -102,6 +102,7 @@
     "terms": {
       "text": "I've read the <0>licence terms</0> and the <1>refund policy</1> for digital files, and I agree to them."
     },
+    "scrollNudge": "Scroll down to check out ↓",
     "cta": {
       "incomplete": "Complete the fields above",
       "continueToPayment": "Continue to payment • {{total}}",
