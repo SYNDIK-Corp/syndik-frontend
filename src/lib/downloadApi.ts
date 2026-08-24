@@ -37,7 +37,10 @@ async function readDownloadError(error: unknown): Promise<DownloadError> {
     try {
       const body = await error.context.json();
       if (body && typeof body.error === 'string') {
-        return { code: body.error as DownloadErrorCode };
+        return {
+          code: body.error as DownloadErrorCode,
+          debug: `status=${error.context.status}${body.message ? ` message="${body.message}"` : ''}`,
+        };
       }
       return { code: 'unexpected', debug: `FunctionsHttpError status=${error.context.status} body=${JSON.stringify(body)}` };
     } catch (parseError) {
