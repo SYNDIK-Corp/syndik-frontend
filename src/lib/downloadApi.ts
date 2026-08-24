@@ -82,8 +82,28 @@ export function isDownloadError(result: RequestDownloadResult | DownloadError): 
  * primeiro, e o navegador bloqueava o resto silenciosamente (só a capa
  * "baixava", o resto sumia). */
 
+/* "Salvar na galeria" só faz sentido em celular/tablet — mas navegador
+ * desktop (testado: Safari no Mac) também pode implementar
+ * navigator.share/canShare hoje em dia, então só checar a existência da
+ * API não basta mais (achado real: em desktop abria a folha nativa de
+ * compartilhar em vez de simplesmente baixar o arquivo, para "Download
+ * all" e também pra imagem mobile do picker — nos dois casos o usuário só
+ * queria o arquivo salvo, não uma folha de compartilhar).
+ *
+ * `pointer: coarse` é a forma padrão (não é sniffing de user agent) de
+ * perguntar "o dispositivo primário de apontar aqui é toque, não
+ * mouse/trackpad?" — mapeia bem pra "isso é celular/tablet de verdade",
+ * diferente de checar largura de tela (um Mac com janela pequena não vira
+ * celular) ou o user agent (frágil, muda a cada versão de navegador). */
 function hasWebShareSupport(): boolean {
-  return typeof navigator !== 'undefined' && typeof navigator.share === 'function' && typeof navigator.canShare === 'function';
+  return (
+    typeof navigator !== 'undefined' &&
+    typeof navigator.share === 'function' &&
+    typeof navigator.canShare === 'function' &&
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(pointer: coarse)').matches
+  );
 }
 
 /* Safari iOS só aceita navigator.share() poucos segundos depois do gesto

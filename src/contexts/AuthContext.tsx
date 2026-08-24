@@ -73,13 +73,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const requestAccessCode: AuthContextValue['requestAccessCode'] = async (email) => {
     const { error } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: true } });
-    if (error) return { code: 'unexpected' };
+    if (error) {
+      // sem isso, rate limit do próprio Supabase Auth (429) caía no genérico
+      // "something went wrong" — mesma mensagem de qualquer outro erro,
+      // sem dar pra pessoa (ou pra gente depurando) diferenciar os casos
+      console.error('requestAccessCode failed', { status: error.status, code: error.code, message: error.message });
+      if (error.status === 429) return { code: 'rate_limited' };
+      return { code: 'unexpected' };
+    }
     return null;
   };
 
   const confirmAccessCode: AuthContextValue['confirmAccessCode'] = async (email, code) => {
     const { error } = await supabase.auth.verifyOtp({ email, token: code, type: 'email' });
-    if (error) return { code: 'invalid_code' };
+    if (error) {
+      console.error('confirmAccessCode failed', { status: error.status, code: error.code, message: error.message });
+      if (error.status === 429) return { code: 'rate_limited' };
+      return { code: 'invalid_code' };
+    }
     // best-effort — a sessão já é válida de qualquer forma; isso só garante
     // que account_credentials existe (Conta/FAQ/emails continuam
     // funcionando pra quem chegou aqui sem nunca ter definido um PIN)
