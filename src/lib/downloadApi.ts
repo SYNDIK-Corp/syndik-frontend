@@ -14,11 +14,6 @@ export type DownloadErrorCode =
 
 export interface DownloadError {
   code: DownloadErrorCode;
-  /* DIAGNÓSTICO TEMPORÁRIO — detalhe cru da exceção quando o código cai no
-     genérico 'unexpected', pra distinguir FunctionsFetchError (rede) de
-     FunctionsRelayError de corpo não-JSON. Remover junto com o resto da
-     instrumentação. */
-  debug?: string;
 }
 
 export interface DownloadFile {
@@ -37,21 +32,13 @@ async function readDownloadError(error: unknown): Promise<DownloadError> {
     try {
       const body = await error.context.json();
       if (body && typeof body.error === 'string') {
-        return {
-          code: body.error as DownloadErrorCode,
-          debug: `status=${error.context.status}${body.message ? ` message="${body.message}"` : ''}`,
-        };
+        return { code: body.error as DownloadErrorCode };
       }
-      return { code: 'unexpected', debug: `FunctionsHttpError status=${error.context.status} body=${JSON.stringify(body)}` };
-    } catch (parseError) {
-      return {
-        code: 'unexpected',
-        debug: `FunctionsHttpError status=${error.context.status} (corpo não é JSON: ${(parseError as Error).message})`,
-      };
+    } catch {
+      /* corpo não veio como JSON — cai no genérico abaixo */
     }
   }
-  const err = error as { name?: string; message?: string } | null;
-  return { code: 'unexpected', debug: `${err?.name ?? typeof error} — ${err?.message ?? String(error)}` };
+  return { code: 'unexpected' };
 }
 
 export interface GuestDownloadProof {
@@ -108,44 +95,14 @@ async function fetchWithTimeout(url: string): Promise<Response> {
  * sniffing de user agent — mais robusto e já cobre desktops que também
  * suportam). true = a folha nativa abriu (mesmo que o usuário cancele —
  * cancelar é escolha dele, não cai pro zip depois disso). false = sem
- * suporte, ou falha real — quem chamou tenta o zip em seguida.
- *
- * Revertido: uma "otimização" que testava canShare com um arquivo falso de 1
- * byte antes de buscar os arquivos de verdade (pra evitar o desktop baixar
- * tudo em dobro) — testado no iPhone/Safari real e a folha nativa de
- * compartilhar nunca abria, caía direto pro zip. Sem confirmação de que
- * esse fluxo (a versão de baixo, com arquivos reais) já tinha funcionado
- * antes dessa mudança, o mais seguro é voltar exatamente pro que já existia
- * quando essa função foi desenhada — a checagem com arquivo fake é
- * suspeita, mas não confirmada; não vale o risco de manter algo não
- * verificável no caminho principal do fluxo de mobile. */
-/* DIAGNÓSTICO TEMPORÁRIO — investigando por que a folha de compartilhar não
- * abre no iPhone/Safari real (sempre cai pro zip). Sem remote debugging
- * disponível no aparelho, alert() é o jeito mais rápido de ver em qual dos 5
- * pontos de falha isso está parando. Remover assim que a causa real for
- * confirmada, não é pra ficar em produção. */
-function debugAlert(message: string) {
-  if (typeof window !== 'undefined' && typeof window.alert === 'function') {
-    window.alert(`[debug download] ${message}`);
-  }
-}
-
+ * suporte, ou falha real — quem chamou tenta o zip em seguida. */
 async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof): Promise<boolean> {
-  const startedAt = Date.now();
-
   if (typeof navigator === 'undefined' || typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function') {
-    debugAlert('navigator.share/canShare não existem nesse navegador');
     return false;
   }
 
   const results = await Promise.all(productIds.map((productId) => requestDownload(productId, guestProof)));
-  if (results.some(isDownloadError)) {
-    const details = results
-      .map((r) => (isDownloadError(r) ? `${r.code}${r.debug ? ` (${r.debug})` : ''}` : 'ok'))
-      .join(' | ');
-    debugAlert(`requestDownload falhou (signed URLs) — ${details}`);
-    return false;
-  }
+  if (results.some(isDownloadError)) return false;
   const downloadFiles = (results as RequestDownloadResult[]).flatMap((result) => result.files);
 
   // busca todos em paralelo (não um por vez) — mais rápido e evita que um
@@ -160,21 +117,11 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
         return new File([blob], file.file_name, { type: blob.type || 'image/jpeg' });
       }),
     );
-  } catch (error) {
-    debugAlert(`fetch dos arquivos falhou depois de ${Date.now() - startedAt}ms: ${(error as Error).message}`);
+  } catch {
     return false;
   }
 
-  const elapsedBeforeShare = Date.now() - startedAt;
-
-  if (files.length === 0) {
-    debugAlert(`nenhum arquivo baixado (${elapsedBeforeShare}ms)`);
-    return false;
-  }
-  if (!navigator.canShare({ files })) {
-    debugAlert(`canShare(arquivos reais) retornou false depois de ${elapsedBeforeShare}ms — ${files.length} arquivo(s), ${files.map((f) => f.type).join(',')}`);
-    return false;
-  }
+  if (files.length === 0 || !navigator.canShare({ files })) return false;
 
   try {
     await navigator.share({ files });
@@ -183,9 +130,6 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
     // usuário fechou a folha nativa sem escolher nada — decisão dele, não
     // é uma falha que devesse cair pro fallback de zip
     if (error instanceof Error && error.name === 'AbortError') return true;
-    debugAlert(
-      `share() lançou erro depois de ${elapsedBeforeShare}ms de espera: ${(error as Error).name} — ${(error as Error).message}`,
-    );
     return false;
   }
 }
