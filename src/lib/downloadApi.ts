@@ -14,6 +14,11 @@ export type DownloadErrorCode =
 
 export interface DownloadError {
   code: DownloadErrorCode;
+  /* DIAGNÓSTICO TEMPORÁRIO — detalhe cru da exceção quando o código cai no
+     genérico 'unexpected', pra distinguir FunctionsFetchError (rede) de
+     FunctionsRelayError de corpo não-JSON. Remover junto com o resto da
+     instrumentação. */
+  debug?: string;
 }
 
 export interface DownloadFile {
@@ -34,11 +39,16 @@ async function readDownloadError(error: unknown): Promise<DownloadError> {
       if (body && typeof body.error === 'string') {
         return { code: body.error as DownloadErrorCode };
       }
-    } catch {
-      /* corpo não veio como JSON — cai no genérico abaixo */
+      return { code: 'unexpected', debug: `FunctionsHttpError status=${error.context.status} body=${JSON.stringify(body)}` };
+    } catch (parseError) {
+      return {
+        code: 'unexpected',
+        debug: `FunctionsHttpError status=${error.context.status} (corpo não é JSON: ${(parseError as Error).message})`,
+      };
     }
   }
-  return { code: 'unexpected' };
+  const err = error as { name?: string; message?: string } | null;
+  return { code: 'unexpected', debug: `${err?.name ?? typeof error} — ${err?.message ?? String(error)}` };
 }
 
 export interface GuestDownloadProof {
@@ -127,8 +137,10 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
 
   const results = await Promise.all(productIds.map((productId) => requestDownload(productId, guestProof)));
   if (results.some(isDownloadError)) {
-    const codes = results.map((r) => (isDownloadError(r) ? r.code : 'ok')).join(', ');
-    debugAlert(`requestDownload falhou (signed URLs) — códigos: ${codes}`);
+    const details = results
+      .map((r) => (isDownloadError(r) ? `${r.code}${r.debug ? ` (${r.debug})` : ''}` : 'ok'))
+      .join(' | ');
+    debugAlert(`requestDownload falhou (signed URLs) — ${details}`);
     return false;
   }
   const downloadFiles = (results as RequestDownloadResult[]).flatMap((result) => result.files);
