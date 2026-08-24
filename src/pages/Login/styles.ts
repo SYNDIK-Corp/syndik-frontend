@@ -124,6 +124,10 @@ export const CodeInput = styled(TextField)`
 export const SubmitButton = styled.button`
   margin-top: 12px;
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   border: 0;

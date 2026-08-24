@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { MainLayout } from '@/components/templates/MainLayout';
 import { PageLoader } from '@/components/molecules/PageLoader';
-import { AccountGate } from '@/components/organisms/AccountGate';
 import { AccountSidebar, type AccountTab } from '@/components/organisms/AccountSidebar';
 import { AccountDownloads } from '@/components/organisms/AccountDownloads';
 import { AccountOrders } from '@/components/organisms/AccountOrders';
@@ -36,27 +36,29 @@ export function Account() {
     );
   }
 
+  // mesma tela de login pra tudo (checkout, conta) — o AccountGate antigo
+  // (email+PIN) foi aposentado quando login/registro viraram email+código.
+  if (!session || !profile) {
+    return <Navigate to="/login?redirect=/account" replace />;
+  }
+
   return (
     <MainLayout>
-      {session && profile ? (
-        <S.Dashboard>
-          <AccountSidebar
-            email={profile.email}
-            userId={profile.id}
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-            onSignOut={handleSignOut}
-            downloadsCount={downloadsCount}
-            ordersCount={ordersCount}
-          />
+      <S.Dashboard>
+        <AccountSidebar
+          email={profile.email}
+          userId={profile.id}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onSignOut={handleSignOut}
+          downloadsCount={downloadsCount}
+          ordersCount={ordersCount}
+        />
 
-          {activeTab === 'downloads' && <AccountDownloads />}
-          {activeTab === 'orders' && <AccountOrders />}
-          {activeTab === 'details' && <AccountDetails profile={profile} />}
-        </S.Dashboard>
-      ) : (
-        <AccountGate onSignIn={() => setActiveTab('downloads')} />
-      )}
+        {activeTab === 'downloads' && <AccountDownloads />}
+        {activeTab === 'orders' && <AccountOrders />}
+        {activeTab === 'details' && <AccountDetails profile={profile} />}
+      </S.Dashboard>
     </MainLayout>
   );
 }

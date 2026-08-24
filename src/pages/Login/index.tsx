@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, Navigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Logo } from '@/components/atoms/Logo';
+import { Spinner } from '@/components/atoms/Spinner';
 import { TextField } from '@/components/atoms/TextField';
 import { useAuth } from '@/hooks/useAuth';
 import { authErrorMessage } from '@/lib/authErrorMessage';
@@ -32,7 +33,7 @@ export function Login() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { requestAccessCode, confirmAccessCode } = useAuth();
+  const { session, loading: authLoading, requestAccessCode, confirmAccessCode } = useAuth();
 
   const [mode, setMode] = useState<Mode>('signin');
   const [step, setStep] = useState<Step>('email');
@@ -70,6 +71,12 @@ export function Login() {
     }
     navigate(searchParams.get('redirect') || '/account');
   };
+
+  // já tem sessão (voltou pra /login pelo histórico, favoritos, etc.) — vai
+  // direto pro destino em vez de mostrar a tela de login à toa
+  if (!authLoading && session) {
+    return <Navigate to={searchParams.get('redirect') || '/account'} replace />;
+  }
 
   return (
     <S.Container>
@@ -121,6 +128,7 @@ export function Login() {
                   onChange={(event) => setEmail(event.target.value)}
                 />
                 <S.SubmitButton type="submit" disabled={!emailValid || submitting}>
+                  {submitting && <Spinner />}
                   {submitting
                     ? t('login.sending')
                     : mode === 'signin'
@@ -155,6 +163,7 @@ export function Login() {
                   autoFocus
                 />
                 <S.SubmitButton type="submit" disabled={!code.trim() || submitting}>
+                  {submitting && <Spinner />}
                   {submitting ? t('login.verifying') : t('login.confirmCta')}
                 </S.SubmitButton>
               </S.Field>

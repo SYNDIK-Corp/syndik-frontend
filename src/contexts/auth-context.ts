@@ -33,17 +33,10 @@ export interface AuthContextValue {
      evita mostrar a tela de login por um instante antes de saber se já tem
      sessão válida no localStorage. */
   loading: boolean;
-  login: (email: string, pin: string) => Promise<AuthActionError | null>;
-  signUp: (email: string, pin: string) => Promise<AuthActionError | null>;
-  /* tenta login; se a conta não existir, cria na hora com o mesmo PIN —
-     só o checkout usa isso (conta nova nasce no primeiro pedido) */
-  loginOrSignUp: (email: string, pin: string) => Promise<AuthActionError | null>;
   changePin: (newPin: string) => Promise<AuthActionError | null>;
-  requestPinReset: (email: string) => Promise<AuthActionError | null>;
-  confirmPinReset: (email: string, code: string, newPin: string) => Promise<AuthActionError | null>;
-  /* MVP 2.3.1 — entrada do checkout: email + token, sem PIN nenhum.
-     shouldCreateUser:true (diferente de requestPinReset) — funciona pra
-     cliente novo também, não só recuperação de conta existente. */
+  /* entrada do checkout/conta: email + token, sem PIN nenhum.
+     shouldCreateUser:true — funciona pra cliente novo também, não só pra
+     quem já tem conta. */
   requestAccessCode: (email: string) => Promise<AuthActionError | null>;
   confirmAccessCode: (email: string, code: string) => Promise<AuthActionError | null>;
   setNewsletterOptIn: (value: boolean) => Promise<void>;

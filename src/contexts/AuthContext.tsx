@@ -3,12 +3,6 @@ import { FunctionsHttpError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { AuthContext, type AuthActionError, type AuthContextValue, type AuthErrorCode, type AuthProfile } from './auth-context';
 
-interface AuthSessionPayload {
-  session: { access_token: string; refresh_token: string } | null;
-  user: { id: string; email: string };
-  warning?: string;
-}
-
 async function readFunctionError(error: unknown): Promise<AuthActionError> {
   if (error instanceof FunctionsHttpError) {
     try {
@@ -71,48 +65,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [session?.user.id]);
 
-  const applySession = async (session: { access_token: string; refresh_token: string }) => {
-    await supabase.auth.setSession(session);
-  };
-
-  const login: AuthContextValue['login'] = async (email, pin) => {
-    const { data, error } = await supabase.functions.invoke<AuthSessionPayload>('auth-login', { body: { email, pin } });
-    if (error) return readFunctionError(error);
-    if (data?.session) await applySession(data.session);
-    return null;
-  };
-
-  const signUp: AuthContextValue['signUp'] = async (email, pin) => {
-    const { data, error } = await supabase.functions.invoke<AuthSessionPayload>('auth-signup', { body: { email, pin } });
-    if (error) return readFunctionError(error);
-    if (!data?.session) return { code: 'session_pending' };
-    await applySession(data.session);
-    return null;
-  };
-
-  const loginOrSignUp: AuthContextValue['loginOrSignUp'] = async (email, pin) => {
-    const loginError = await login(email, pin);
-    if (!loginError) return null;
-    if (loginError.code !== 'account_not_found') return loginError;
-    return signUp(email, pin);
-  };
-
   const changePin: AuthContextValue['changePin'] = async (newPin) => {
     const { error } = await supabase.functions.invoke('auth-change-pin', { body: { newPin } });
     if (error) return readFunctionError(error);
     return null;
-  };
-
-  const requestPinReset: AuthContextValue['requestPinReset'] = async (email) => {
-    const { error } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: false } });
-    if (error) return { code: 'account_not_found' };
-    return null;
-  };
-
-  const confirmPinReset: AuthContextValue['confirmPinReset'] = async (email, code, newPin) => {
-    const { error: verifyError } = await supabase.auth.verifyOtp({ email, token: code, type: 'email' });
-    if (verifyError) return { code: 'wrong_pin' };
-    return changePin(newPin);
   };
 
   const requestAccessCode: AuthContextValue['requestAccessCode'] = async (email) => {
@@ -146,12 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session,
       profile,
       loading,
-      login,
-      signUp,
-      loginOrSignUp,
       changePin,
-      requestPinReset,
-      confirmPinReset,
       requestAccessCode,
       confirmAccessCode,
       setNewsletterOptIn,

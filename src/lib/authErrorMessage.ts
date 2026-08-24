@@ -1,9 +1,9 @@
 import type { TFunction } from 'i18next';
 import type { AuthActionError } from '@/contexts/auth-context';
 
-/* traduz o código de erro das Edge Functions de auth pra uma mensagem —
- * reaproveitado pelo AccountGate e pelo CheckoutForm (mesmos códigos,
- * mesmas 6 chaves em account.gate.errors.*, sem duplicar copy). */
+/* traduz o código de erro do fluxo de login (email + código) pra uma
+ * mensagem, reaproveitando as chaves em account.gate.errors.* (mesmo texto
+ * de antes do login/registro virarem uma tela só). */
 export function authErrorMessage(t: TFunction, error: AuthActionError): string {
   if (error.code === 'wrong_pin') {
     return t('account.gate.errors.wrong_pin', { count: error.attemptsRemaining ?? 0 });
