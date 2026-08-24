@@ -14,6 +14,9 @@ export type DownloadErrorCode =
 
 export interface DownloadError {
   code: DownloadErrorCode;
+  /* DIAGNÓSTICO TEMPORÁRIO — remover quando o fluxo mobile for confirmado
+     funcionando de ponta a ponta num teste real. */
+  debug?: string;
 }
 
 export interface DownloadFile {
@@ -32,13 +35,21 @@ async function readDownloadError(error: unknown): Promise<DownloadError> {
     try {
       const body = await error.context.json();
       if (body && typeof body.error === 'string') {
-        return { code: body.error as DownloadErrorCode };
+        return {
+          code: body.error as DownloadErrorCode,
+          debug: `status=${error.context.status}${body.message ? ` message="${body.message}"` : ''}`,
+        };
       }
-    } catch {
-      /* corpo não veio como JSON — cai no genérico abaixo */
+      return { code: 'unexpected', debug: `FunctionsHttpError status=${error.context.status} body=${JSON.stringify(body)}` };
+    } catch (parseError) {
+      return {
+        code: 'unexpected',
+        debug: `FunctionsHttpError status=${error.context.status} (corpo não é JSON: ${(parseError as Error).message})`,
+      };
     }
   }
-  return { code: 'unexpected' };
+  const err = error as { name?: string; message?: string } | null;
+  return { code: 'unexpected', debug: `${err?.name ?? typeof error} — ${err?.message ?? String(error)}` };
 }
 
 export interface GuestDownloadProof {
@@ -88,6 +99,17 @@ async function fetchWithTimeout(url: string): Promise<Response> {
   }
 }
 
+/* DIAGNÓSTICO TEMPORÁRIO — segunda rodada. A primeira achou e corrigiu um
+ * bug real (entitlement duplicada quebrando request-download), mas o
+ * sintoma no iPhone persistiu — precisa continuar vendo cada checkpoint até
+ * confirmar o fluxo funcionando de ponta a ponta num teste real. Remover
+ * só depois disso. */
+function debugAlert(message: string) {
+  if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+    window.alert(`[debug download v2] ${message}`);
+  }
+}
+
 /** navigator.share com arquivos de imagem abre a folha nativa de
  * compartilhar do celular — "Salvar imagens"/"Guardar fotos" grava direto
  * na galeria, sem precisar descompactar zip nem salvar uma por uma depois.
@@ -97,13 +119,23 @@ async function fetchWithTimeout(url: string): Promise<Response> {
  * cancelar é escolha dele, não cai pro zip depois disso). false = sem
  * suporte, ou falha real — quem chamou tenta o zip em seguida. */
 async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof): Promise<boolean> {
+  const startedAt = Date.now();
+
   if (typeof navigator === 'undefined' || typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function') {
+    debugAlert('navigator.share/canShare não existem nesse navegador');
     return false;
   }
 
   const results = await Promise.all(productIds.map((productId) => requestDownload(productId, guestProof)));
-  if (results.some(isDownloadError)) return false;
+  if (results.some(isDownloadError)) {
+    const details = results
+      .map((r) => (isDownloadError(r) ? `${r.code}${r.debug ? ` (${r.debug})` : ''}` : 'ok'))
+      .join(' | ');
+    debugAlert(`requestDownload falhou — ${details}`);
+    return false;
+  }
   const downloadFiles = (results as RequestDownloadResult[]).flatMap((result) => result.files);
+  debugAlert(`requestDownload OK — ${downloadFiles.length} arquivo(s) pra buscar, ${Date.now() - startedAt}ms`);
 
   // busca todos em paralelo (não um por vez) — mais rápido e evita que um
   // arquivo lento deixe os de trás perto/além do TTL da URL assinada
@@ -112,16 +144,30 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
     files = await Promise.all(
       downloadFiles.map(async (file) => {
         const response = await fetchWithTimeout(file.url);
-        if (!response.ok) throw new Error(`fetch failed: ${response.status}`);
+        if (!response.ok) throw new Error(`fetch failed: ${response.status} — ${file.file_name}`);
         const blob = await response.blob();
         return new File([blob], file.file_name, { type: blob.type || 'image/jpeg' });
       }),
     );
-  } catch {
+  } catch (error) {
+    debugAlert(`fetch dos arquivos falhou depois de ${Date.now() - startedAt}ms: ${(error as Error).message}`);
     return false;
   }
 
-  if (files.length === 0 || !navigator.canShare({ files })) return false;
+  const elapsedBeforeShare = Date.now() - startedAt;
+
+  if (files.length === 0) {
+    debugAlert(`nenhum arquivo baixado (${elapsedBeforeShare}ms)`);
+    return false;
+  }
+  if (!navigator.canShare({ files })) {
+    debugAlert(
+      `canShare(arquivos reais) retornou false depois de ${elapsedBeforeShare}ms — ${files.length} arquivo(s), tipos: ${files.map((f) => f.type).join(',')}`,
+    );
+    return false;
+  }
+
+  debugAlert(`canShare OK (${elapsedBeforeShare}ms) — chamando navigator.share agora`);
 
   try {
     await navigator.share({ files });
@@ -130,6 +176,9 @@ async function tryWebShare(productIds: number[], guestProof?: GuestDownloadProof
     // usuário fechou a folha nativa sem escolher nada — decisão dele, não
     // é uma falha que devesse cair pro fallback de zip
     if (error instanceof Error && error.name === 'AbortError') return true;
+    debugAlert(
+      `share() lançou erro depois de ${elapsedBeforeShare}ms de espera: ${(error as Error).name} — ${(error as Error).message}`,
+    );
     return false;
   }
 }
