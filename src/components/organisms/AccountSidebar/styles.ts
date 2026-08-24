@@ -27,7 +27,7 @@ export const MemberTag = styled.div`
 export const Email = styled.div`
   margin-top: 8px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   word-break: break-word;
 `;
 
@@ -57,68 +57,68 @@ export const StatLabel = styled.span`
 `;
 
 export const Nav = styled.div`
-  margin-top: 18px;
-  border-top: 1px solid ${({ theme }) => theme.colors.black};
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 
   @media (max-width: 760px) {
-    margin-top: 14px;
+    margin-top: 18px;
   }
 `;
 
 export const NavLink = styled.button<{ $active: boolean }>`
-  width: 100%;
   cursor: pointer;
-  padding: 10px 0;
-
-  @media (max-width: 760px) {
-    padding: 9px 0;
-  }
+  height: 40px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border: 0;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-  background: none;
+  gap: 8px;
+  border: 1px solid ${({ theme, $active }) => ($active ? theme.colors.black : theme.colors.border)};
+  border-radius: 100px;
+  background: ${({ theme, $active }) => ($active ? theme.colors.black : 'transparent')};
   font-family: inherit;
-  transition: padding-left 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
 
   &:hover {
-    padding-left: 8px;
+    border-color: ${({ theme }) => theme.colors.black};
   }
 `;
 
 export const NavLinkLabel = styled.span<{ $active: boolean }>`
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: ${({ theme, $active }) => ($active ? theme.colors.text : theme.colors.textMuted)};
+  color: ${({ theme, $active }) => ($active ? theme.colors.white : theme.colors.text)};
 `;
 
-export const NavLinkCount = styled.span`
+export const NavLinkCount = styled.span<{ $active: boolean }>`
   font-size: 11px;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: ${({ theme, $active }) => ($active ? 'rgba(255, 255, 255, 0.6)' : theme.colors.textMuted)};
 `;
 
 export const SignOutButton = styled.button`
-  margin-top: 16px;
-
-  @media (max-width: 760px) {
-    margin-top: 12px;
-  }
-  background: none;
-  border: 0;
-  padding: 0;
   cursor: pointer;
-  font-size: 10px;
+  height: 40px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 100px;
+  background: transparent;
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: ${({ theme }) => theme.colors.textMuted};
-  transition: color 0.2s ease;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.text};
+    border-color: ${({ theme }) => theme.colors.danger};
+    color: ${({ theme }) => theme.colors.danger};
   }
 `;
 

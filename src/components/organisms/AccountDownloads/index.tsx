@@ -9,34 +9,68 @@ import { downloadOrShare, type DeviceVariant } from '@/lib/downloadApi';
 import { formatDate } from '@/lib/format';
 import * as S from './styles';
 
-interface DownloadEntry extends Entitlement {
+interface DownloadGroup {
+  productId: number;
+  sku: string;
+  name: string;
   mobileCount: number;
   desktopCount: number;
   coverImage?: string;
+  purchaseCount: number;
+  firstPurchasedAt: string;
+  lastPurchasedAt: string;
+}
+
+/* mesmo Drop comprado mais de uma vez vira várias entitlements (uma por
+   pedido) — agrupa por product_id em vez de repetir a mesma linha uma vez
+   por compra. */
+function groupByProduct(entitlements: Entitlement[]): DownloadGroup[] {
+  const byProduct = new Map<number, Entitlement[]>();
+  for (const entitlement of entitlements) {
+    const existing = byProduct.get(entitlement.product_id);
+    if (existing) existing.push(entitlement);
+    else byProduct.set(entitlement.product_id, [entitlement]);
+  }
+
+  return Array.from(byProduct.values()).map((group) => {
+    const sorted = [...group].sort((a, b) => a.granted_at.localeCompare(b.granted_at));
+    const latest = sorted[sorted.length - 1];
+    return {
+      productId: latest.product_id,
+      sku: latest.sku,
+      name: latest.name,
+      mobileCount: 0,
+      desktopCount: 0,
+      purchaseCount: sorted.length,
+      firstPurchasedAt: sorted[0].granted_at,
+      lastPurchasedAt: latest.granted_at,
+    };
+  });
 }
 
 export function AccountDownloads() {
   const { t, i18n } = useTranslation();
-  const [entries, setEntries] = useState<DownloadEntry[]>([]);
+  const [groups, setGroups] = useState<DownloadGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
   const [downloadingAll, setDownloadingAll] = useState(false);
-  const [pickerEntry, setPickerEntry] = useState<DownloadEntry | null>(null);
+  const [pickerGroup, setPickerGroup] = useState<DownloadGroup | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     fetchMyEntitlements()
       .then(async (entitlements) => {
-        const covers = await fetchProductCoverImages(entitlements.map((entitlement) => entitlement.product_id));
+        const grouped = groupByProduct(entitlements);
+        const covers = await fetchProductCoverImages(grouped.map((group) => group.productId));
         const withBreakdown = await Promise.all(
-          entitlements.map(async (entitlement): Promise<DownloadEntry> => {
-            const breakdown = await fetchFileBreakdown(entitlement.product_id);
+          grouped.map(async (group): Promise<DownloadGroup> => {
+            const breakdown = await fetchFileBreakdown(group.productId);
             const mobileCount = breakdown.find((row) => row.device_variant === 'mobile')?.file_count ?? 0;
             const desktopCount = breakdown.find((row) => row.device_variant === 'desktop')?.file_count ?? 0;
-            return { ...entitlement, mobileCount, desktopCount, coverImage: covers.get(entitlement.product_id) };
+            return { ...group, mobileCount, desktopCount, coverImage: covers.get(group.productId) };
           }),
         );
-        if (!cancelled) setEntries(withBreakdown);
+        if (!cancelled) setGroups(withBreakdown);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -46,18 +80,18 @@ export function AccountDownloads() {
     };
   }, []);
 
-  const totalFiles = entries.reduce((sum, entry) => sum + entry.mobileCount + entry.desktopCount, 0);
+  const totalFiles = groups.reduce((sum, group) => sum + group.mobileCount + group.desktopCount, 0);
 
-  const download = async (entry: DownloadEntry, deviceVariant?: DeviceVariant) => {
-    setDownloadingId(entry.entitlement_id);
-    await downloadOrShare([entry.product_id], { deviceVariant });
+  const download = async (group: DownloadGroup, deviceVariant?: DeviceVariant) => {
+    setDownloadingId(group.productId);
+    await downloadOrShare([group.productId], { deviceVariant });
     setDownloadingId(null);
   };
 
   const downloadAll = async (deviceVariant?: DeviceVariant) => {
     setDownloadingAll(true);
     await downloadOrShare(
-      entries.map((entry) => entry.product_id),
+      groups.map((group) => group.productId),
       { deviceVariant },
     );
     setDownloadingAll(false);
@@ -70,23 +104,31 @@ export function AccountDownloads() {
         <S.NeverExpire>{t('account.downloads.neverExpire')}</S.NeverExpire>
       </S.Header>
 
-      {!loading && entries.length === 0 ? (
+      {!loading && groups.length === 0 ? (
         <S.List>{t('account.downloads.empty')}</S.List>
       ) : (
         <>
           <S.List>
-            {entries.map((entry) => (
+            {groups.map((group) => (
               <DownloadRow
-                key={entry.entitlement_id}
-                sku={entry.sku}
-                name={entry.name}
+                key={group.productId}
+                sku={group.sku}
+                name={group.name}
                 kind={t('account.downloads.kind')}
-                spec={t('account.downloads.breakdown', { mobile: entry.mobileCount, desktop: entry.desktopCount })}
-                meta={formatDate(entry.granted_at, i18n.language)}
-                downloading={downloadingId === entry.entitlement_id}
-                onDownloadAll={(deviceVariant) => download(entry, deviceVariant)}
-                onPickImage={() => setPickerEntry(entry)}
-                coverImage={entry.coverImage}
+                spec={t('account.downloads.breakdown', { mobile: group.mobileCount, desktop: group.desktopCount })}
+                meta={
+                  group.purchaseCount > 1
+                    ? t('account.downloads.boughtTwice', {
+                        first: formatDate(group.firstPurchasedAt, i18n.language),
+                        last: formatDate(group.lastPurchasedAt, i18n.language),
+                      })
+                    : formatDate(group.lastPurchasedAt, i18n.language)
+                }
+                downloading={downloadingId === group.productId}
+                onDownloadAll={(deviceVariant) => download(group, deviceVariant)}
+                onPickImage={() => setPickerGroup(group)}
+                coverImage={group.coverImage}
+                purchaseCount={group.purchaseCount}
               />
             ))}
           </S.List>
@@ -98,11 +140,11 @@ export function AccountDownloads() {
         </>
       )}
 
-      {pickerEntry && (
+      {pickerGroup && (
         <ImagePickerModal
-          productId={pickerEntry.product_id}
-          productName={pickerEntry.name}
-          onClose={() => setPickerEntry(null)}
+          productId={pickerGroup.productId}
+          productName={pickerGroup.name}
+          onClose={() => setPickerGroup(null)}
         />
       )}
     </div>

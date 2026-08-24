@@ -14,8 +14,8 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  margin-top: 10px;
-  font-size: clamp(26px, 3.4vw, 44px);
+  margin-top: 8px;
+  font-size: clamp(22px, 2.8vw, 36px);
   font-weight: 300;
   line-height: 0.96;
   letter-spacing: -0.03em;
@@ -24,10 +24,10 @@ export const Title = styled.h1`
 `;
 
 export const Description = styled.p`
-  margin-top: 12px;
+  margin-top: 10px;
   max-width: 44ch;
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.6;
   color: ${({ theme }) => theme.colors.textMuted};
 `;
 
@@ -36,13 +36,12 @@ export const EmailHighlight = styled.span`
 `;
 
 export const DownloadActions = styled.div`
-  margin-top: 20px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
 `;
-
 
 export const ZipNote = styled.span`
   font-size: 10px;
@@ -53,7 +52,7 @@ export const ZipNote = styled.span`
 `;
 
 export const FilesSection = styled.div`
-  margin-top: 26px;
+  margin-top: 20px;
 `;
 
 export const FilesHeader = styled.div`
@@ -81,10 +80,10 @@ export const FilesNeverExpire = styled.span`
 `;
 
 export const PinBox = styled.div`
-  margin-top: 22px;
+  margin-top: 18px;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
-  padding: 16px 18px;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -172,7 +171,7 @@ export const PinSaveButton = styled.button`
 `;
 
 export const InstallSection = styled.div`
-  margin-top: 18px;
+  margin-top: 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;

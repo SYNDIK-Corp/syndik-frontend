@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { MainLayout } from '@/components/templates/MainLayout';
 import { PageLoader } from '@/components/molecules/PageLoader';
 import { AccountSidebar, type AccountTab } from '@/components/organisms/AccountSidebar';
@@ -12,9 +12,19 @@ import { fetchDiscountTiers, type DiscountTier } from '@/lib/couponsApi';
 import { useAuth } from '@/hooks/useAuth';
 import * as S from './styles';
 
+const VALID_TABS: AccountTab[] = ['downloads', 'orders', 'details'];
+
 export function Account() {
   const { session, profile, loading, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<AccountTab>('downloads');
+  const [searchParams] = useSearchParams();
+  // volta pra aba certa quando vem de um link direto (ex.: "back" do
+  // recibo pra Orders) — só lida com o valor no primeiro render, trocar de
+  // aba depois disso é só estado local (não fica reescrevendo a URL a cada
+  // clique)
+  const [activeTab, setActiveTab] = useState<AccountTab>(() => {
+    const requested = searchParams.get('tab');
+    return VALID_TABS.includes(requested as AccountTab) ? (requested as AccountTab) : 'downloads';
+  });
   const [downloadsCount, setDownloadsCount] = useState(0);
   const [ordersCount, setOrdersCount] = useState(0);
   const [totalSpent, setTotalSpent] = useState(0);

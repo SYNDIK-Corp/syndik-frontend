@@ -69,17 +69,19 @@ export function AccountSidebar({
       </S.StatsRow>
 
       <S.Nav>
-        {tabs.map((tab) => (
-          <S.NavLink key={tab.key} type="button" $active={activeTab === tab.key} onClick={() => onTabChange(tab.key)}>
-            <S.NavLinkLabel $active={activeTab === tab.key}>{tab.label}</S.NavLinkLabel>
-            {tab.count !== undefined && <S.NavLinkCount>{tab.count}</S.NavLinkCount>}
-          </S.NavLink>
-        ))}
+        {tabs.map((tab) => {
+          const active = activeTab === tab.key;
+          return (
+            <S.NavLink key={tab.key} type="button" $active={active} onClick={() => onTabChange(tab.key)}>
+              <S.NavLinkLabel $active={active}>{tab.label}</S.NavLinkLabel>
+              {tab.count !== undefined && <S.NavLinkCount $active={active}>{tab.count}</S.NavLinkCount>}
+            </S.NavLink>
+          );
+        })}
+        <S.SignOutButton type="button" onClick={onSignOut}>
+          {t('account.sidebar.signOut')}
+        </S.SignOutButton>
       </S.Nav>
-
-      <S.SignOutButton type="button" onClick={onSignOut}>
-        {t('account.sidebar.signOut')}
-      </S.SignOutButton>
 
       {lastTier && (
         <S.MemberRateBox>

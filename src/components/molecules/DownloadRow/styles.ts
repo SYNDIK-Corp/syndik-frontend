@@ -21,6 +21,7 @@ export const Container = styled.div`
 `;
 
 export const Thumb = styled.div`
+  position: relative;
   width: 56px;
   height: 56px;
   background: ${({ theme }) => theme.colors.black};
@@ -28,7 +29,7 @@ export const Thumb = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   text-align: center;
   padding: 6px;
   font-size: 9px;
@@ -47,6 +48,25 @@ export const ThumbImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+
+/* mesmo padrão do badge de quantidade do carrinho (OrderSummaryLine) —
+   Drop comprado mais de uma vez, mostra quantas em vez de repetir a linha */
+export const PurchaseBadge = styled.span`
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.white};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
 `;
 
 export const Info = styled.div`

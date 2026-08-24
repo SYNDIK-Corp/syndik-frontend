@@ -55,7 +55,7 @@ export function AccountOrders() {
                 order.paymentMethod ? t(`account.orders.method.${order.paymentMethod}`) : t('account.orders.method.unknown')
               }
               total={formatPrice(order.total, i18n.language)}
-              receiptTo={`/order-confirmation?order_id=${order.id}`}
+              receiptTo={`/order-confirmation?order_id=${order.id}&from=account`}
             />
           ))}
         </S.List>

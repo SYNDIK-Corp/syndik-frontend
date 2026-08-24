@@ -1,6 +1,52 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import type { CardTone } from '.';
+
+const shine = keyframes`
+  0%, 60%, 100% { background-position: -140% 0; }
+  30% { background-position: 140% 0; }
+`;
+
+const popIn = keyframes`
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+`;
+
+/* "você já tem esse Drop" — canto livre (Tag/SALE fica em cima à
+   esquerda, CartButton embaixo à esquerda). O brilho passando por cima é
+   só decorativo (não repete a cor sólida do fundo, um degradê "varrendo"
+   o texto) — chama atenção sem ser um badge de alerta/erro. */
+export const OwnedBadge = styled.span`
+  position: absolute;
+  right: 12px;
+  top: 14px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  background: ${({ theme }) => theme.colors.black};
+  background-image: linear-gradient(
+    110deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+  animation:
+    ${popIn} 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    ${shine} 3.5s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: ${popIn} 0.3s ease;
+  }
+`;
 
 export const AltImage = styled.div`
   position: absolute;

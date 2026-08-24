@@ -8,6 +8,8 @@ import { PageLoader } from '@/components/molecules/PageLoader';
 import { ProductCard } from '@/components/molecules/ProductCard';
 import { fetchScreensCatalog } from '@/lib/catalogApi';
 import { toRichProduct } from '@/lib/richProductDisplay';
+import { fetchMyEntitlements } from '@/lib/entitlementsApi';
+import { useAuth } from '@/hooks/useAuth';
 import type { CatalogSheet, Product } from '@/types/product';
 import * as S from './styles';
 
@@ -20,7 +22,9 @@ export interface CatalogProps {
 
 export function Catalog({ sheet }: CatalogProps) {
   const { t } = useTranslation();
+  const { session } = useAuth();
   const [products, setProducts] = useState<Product[] | null>(sheet === 'sound' ? [] : null);
+  const [ownedIds, setOwnedIds] = useState<Set<number>>(new Set());
   const ratio = RATIO[sheet];
   const otherPath = OTHER_PATH[sheet];
 
@@ -49,6 +53,23 @@ export function Catalog({ sheet }: CatalogProps) {
       cancelled = true;
     };
   }, [sheet, t]);
+
+  // "você já tem esse Drop" — só busca entitlements se tiver sessão, não
+  // bloqueia o carregamento do catálogo em si (cruza depois que a lista de
+  // produtos já está na tela)
+  useEffect(() => {
+    if (!session) {
+      setOwnedIds(new Set());
+      return;
+    }
+    let cancelled = false;
+    fetchMyEntitlements().then((entitlements) => {
+      if (!cancelled) setOwnedIds(new Set(entitlements.map((entitlement) => entitlement.product_id)));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [session]);
 
   const tabs = (
     <S.Toggle>
@@ -100,6 +121,7 @@ export function Catalog({ sheet }: CatalogProps) {
                   metaLayout="row"
                   ratio={ratio}
                   to={`/products/${sheet}/${product.id}`}
+                  owned={product.dbId !== undefined && ownedIds.has(product.dbId)}
                 />
               ))}
             </S.Grid>

@@ -14,12 +14,29 @@ export interface DownloadRowProps {
   onPickImage: () => void;
   /* sem imagem, cai no fallback de sempre (caixa preta com o SKU) */
   coverImage?: string;
+  /* comprado mais de uma vez — mostra "×N" no canto da miniatura em vez de
+     repetir a mesma linha pra cada compra */
+  purchaseCount?: number;
 }
 
-export function DownloadRow({ sku, name, kind, spec, meta, downloading, onDownloadAll, onPickImage, coverImage }: DownloadRowProps) {
+export function DownloadRow({
+  sku,
+  name,
+  kind,
+  spec,
+  meta,
+  downloading,
+  onDownloadAll,
+  onPickImage,
+  coverImage,
+  purchaseCount,
+}: DownloadRowProps) {
   return (
     <S.Container>
-      <S.Thumb>{coverImage ? <S.ThumbImage src={coverImage} alt="" /> : sku}</S.Thumb>
+      <S.Thumb>
+        {coverImage ? <S.ThumbImage src={coverImage} alt="" /> : sku}
+        {purchaseCount && purchaseCount > 1 && <S.PurchaseBadge>×{purchaseCount}</S.PurchaseBadge>}
+      </S.Thumb>
 
       <S.Info>
         <S.Kind>

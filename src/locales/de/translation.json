@@ -32,7 +32,8 @@
   "product": {
     "sale": "Sale",
     "addToBag": "In den Warenkorb",
-    "sold": "Verkauft"
+    "sold": "Verkauft",
+    "owned": "Bereits deins"
   },
   "cart": {
     "title": "Mein Warenkorb",
@@ -196,6 +197,7 @@
       "downloadAll": "Alles herunterladen",
       "kind": "Wallpaper-Paket",
       "breakdown": "{{mobile}} mobil + {{desktop}} Desktop",
+      "boughtTwice": "Gekauft am {{first}} · erneut am {{last}}",
       "filesCount": "{{count}} Dateien",
       "empty": "Du hast noch nichts gekauft."
     },
@@ -217,6 +219,8 @@
       "save": "Speichern",
       "saved": "Gespeichert",
       "pinError": "4 Ziffern — versuche es erneut.",
+      "pinSavedMessage": "Deine PIN wurde aktualisiert.",
+      "close": "Schließen",
       "newsletter": "Benachrichtige mich bei neuen Drops.",
       "dangerZone": "Kritischer Bereich",
       "dangerZoneBody": "Das Löschen des Kontos entfernt deine Download-Links dauerhaft. Die Lizenz bereits erhaltener Dateien bleibt gültig.",
@@ -226,6 +230,7 @@
   "orderConfirmation": {
     "orderBadge": "Bestellung {{number}}",
     "yourAccount": "Dein Konto",
+    "backToOrders": "Zurück zu den Bestellungen",
     "paymentCleared": "Zahlung bestätigt — {{datetime}}",
     "title": "Es gehört dir.\nHol es dir.",
     "description": "Die Dateien sind auf dieser Seite und in deinem Konto verfügbar. Ein Beleg mit denselben Links ist unterwegs zu <0>{{email}}</0>.",

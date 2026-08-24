@@ -1,5 +1,9 @@
 export interface Product {
   id: string;
+  /* PK numérica real do produto (Supabase) — mesma origem de CatalogItem.dbId,
+     usada pra cruzar com entitlements (ex.: "você já tem esse Drop" no
+     catálogo). undefined nos itens que não vêm do banco. */
+  dbId?: number;
   name: string;
   price: number;
   compareAtPrice?: number;

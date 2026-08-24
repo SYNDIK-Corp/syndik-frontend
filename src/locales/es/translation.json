@@ -32,7 +32,8 @@
   "product": {
     "sale": "Oferta",
     "addToBag": "Añadir a la bolsa",
-    "sold": "Vendido"
+    "sold": "Vendido",
+    "owned": "Ya es tuyo"
   },
   "cart": {
     "title": "Mi carrito",
@@ -196,6 +197,7 @@
       "downloadAll": "Descargar todo",
       "kind": "Pack de wallpapers",
       "breakdown": "{{mobile}} móvil + {{desktop}} escritorio",
+      "boughtTwice": "Comprado el {{first}} · de nuevo el {{last}}",
       "filesCount": "{{count}} archivos",
       "empty": "Todavía no compraste nada."
     },
@@ -217,6 +219,8 @@
       "save": "Guardar",
       "saved": "Guardado",
       "pinError": "4 dígitos — intenta de nuevo.",
+      "pinSavedMessage": "Tu PIN fue actualizado.",
+      "close": "Cerrar",
       "newsletter": "Avísame cuando llegue un nuevo lanzamiento.",
       "dangerZone": "Zona de riesgo",
       "dangerZoneBody": "Eliminar la cuenta borra tus enlaces de descarga para siempre. La licencia de los archivos que ya tienes sigue siendo válida.",
@@ -226,6 +230,7 @@
   "orderConfirmation": {
     "orderBadge": "Pedido {{number}}",
     "yourAccount": "Tu cuenta",
+    "backToOrders": "Volver a los pedidos",
     "paymentCleared": "Pago confirmado — {{datetime}}",
     "title": "Es tuyo.\nVe a buscarlo.",
     "description": "Los archivos ya están en esta página y en tu cuenta. Un recibo con los mismos enlaces va en camino a <0>{{email}}</0>.",

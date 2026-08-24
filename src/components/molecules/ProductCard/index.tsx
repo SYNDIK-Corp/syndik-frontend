@@ -23,6 +23,10 @@ export interface ProductCardProps {
   shortNameOnMobile?: boolean;
   to?: string;
   onAddToBag?: (product: Product) => void;
+  /* usuário logado já tem esse Drop na conta — não impede comprar de
+     novo, só avisa (não quer impedir repetir a compra, quer deixar
+     claro). */
+  owned?: boolean;
 }
 
 export function ProductCard({
@@ -35,6 +39,7 @@ export function ProductCard({
   shortNameOnMobile = false,
   to = '/products',
   onAddToBag,
+  owned = false,
 }: ProductCardProps) {
   const { t, i18n } = useTranslation();
   const { addItem } = useCart();
@@ -81,6 +86,12 @@ export function ProductCard({
           </S.AltImage>
         )}
         {tag && <S.Tag $sold={sold}>{tag}</S.Tag>}
+        {owned && (
+          <S.OwnedBadge>
+            <Icon name="check" size={9} />
+            {t('product.owned')}
+          </S.OwnedBadge>
+        )}
         {!sold && (
           <S.CartButton type="button" aria-label={t('product.addToBag')} onClick={handleAddToBag}>
             <Icon name="bag" size={dense ? 15 : 16} />

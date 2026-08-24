@@ -39,6 +39,10 @@ export function OrderConfirmation() {
      server-side). Sem token, cai no caminho de sempre (RLS autenticada) —
      usado quando quem está logado abre um recibo antigo pela Conta. */
   const token = searchParams.get('token');
+  /* veio do link "Receipt" da Conta > Orders — recibo antigo, não uma
+     compra recém-feita: esconde o "Set your PIN" (só faz sentido no
+     momento da compra) e troca o link do header por um "back" de verdade. */
+  const fromAccount = searchParams.get('from') === 'account';
 
   const [status, setStatus] = useState<PageStatus>('loading');
   const [order, setOrder] = useState<MyOrder | null>(null);
@@ -253,7 +257,7 @@ export function OrderConfirmation() {
   }
 
   return (
-    <OrderConfirmationLayout orderNumber={order.orderNumber}>
+    <OrderConfirmationLayout orderNumber={order.orderNumber} backToOrders={fromAccount}>
       <S.Grid>
         <OrderConfirmationDetails
           orderId={order.id}
@@ -261,6 +265,7 @@ export function OrderConfirmation() {
           memberEmail={order.email}
           files={files}
           guestProof={token ? { orderId: order.id, token } : undefined}
+          hidePinBox={fromAccount}
         />
         <OrderReceipt
           orderNumber={order.orderNumber}

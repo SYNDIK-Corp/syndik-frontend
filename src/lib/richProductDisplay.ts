@@ -20,6 +20,7 @@ export function toRichProduct(item: CatalogItem, t: TFunction): Product {
 
   return {
     id: item.id,
+    dbId: item.dbId,
     sku: item.sku,
     name: rich
       ? t('catalog.richTitle', { volume: item.volume, name: item.name, count: item.designCount }).toUpperCase()

@@ -28,9 +28,20 @@ export interface OrderConfirmationDetailsProps {
   /* presente só no fluxo guest (sem sessão) — repassado pro
      request-download como prova de posse do pedido. */
   guestProof?: GuestDownloadProof;
+  /* recibo antigo aberto pela Conta > Orders — "Set your PIN" só faz
+     sentido no momento da compra, não toda vez que a pessoa revisita um
+     pedido já pago há tempos. */
+  hidePinBox?: boolean;
 }
 
-export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, guestProof }: OrderConfirmationDetailsProps) {
+export function OrderConfirmationDetails({
+  orderId,
+  paidAt,
+  memberEmail,
+  files,
+  guestProof,
+  hidePinBox,
+}: OrderConfirmationDetailsProps) {
   const { t, i18n } = useTranslation();
   const [downloaded, setDownloaded] = useState<Set<string>>(new Set());
   const [downloadingSku, setDownloadingSku] = useState<string | null>(null);
@@ -121,55 +132,57 @@ export function OrderConfirmationDetails({ orderId, paidAt, memberEmail, files, 
         </div>
       </S.FilesSection>
 
-      <S.PinBox>
-        <S.PinText>
-          <S.PinLabel>{t('orderConfirmation.setPin.label')}</S.PinLabel>
-          <S.PinBody>{t('orderConfirmation.setPin.body')}</S.PinBody>
-          {pinStatus === 'saved' && (
-            <S.PinFeedback $tone="success">
-              {t('orderConfirmation.setPin.successTitle')} — {t('orderConfirmation.setPin.successBody')}
-            </S.PinFeedback>
-          )}
-          {pinStatus === 'invalid' && (
-            <S.PinFeedback $tone="error">{t('orderConfirmation.setPin.errorInvalid')}</S.PinFeedback>
-          )}
-          {pinStatus === 'error' && (
-            <S.PinFeedback $tone="error">{t('orderConfirmation.setPin.errorGeneric')}</S.PinFeedback>
-          )}
-          {pinStatus === 'already_set' && (
-            <S.PinFeedback $tone="error">
-              <Trans
-                i18nKey="orderConfirmation.setPin.errorAlreadySet"
-                components={[<S.PinLoginLink key="0" href="/login" />]}
-              />
-            </S.PinFeedback>
-          )}
-        </S.PinText>
-        <S.PinRow>
-          <S.PinInput
-            maxLength={4}
-            inputMode="numeric"
-            placeholder={t('orderConfirmation.setPin.placeholder')}
-            value={pin}
-            disabled={pinStatus === 'saved' || pinStatus === 'already_set'}
-            onChange={(event) => {
-              setPin(event.target.value);
-              setPinStatus('idle');
-            }}
-          />
-          <S.PinSaveButton
-            type="button"
-            onClick={handleSavePin}
-            disabled={pinStatus === 'saving' || pinStatus === 'saved' || pinStatus === 'already_set'}
-          >
-            {pinStatus === 'saving'
-              ? t('orderConfirmation.setPin.saving')
-              : pinStatus === 'saved'
-                ? t('orderConfirmation.setPin.saved')
-                : t('orderConfirmation.setPin.save')}
-          </S.PinSaveButton>
-        </S.PinRow>
-      </S.PinBox>
+      {!hidePinBox && (
+        <S.PinBox>
+          <S.PinText>
+            <S.PinLabel>{t('orderConfirmation.setPin.label')}</S.PinLabel>
+            <S.PinBody>{t('orderConfirmation.setPin.body')}</S.PinBody>
+            {pinStatus === 'saved' && (
+              <S.PinFeedback $tone="success">
+                {t('orderConfirmation.setPin.successTitle')} — {t('orderConfirmation.setPin.successBody')}
+              </S.PinFeedback>
+            )}
+            {pinStatus === 'invalid' && (
+              <S.PinFeedback $tone="error">{t('orderConfirmation.setPin.errorInvalid')}</S.PinFeedback>
+            )}
+            {pinStatus === 'error' && (
+              <S.PinFeedback $tone="error">{t('orderConfirmation.setPin.errorGeneric')}</S.PinFeedback>
+            )}
+            {pinStatus === 'already_set' && (
+              <S.PinFeedback $tone="error">
+                <Trans
+                  i18nKey="orderConfirmation.setPin.errorAlreadySet"
+                  components={[<S.PinLoginLink key="0" href="/login" />]}
+                />
+              </S.PinFeedback>
+            )}
+          </S.PinText>
+          <S.PinRow>
+            <S.PinInput
+              maxLength={4}
+              inputMode="numeric"
+              placeholder={t('orderConfirmation.setPin.placeholder')}
+              value={pin}
+              disabled={pinStatus === 'saved' || pinStatus === 'already_set'}
+              onChange={(event) => {
+                setPin(event.target.value);
+                setPinStatus('idle');
+              }}
+            />
+            <S.PinSaveButton
+              type="button"
+              onClick={handleSavePin}
+              disabled={pinStatus === 'saving' || pinStatus === 'saved' || pinStatus === 'already_set'}
+            >
+              {pinStatus === 'saving'
+                ? t('orderConfirmation.setPin.saving')
+                : pinStatus === 'saved'
+                  ? t('orderConfirmation.setPin.saved')
+                  : t('orderConfirmation.setPin.save')}
+            </S.PinSaveButton>
+          </S.PinRow>
+        </S.PinBox>
+      )}
 
       <S.InstallSection>
         <S.InstallLabel>{t('orderConfirmation.install.title')}</S.InstallLabel>

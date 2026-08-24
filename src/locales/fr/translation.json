@@ -32,7 +32,8 @@
   "product": {
     "sale": "Promo",
     "addToBag": "Ajouter au panier",
-    "sold": "Vendu"
+    "sold": "Vendu",
+    "owned": "Déjà à vous"
   },
   "cart": {
     "title": "Mon panier",
@@ -196,6 +197,7 @@
       "downloadAll": "Tout télécharger",
       "kind": "Pack de fonds d'écran",
       "breakdown": "{{mobile}} mobile + {{desktop}} bureau",
+      "boughtTwice": "Acheté le {{first}} · à nouveau le {{last}}",
       "filesCount": "{{count}} fichiers",
       "empty": "Vous n'avez encore rien acheté."
     },
@@ -217,6 +219,8 @@
       "save": "Enregistrer",
       "saved": "Enregistré",
       "pinError": "4 chiffres — réessayez.",
+      "pinSavedMessage": "Votre code PIN a été mis à jour.",
+      "close": "Fermer",
       "newsletter": "Prévenez-moi des nouveaux drops.",
       "dangerZone": "Zone sensible",
       "dangerZoneBody": "Supprimer le compte retire définitivement vos liens de téléchargement. La licence des fichiers déjà obtenus reste valable.",
@@ -226,6 +230,7 @@
   "orderConfirmation": {
     "orderBadge": "Commande {{number}}",
     "yourAccount": "Votre compte",
+    "backToOrders": "Retour aux commandes",
     "paymentCleared": "Paiement validé — {{datetime}}",
     "title": "C'est à vous.\nAllez le chercher.",
     "description": "Les fichiers sont disponibles sur cette page et dans votre compte. Un reçu avec les mêmes liens arrive à <0>{{email}}</0>.",
