@@ -38,20 +38,32 @@ export function formatFileSize(megabytes: number) {
   return `${megabytes} MB`;
 }
 
+/* Exceções ao rótulo derivado automaticamente do slug — o slug no banco
+   continua "trap-rap-legends" (sem mudar dado nem migração antiga), só o
+   texto exibido muda. O transform genérico (primeiro hífen -> " / ") não
+   dá conta desse caso porque o primeiro segmento tem duas palavras
+   ("Hip Hop"), não uma. */
+const STYLE_LABEL_OVERRIDES: Record<string, string> = {
+  'trap-rap-legends': 'HIP HOP / RAP LEGENDS',
+};
+const STYLE_WORDS_OVERRIDES: Record<string, string> = {
+  'trap-rap-legends': 'HIP HOP RAP LEGENDS',
+};
+
 /* drops.style ("money-power", "trap-rap-legends") -> label de categoria do
-   Drop ("MONEY / POWER", "TRAP / RAP LEGENDS"). Só o primeiro hífen vira
-   " / " (separador de categoria); o resto vira espaço, porque o segundo
-   segmento pode ter mais de uma palavra. */
+   Drop ("MONEY / POWER", "HIP HOP / RAP LEGENDS"). Sem exceção, só o
+   primeiro hífen vira " / " (separador de categoria); o resto vira espaço,
+   porque o segundo segmento pode ter mais de uma palavra. */
 export function formatStyleLabel(style: string): string {
-  return style.toUpperCase().replace('-', ' / ').replace(/-/g, ' ');
+  return STYLE_LABEL_OVERRIDES[style] ?? style.toUpperCase().replace('-', ' / ').replace(/-/g, ' ');
 }
 
 /* mesma entrada, mas sem barra interna nenhuma ("MONEY POWER",
-   "TRAP RAP LEGENDS") — pra compor com um prefixo de marca (ex.:
+   "HIP HOP RAP LEGENDS") — pra compor com um prefixo de marca (ex.:
    "SYNDIK / MONEY POWER") sem repetir "/" quando a categoria tem mais de
    uma palavra. */
 export function formatStyleWords(style: string): string {
-  return style.toUpperCase().replace(/-/g, ' ');
+  return STYLE_WORDS_OVERRIDES[style] ?? style.toUpperCase().replace(/-/g, ' ');
 }
 
 export function formatList(items: string[], locale: string) {

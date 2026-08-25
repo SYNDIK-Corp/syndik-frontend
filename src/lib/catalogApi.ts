@@ -78,6 +78,12 @@ export async function fetchScreensCatalog(): Promise<CatalogItem[]> {
     .from('product_catalog')
     .select(PRODUCT_COLUMNS)
     .eq('product_type_code', 'wallpaper_pack')
+    // category_rank vem da view (ordem fixa de categoria: Hip Hop/Rap
+    // Legends, Pop Culture Icons, Movie Icons, Money/Power, Automotive/
+    // Street) — sort_order só desempata dentro da mesma categoria. Upload
+    // novo em qualquer categoria já cai no bloco certo sozinho, sem
+    // precisar renumerar nada.
+    .order('category_rank')
     .order('sort_order');
   if (error) throw error;
   return (data ?? []).map(toCatalogItem);
@@ -148,7 +154,10 @@ export async function fetchHomeBestSellers(): Promise<CatalogItem[]> {
     .select(PRODUCT_COLUMNS)
     .eq('product_type_code', 'wallpaper_pack')
     .eq('attributes->>featured', 'true')
-    .order('sort_order');
+    // featured_order é a curadoria da home, independente de sort_order
+    // (que ordena o grid geral do catálogo) — são duas ordenações
+    // diferentes por natureza, não dá pra reusar a mesma coluna.
+    .order('featured_order');
   if (error) throw error;
   return (data ?? []).map(toCatalogItem);
 }
