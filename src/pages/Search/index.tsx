@@ -7,8 +7,8 @@ import { SearchIdle, type CollectionRow } from '@/components/organisms/SearchIdl
 import { SearchResults, type SearchResultItem } from '@/components/organisms/SearchResults';
 import { SearchEmpty } from '@/components/organisms/SearchEmpty';
 import { searchCatalog, type SearchableItem, type SearchFilter } from '@/lib/search';
-import { searchProductIds } from '@/lib/searchApi';
 import { fetchScreensCatalog } from '@/lib/catalogApi';
+import { DROP_STYLES, formatStyleLabel } from '@/lib/format';
 import type { CatalogItem, Product } from '@/types/product';
 import * as S from './styles';
 
@@ -20,7 +20,6 @@ export function Search() {
   const [filter, setFilter] = useState<SearchFilter>('all');
   const [hits, setHits] = useState<SearchableItem[]>([]);
   const [screensCatalog, setScreensCatalog] = useState<CatalogItem[]>([]);
-  const [suggestionCounts, setSuggestionCounts] = useState<number[]>([]);
 
   const active = query.trim() !== '' || filter !== 'all';
 
@@ -52,52 +51,38 @@ export function Search() {
     };
   }, [query, filter, t, active]);
 
-  const suggestionDefs = t('search.suggestions', { returnObjects: true }) as {
-    label: string;
-    query: string;
-  }[];
-
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all(suggestionDefs.map((suggestion) => searchProductIds(suggestion.query).then((ids) => ids.length))).then(
-      (counts) => {
-        if (!cancelled) setSuggestionCounts(counts);
-      },
-    );
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t]);
-
-  const suggestions = suggestionDefs.map((suggestion, index) => ({
-    ...suggestion,
-    hits: suggestionCounts[index] ?? 0,
-  }));
-
   const plateCountLabel = (count: number) =>
     count === 1 ? t('search.plateSingular', { count }) : t('search.platePlural', { count });
 
   const countLabel = active ? plateCountLabel(hits.length) : t('search.countIdle', { count: screensCatalog.length });
 
-  const collections: CollectionRow[] = [
-    { label: t('search.collectionRows.sheetScreens'), count: screensCatalog.length, to: '/products/screens' },
-    // 'sound' ainda não tem produto real (Fase 10) — sempre 0
-    { label: t('search.collectionRows.sheetSound'), count: 0, to: '/products/sound' },
-    { label: t('search.collectionRows.newThisWeek'), count: 3, to: '/products/screens' },
-    {
-      label: t('search.collectionRows.retired'),
-      count: screensCatalog.filter((item) => item.sold).length,
-      to: '/products/sound',
-    },
-  ];
+  // Collections = as categorias reais de Drop (drops.style), na mesma
+  // ordem fixa usada no catálogo (DROP_STYLES) — só entra categoria que já
+  // tem produto publicado. Link direto pro filtro de categoria do catálogo
+  // (Catalog/index.tsx lê o mesmo ?category=).
+  const collections: CollectionRow[] = DROP_STYLES.filter((style) =>
+    screensCatalog.some((item) => item.style === style),
+  ).map((style) => ({
+    label: formatStyleLabel(style),
+    count: screensCatalog.filter((item) => item.style === style).length,
+    to: `/products/screens?category=${style}`,
+  }));
 
-  const lastDropEntry = screensCatalog.at(-1);
+  // drop mais recente de verdade (published_at), não o último item na ordem
+  // de exibição do catálogo (essa é por categoria, não por data). Drops
+  // lançados em lote compartilham o mesmo published_at exato — desempata
+  // por dbId desc (mesmo critério do drop_volume calculado no banco).
+  const lastDropEntry = [...screensCatalog].sort((a, b) => {
+    const byDate = new Date(b.publishedAt ?? 0).getTime() - new Date(a.publishedAt ?? 0).getTime();
+    return byDate !== 0 ? byDate : (b.dbId ?? 0) - (a.dbId ?? 0);
+  })[0];
   const lastDropProduct: Product | undefined = lastDropEntry && {
     id: lastDropEntry.id,
     sku: lastDropEntry.sku,
     name: lastDropEntry.name,
     price: lastDropEntry.price,
+    coverImage: lastDropEntry.coverImage,
+    hoverImage: lastDropEntry.hoverImage,
   };
 
   const results: SearchResultItem[] = hits.map((item) => ({
@@ -105,6 +90,8 @@ export function Search() {
     sku: item.sku,
     name: item.name,
     price: item.price,
+    coverImage: item.coverImage,
+    hoverImage: item.hoverImage,
     tag: item.sold ? t('search.soldBadge') : t(`productDetail.related.sheetTag.${item.sheet}`),
     sold: item.sold,
     ratio: item.sheet === 'sound' ? '1 / 1' : '4 / 5',
@@ -122,8 +109,6 @@ export function Search() {
 
         {!active && lastDropProduct && lastDropEntry && (
           <SearchIdle
-            suggestions={suggestions}
-            onPickSuggestion={setQuery}
             collections={collections}
             lastDrop={lastDropProduct}
             lastDropTo={`/products/screens/${lastDropEntry.id}`}

@@ -332,36 +332,7 @@
     "plateSingular": "{{count}} obra",
     "platePlural": "{{count}} obras",
     "countIdle": "{{count}} obras en el archivo",
-    "mostWanted": "Más buscadas",
-    "suggestions": [
-      {
-        "label": "Wallpapers para móvil",
-        "query": "mobile"
-      },
-      {
-        "label": "Portadas trap",
-        "query": "trap"
-      },
-      {
-        "label": "Packs de álbum",
-        "query": "album"
-      },
-      {
-        "label": "Noche / oscuro",
-        "query": "night"
-      },
-      {
-        "label": "Menos de $5",
-        "query": "3.99"
-      }
-    ],
     "collections": "Colecciones",
-    "collectionRows": {
-      "sheetScreens": "Hoja 001 — para tu pantalla",
-      "sheetSound": "Hoja 002 — para tu sonido",
-      "newThisWeek": "Novedades de la semana",
-      "retired": "Retiradas — un solo dueño"
-    },
     "lastDrop": "Último lanzamiento",
     "soldBadge": "Un dueño — ya se fue",
     "empty": {
@@ -372,6 +343,11 @@
     }
   },
   "catalog": {
+    "filters": {
+      "label": "Filtrar por categoría",
+      "all": "Todos",
+      "empty": "Todavía no hay wallpapers en esta categoría."
+    },
     "tabs": {
       "screen": "Para tu pantalla",
       "sound": "Para tu sonido"

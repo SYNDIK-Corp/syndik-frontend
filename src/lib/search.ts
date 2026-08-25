@@ -22,6 +22,8 @@ export interface SearchableItem {
   kind: string;
   price: number;
   sold: boolean;
+  coverImage?: string;
+  hoverImage?: string;
 }
 
 export type SearchFilter = 'all' | 'screen' | 'sound' | 'mobile' | 'desktop';
@@ -50,6 +52,8 @@ export async function searchCatalog(query: string, filter: SearchFilter, t: TFun
     kind: t(`catalog.variants.${item.variant}`),
     price: item.price,
     sold: item.sold ?? false,
+    coverImage: item.coverImage,
+    hoverImage: item.hoverImage,
   }));
 
   return results.filter((item) => {

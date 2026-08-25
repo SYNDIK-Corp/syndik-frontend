@@ -332,36 +332,7 @@
     "plateSingular": "{{count}} plate",
     "platePlural": "{{count}} plates",
     "countIdle": "{{count}} plates in the vault",
-    "mostWanted": "Most wanted",
-    "suggestions": [
-      {
-        "label": "Mobile wallpapers",
-        "query": "mobile"
-      },
-      {
-        "label": "Trap covers",
-        "query": "trap"
-      },
-      {
-        "label": "Album packs",
-        "query": "album"
-      },
-      {
-        "label": "Night / dark",
-        "query": "night"
-      },
-      {
-        "label": "Under $5",
-        "query": "3.99"
-      }
-    ],
     "collections": "Collections",
-    "collectionRows": {
-      "sheetScreens": "Sheet 001 — for your screen",
-      "sheetSound": "Sheet 002 — for your sound",
-      "newThisWeek": "New this week",
-      "retired": "Retired — one owner"
-    },
     "lastDrop": "Last drop",
     "soldBadge": "One owner — gone",
     "empty": {
@@ -372,6 +343,11 @@
     }
   },
   "catalog": {
+    "filters": {
+      "label": "Filter by category",
+      "all": "All",
+      "empty": "No wallpapers in this category yet."
+    },
     "tabs": {
       "screen": "For your screen",
       "sound": "For your sound"

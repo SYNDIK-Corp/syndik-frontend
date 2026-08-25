@@ -40,4 +40,15 @@ export const ClearButton = styled.button`
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.textMuted};
+  transition:
+    color 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.black};
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
 `;

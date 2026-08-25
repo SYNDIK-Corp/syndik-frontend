@@ -54,6 +54,10 @@ export interface CatalogItem {
      o Drop ser categorizado */
   style?: string;
   volume?: number;
+  /* data de publicação do produto (products.published_at) — usada pra achar
+     o Drop mais recente ("Last drop") e contagens por janela de tempo
+     ("New this week"), sem depender da ordem de exibição do catálogo */
+  publishedAt?: string;
   /* quantidade de designs únicos (product_images com role='gallery') —
      "7 Original Artworks", não é o total de arquivos pagos (esse é o dobro,
      mobile+desktop) */

@@ -38,6 +38,18 @@ export function formatFileSize(megabytes: number) {
   return `${megabytes} MB`;
 }
 
+/* ordem fixa de categoria (mesma do category_rank calculado na view
+   product_catalog, backend/supabase/migrations/20260825180000_category_
+   order_and_bestsellers.sql) — fonte única do slug pra quem precisa listar
+   as 5 categorias reais de Drop (ex.: Collections da busca). */
+export const DROP_STYLES = [
+  'trap-rap-legends',
+  'pop-culture-icons',
+  'movie-icons',
+  'money-power',
+  'automotive-street',
+] as const;
+
 /* Exceções ao rótulo derivado automaticamente do slug — o slug no banco
    continua "trap-rap-legends" (sem mudar dado nem migração antiga), só o
    texto exibido muda. O transform genérico (primeiro hífen -> " / ") não

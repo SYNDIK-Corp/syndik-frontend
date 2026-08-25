@@ -332,36 +332,7 @@
     "plateSingular": "{{count}} Motiv",
     "platePlural": "{{count}} Motive",
     "countIdle": "{{count}} Motive im Archiv",
-    "mostWanted": "Am meisten gesucht",
-    "suggestions": [
-      {
-        "label": "Mobile Wallpaper",
-        "query": "mobile"
-      },
-      {
-        "label": "Trap-Cover",
-        "query": "trap"
-      },
-      {
-        "label": "Album-Pakete",
-        "query": "album"
-      },
-      {
-        "label": "Nacht / dunkel",
-        "query": "night"
-      },
-      {
-        "label": "Unter 5 $",
-        "query": "3.99"
-      }
-    ],
     "collections": "Kollektionen",
-    "collectionRows": {
-      "sheetScreens": "Blatt 001 — für deinen Bildschirm",
-      "sheetSound": "Blatt 002 — für deinen Sound",
-      "newThisWeek": "Neu diese Woche",
-      "retired": "Zurückgezogen — ein Besitzer"
-    },
     "lastDrop": "Letzter Drop",
     "soldBadge": "Ein Besitzer — vergriffen",
     "empty": {
@@ -372,6 +343,11 @@
     }
   },
   "catalog": {
+    "filters": {
+      "label": "Nach Kategorie filtern",
+      "all": "Alle",
+      "empty": "In dieser Kategorie gibt es noch keine Wallpaper."
+    },
     "tabs": {
       "screen": "Für deinen Bildschirm",
       "sound": "Für deinen Sound"

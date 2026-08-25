@@ -24,6 +24,7 @@ interface ProductRow {
   collection_label: string | null;
   drop_style: string | null;
   drop_volume: number | null;
+  published_at: string | null;
   product_images: ProductImageRow[];
 }
 
@@ -32,7 +33,7 @@ interface ProductRow {
    20260817215923_product_catalog_view_with_volume.sql), não a tabela
    products direto. */
 const PRODUCT_COLUMNS =
-  'id, slug, sku, name, description, price_current, price_compare_at, is_sold_out, collection_label, drop_style, drop_volume, product_images(role, storage_bucket, storage_path)';
+  'id, slug, sku, name, description, price_current, price_compare_at, is_sold_out, collection_label, drop_style, drop_volume, published_at, product_images(role, storage_bucket, storage_path)';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -68,6 +69,7 @@ function toCatalogItem(row: ProductRow): CatalogItem {
     collectionLabel: row.collection_label ?? undefined,
     style: row.drop_style ?? undefined,
     volume: row.drop_volume ?? undefined,
+    publishedAt: row.published_at ?? undefined,
     designCount: row.product_images?.filter((img) => img.role === 'gallery').length ?? 0,
     ...imagesFromRow(row),
   };

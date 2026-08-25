@@ -332,36 +332,7 @@
     "plateSingular": "{{count}} pièce",
     "platePlural": "{{count}} pièces",
     "countIdle": "{{count}} pièces dans les archives",
-    "mostWanted": "Les plus demandés",
-    "suggestions": [
-      {
-        "label": "Fonds d'écran mobile",
-        "query": "mobile"
-      },
-      {
-        "label": "Pochettes trap",
-        "query": "trap"
-      },
-      {
-        "label": "Packs album",
-        "query": "album"
-      },
-      {
-        "label": "Nuit / sombre",
-        "query": "night"
-      },
-      {
-        "label": "Moins de 5 $",
-        "query": "3.99"
-      }
-    ],
     "collections": "Collections",
-    "collectionRows": {
-      "sheetScreens": "Feuille 001 — pour votre écran",
-      "sheetSound": "Feuille 002 — pour votre son",
-      "newThisWeek": "Nouveau cette semaine",
-      "retired": "Retiré — un seul propriétaire"
-    },
     "lastDrop": "Dernier drop",
     "soldBadge": "Un seul propriétaire — épuisé",
     "empty": {
@@ -372,6 +343,11 @@
     }
   },
   "catalog": {
+    "filters": {
+      "label": "Filtrer par catégorie",
+      "all": "Tous",
+      "empty": "Aucun fond d'écran dans cette catégorie pour l'instant."
+    },
     "tabs": {
       "screen": "Pour votre écran",
       "sound": "Pour votre son"
