@@ -57,9 +57,11 @@ export const DROP_STYLES = [
    ("Hip Hop"), não uma. */
 const STYLE_LABEL_OVERRIDES: Record<string, string> = {
   'trap-rap-legends': 'HIP HOP / RAP LEGENDS',
+  'pop-culture-icons': 'POP CULTURE / ICONS',
 };
 const STYLE_WORDS_OVERRIDES: Record<string, string> = {
   'trap-rap-legends': 'HIP HOP RAP LEGENDS',
+  'pop-culture-icons': 'POP CULTURE ICONS',
 };
 
 /* drops.style ("money-power", "trap-rap-legends") -> label de categoria do

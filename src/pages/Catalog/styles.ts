@@ -61,6 +61,24 @@ export const ToggleLink = styled(Link)`
 `;
 
 
+export const FilterSection = styled.section`
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 18px clamp(16px, 3vw, 40px) 0;
+
+  @media (max-width: 720px) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+`;
+
+export const EmptyState = styled.p`
+  padding: 48px 0;
+  text-align: center;
+  font-size: 13px;
+  color: ${({ theme }) => theme.colors.textMuted};
+`;
+
 export const GridSection = styled.section`
   max-width: 1700px;
   margin: 0 auto;

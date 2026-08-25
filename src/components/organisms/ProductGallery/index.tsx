@@ -110,7 +110,10 @@ export function ProductGallery({ coverImage, hoverImage, galleryImages, alt }: P
               $active={mobileActive === index}
               aria-label={`${alt} ${index + 1}`}
               aria-current={mobileActive === index}
-              onClick={() => setMobileActive(index)}
+              onClick={(event) => {
+                setMobileActive(index);
+                event.currentTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              }}
             >
               <S.MobileThumbImage src={image} alt="" />
             </S.MobileThumb>

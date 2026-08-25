@@ -115,19 +115,32 @@ export const MobileImage = styled.img`
   height: auto;
 `;
 
+/* virou carrossel de uma linha só (era grid de 3 colunas, quebrava em
+ * várias linhas com 7 imagens) — objetivo é compactar a tela mobile pra
+ * caber mais coisa (preço, botão de compra) sem rolar tanto. Mesma
+ * convenção de rail horizontal do BestSellers: overflow-x + scroll-snap,
+ * sem barra de rolagem visível. */
 export const MobileGrid = styled.div`
   display: none;
 
   @media (max-width: 900px) {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    justify-content: center;
     gap: 6px;
-    margin-top: 6px;
+    margin-top: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 
 export const MobileThumb = styled.button<{ $active: boolean }>`
   display: block;
+  flex: 0 0 auto;
   padding: 0;
   border: 2px solid ${({ theme, $active }) => ($active ? theme.colors.text : 'transparent')};
   border-radius: ${({ theme }) => theme.radii.sm};
@@ -135,14 +148,17 @@ export const MobileThumb = styled.button<{ $active: boolean }>`
   background: none;
   cursor: pointer;
   opacity: ${({ $active }) => ($active ? 1 : 0.6)};
+  scroll-snap-align: start;
   transition:
     opacity 0.2s ease,
     border-color 0.2s ease;
 `;
 
+/* miniatura pequena de propósito (pedido explícito) — quadrada, bem menor
+ * que a altura de 96px do grid anterior. */
 export const MobileThumbImage = styled.img`
   display: block;
-  width: 100%;
-  height: 96px;
+  width: 56px;
+  height: 56px;
   object-fit: cover;
 `;
