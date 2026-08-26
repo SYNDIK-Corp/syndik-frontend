@@ -1,3 +1,9 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/go/:platform",
+      "destination": "https://jxtbyfkoesgptcpkbqak.supabase.co/functions/v1/link-redirect?platform=:platform"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

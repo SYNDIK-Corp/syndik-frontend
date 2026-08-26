@@ -1,6 +1,7 @@
 import { FunctionsHttpError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { activeLocale, DEFAULT_LOCALE } from '@/lib/locale';
+import { getAttribution } from '@/lib/attribution';
 
 export type CheckoutErrorCode =
   | 'invalid_email'
@@ -42,6 +43,7 @@ export async function createOrder(
   couponCode?: string | null,
   guestEmail?: string,
 ): Promise<CreateOrderResult | CheckoutError> {
+  const attribution = getAttribution();
   const { data, error } = await supabase.functions.invoke<CreateOrderResult>('checkout-create-order', {
     body: {
       items,
@@ -52,6 +54,8 @@ export async function createOrder(
       // Fase 11.6: preserva o idioma no retorno do Stripe (return_url) —
       // inglês é a raiz, sem prefixo, não precisa mandar nada.
       locale: activeLocale === DEFAULT_LOCALE ? undefined : activeLocale,
+      utmSource: attribution?.source,
+      utmCampaign: attribution?.campaign ?? undefined,
     },
   });
   if (error) return readCheckoutError(error);

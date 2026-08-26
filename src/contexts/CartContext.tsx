@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CartContext, type AppliedCoupon, type BestDiscount, type CartContextValue, type CartItem } from './cart-context';
 import { fetchDiscountTiers, type DiscountTier } from '@/lib/couponsApi';
+import { track } from '@/lib/trackEvent';
 
 const STORAGE_KEY = 'syndik.cart';
 const HOLD_DURATION_SECONDS = 300;
@@ -109,12 +110,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
         setItems((prev) => [...prev, item]);
         if (openCart) setIsOpen(true);
+        track('add_to_cart', { sku: item.sku, product_name: item.name, price: item.price });
       },
       pendingDuplicate: pendingDuplicate?.item ?? null,
       confirmAddDuplicate: () => {
         if (!pendingDuplicate) return;
         setItems((prev) => [...prev, pendingDuplicate.item]);
         if (pendingDuplicate.openCart) setIsOpen(true);
+        track('add_to_cart', {
+          sku: pendingDuplicate.item.sku,
+          product_name: pendingDuplicate.item.name,
+          price: pendingDuplicate.item.price,
+        });
         setPendingDuplicate(null);
       },
       cancelAddDuplicate: () => setPendingDuplicate(null),

@@ -8,6 +8,7 @@ import { PaymentBrands, type BrandKey } from '@/components/molecules/PaymentBran
 import { useCart } from '@/hooks/useCart';
 import { formatCountdown, formatPrice } from '@/lib/format';
 import { getCartRecommendations, type CartRecommendation } from '@/data/cartRecommendations';
+import { track } from '@/lib/trackEvent';
 import * as S from './styles';
 
 const BRANDS: BrandKey[] = ['visa', 'mastercard', 'amex', 'elo', 'gpay', 'stripe'];
@@ -223,6 +224,7 @@ export function CartDrawer() {
               $enabled={canCheckout}
               disabled={!canCheckout}
               onClick={() => {
+                track('checkout_click', { cart_value: total, item_count: items.length });
                 closeCart();
                 navigate('/checkout');
               }}
